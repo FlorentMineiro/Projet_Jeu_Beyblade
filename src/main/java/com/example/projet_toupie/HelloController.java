@@ -65,7 +65,8 @@ public class HelloController implements Initializable {
     ToupiePersonnage t = new ToupiePersonnage("null","null","null",null,0,0,0,null);
     ClasseToupie c;
     Rotation r;
-
+    @FXML
+    private ImageView imgRetour;
 
 
     @Override
@@ -159,6 +160,7 @@ public class HelloController implements Initializable {
         visible(apBoutique);
         changeZone("Environnement/fond-boutique_2.png",apBoutique);
         changeImageViewImg(imgCoffre,"Bouton_Spécial/toupie-invocation.png");
+        changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
 
 
     }
@@ -179,5 +181,14 @@ public class HelloController implements Initializable {
         invisible(apBoutique);
         invisible(apMenuPrincipal);
         invisible(apCommencement);
+    }
+
+
+    @FXML
+    public void btnRetour(MouseEvent mouseEvent) {
+        clearAll();
+        changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
+        visible(apMenuPrincipal);
+        changeZone("Environnement/Ecran_d'accueil_3.png",apMenuPrincipal);
     }
 }

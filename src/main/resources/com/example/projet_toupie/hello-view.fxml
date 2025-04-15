@@ -13,14 +13,19 @@
       <ImageView fx:id="imgFond" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="408.0" fitWidth="600.0" layoutX="1.0" layoutY="-6.0">
+            <ImageView fitHeight="400.0" fitWidth="600.0">
                <image>
-                  <Image url="@../../../../../../../../Downloads/fond-boutique_2.png" />
+                  <Image url="@../../../Environnement/fond-boutique_2.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCoffre" fitHeight="105.0" fitWidth="109.0" layoutX="235.0" layoutY="235.0" onMouseClicked="#btnCoffreToupie">
+            <ImageView fx:id="imgCoffre" fitHeight="105.0" fitWidth="109.0" layoutX="232.0" layoutY="122.0" onMouseClicked="#btnCoffreToupie">
                <image>
                   <Image url="@../../../../../../../../Downloads/toupie-invocation.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgRetour" fitHeight="77.0" fitWidth="67.0" layoutX="14.0" layoutY="309.0" onMouseClicked="#btnRetour">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/Toupie_Retour.png" />
                </image>
             </ImageView>
          </children>
