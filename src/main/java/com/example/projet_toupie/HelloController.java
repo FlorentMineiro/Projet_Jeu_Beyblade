@@ -51,6 +51,7 @@ public class HelloController implements Initializable {
     @FXML
     private AnchorPane apInvocation;
     private ArrayList<PerformanceTip> tip = new ArrayList<>();
+    private ArrayList<ForgeDisc> disc = new ArrayList<>();
     @FXML
     private ImageView imgPieceToupie;
 
@@ -93,12 +94,37 @@ public class HelloController implements Initializable {
         invisible(apMenuPrincipal);
         invisible(apBoutique);
         invisible(apInvocation);
-        tip.add(new PerformanceTip("Defense",3,9,6,15,"Performance_Tip/DriverDefense.png"));
-        tip.add(new PerformanceTip("Keep",2,9,7,16,"Performance_Tip/DriverKeep.png"));
-        tip.add(new PerformanceTip("Nothing",2,5,9,14,"Performance_Tip/DriverNothing.png"));
-        tip.add(new PerformanceTip("Xtend",1,6,10,13,"Performance_Tip/DriverXtend.png"));
-        tip.add(new PerformanceTip("Operate",8,3,4,10,"Performance_Tip/Operate_tip.png"));
-        tip.add(new PerformanceTip("Evolution",7,4,7,12,"Performance_Tip/PerformanceTip_Evolution.png"));
+
+        PerformanceTip Defense = new PerformanceTip("Defense",3,9,6,15,"Performance_Tip/DriverDefense.png");
+
+        PerformanceTip Keep = new PerformanceTip("Keep",2,9,7,16,"Performance_Tip/DriverKeep.png");
+        PerformanceTip Nothing = new PerformanceTip("Nothing",2,5,9,14,"Performance_Tip/DriverNothing.png");
+        PerformanceTip Xtend = new PerformanceTip("Xtend",1,6,10,13,"Performance_Tip/DriverXtend.png");
+        PerformanceTip Operate = new PerformanceTip("Operate",8,3,4,10,"Performance_Tip/Operate_tip.png");
+        PerformanceTip Evolution = new PerformanceTip("Evolution",7,4,7,12,"Performance_Tip/PerformanceTip_Evolution.png");
+
+        tip.add(Defense);
+        tip.add(Keep);
+        tip.add( Nothing);
+        tip.add(Xtend);
+        tip.add(Operate);
+        tip.add(Evolution);
+
+        ForgeDisc Disk8 = new ForgeDisc("8",3,4,8,18.5,"Forge_Discs/Disk8.png");
+        ForgeDisc Disk11 = new ForgeDisc("11",7,6,9,31.5,"Forge_Discs/Disk11.png");
+        ForgeDisc Disk12 = new ForgeDisc("12",8,5,5,24.5,"Forge_Discs/Disk12.png");
+        ForgeDisc DiskCentral = new ForgeDisc("Central",4,8,5,23.5,"Forge_Discs/DiskCentral.png");
+        ForgeDisc DiskHurricane = new ForgeDisc("Hurricane",9,3,4,28.5,"Forge_Discs/DiskHurricane.png");
+        ForgeDisc Disk2A = new ForgeDisc("2A",6,6,7,18.5,"Forge_Discs/ForgeDisc_2A.png");
+
+        disc.add(Disk8);
+        disc.add(Disk11);
+        disc.add(Disk12);
+        disc.add(DiskCentral);
+        disc.add(DiskHurricane);
+        disc.add(Disk2A);
+
+
 
 
 
@@ -211,25 +237,111 @@ public class HelloController implements Initializable {
         visible(apInvocation);
         changeZone("Environnement/Fond-Invocation.png",apInvocation);
 
+        int chiffreAlea = (int) (Math.random()*2);
+
+        if (1 == chiffreAlea){
+            afficheForgeDisc();
+        }else {
+            affichePerformanceTip();
+        }
+
+
+    }
+
+    public void afficheForgeDisc(){
+        int nombreAleatoire = (int) (Math.random()*6);
+        if (disc.indexOf(new ForgeDisc("8")) == nombreAleatoire){
+
+            changeImageViewImg(imgPieceToupie,"Forge_Discs/Disk8.png");
+            writeRapideInt(lblStatAttaque, disc.get(0).getStatAttaqueDisc());
+            writeRapideInt(lblStatDefense, disc.get(0).getStatDefenseDisc());
+            writeRapideInt(lblStatEndurance, disc.get(0).getStatEnduranceDisc());
+            writeRapideInt(lblPoids, (int) disc.get(0).getPoidsDisc());
+        }
+        if (disc.indexOf(new ForgeDisc("11")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Forge_Discs/Disk11.png");
+            writeRapideInt(lblStatAttaque, disc.get(1).getStatAttaqueDisc());
+            writeRapideInt(lblStatDefense, disc.get(1).getStatDefenseDisc());
+            writeRapideInt(lblStatEndurance, disc.get(1).getStatEnduranceDisc());
+            writeRapideInt(lblPoids, (int) disc.get(1).getPoidsDisc());
+        }
+        if (disc.indexOf(new ForgeDisc("12")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Forge_Discs/Disk12.png");
+            writeRapideInt(lblStatAttaque, disc.get(2).getStatAttaqueDisc());
+            writeRapideInt(lblStatDefense, disc.get(2).getStatDefenseDisc());
+            writeRapideInt(lblStatEndurance, disc.get(2).getStatEnduranceDisc());
+            writeRapideInt(lblPoids, (int) disc.get(2).getPoidsDisc());
+        }
+        if (disc.indexOf(new ForgeDisc("Central")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Forge_Discs/DiskCentral.png");
+            writeRapideInt(lblStatAttaque, disc.get(3).getStatAttaqueDisc());
+            writeRapideInt(lblStatDefense, disc.get(3).getStatDefenseDisc());
+            writeRapideInt(lblStatEndurance, disc.get(3).getStatEnduranceDisc());
+            writeRapideInt(lblPoids, (int) disc.get(3).getPoidsDisc());
+        }
+        if (disc.indexOf(new ForgeDisc("Hurricane")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Forge_Discs/DiskHurricane.png");
+            writeRapideInt(lblStatAttaque, disc.get(4).getStatAttaqueDisc());
+            writeRapideInt(lblStatDefense, disc.get(4).getStatDefenseDisc());
+            writeRapideInt(lblStatEndurance, disc.get(4).getStatEnduranceDisc());
+            writeRapideInt(lblPoids, (int) disc.get(4).getPoidsDisc());
+        }
+        if (disc.indexOf(new ForgeDisc("2A")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Forge_Discs/ForgeDisc_2A.png");
+            writeRapideInt(lblStatAttaque, disc.get(5).getStatAttaqueDisc());
+            writeRapideInt(lblStatDefense, disc.get(5).getStatDefenseDisc());
+            writeRapideInt(lblStatEndurance, disc.get(5).getStatEnduranceDisc());
+            writeRapideInt(lblPoids, (int) disc.get(5).getPoidsDisc());
+        }
+
+    }
+
+    public void affichePerformanceTip(){
         int nombreAleatoire = (int) (Math.random()*6);
         if (tip.indexOf(new PerformanceTip("Defense")) == nombreAleatoire){
+
             changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverDefense.png");
+            writeRapideInt(lblStatAttaque, tip.get(0).getStatAttaqueTip());
+            writeRapideInt(lblStatDefense, tip.get(0).getStatDefenseTip());
+            writeRapideInt(lblStatEndurance, tip.get(0).getStatEnduranceTip());
+            writeRapideInt(lblPoids, (int) tip.get(0).getPoidsTip());
         }
         if (tip.indexOf(new PerformanceTip("Keep")) == nombreAleatoire){
             changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverKeep.png");
-        }
-        if (tip.indexOf(new PerformanceTip("Xtend")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverXtend.png");
+            writeRapideInt(lblStatAttaque, tip.get(1).getStatAttaqueTip());
+            writeRapideInt(lblStatDefense, tip.get(1).getStatDefenseTip());
+            writeRapideInt(lblStatEndurance, tip.get(1).getStatEnduranceTip());
+            writeRapideInt(lblPoids, (int) tip.get(1).getPoidsTip());
         }
         if (tip.indexOf(new PerformanceTip("Nothing")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverXtend.png");
+            writeRapideInt(lblStatAttaque, tip.get(2).getStatAttaqueTip());
+            writeRapideInt(lblStatDefense, tip.get(2).getStatDefenseTip());
+            writeRapideInt(lblStatEndurance, tip.get(2).getStatEnduranceTip());
+            writeRapideInt(lblPoids, (int) tip.get(2).getPoidsTip());
+        }
+        if (tip.indexOf(new PerformanceTip("Xtend")) == nombreAleatoire){
             changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverNothing.png");
+            writeRapideInt(lblStatAttaque, tip.get(3).getStatAttaqueTip());
+            writeRapideInt(lblStatDefense, tip.get(3).getStatDefenseTip());
+            writeRapideInt(lblStatEndurance, tip.get(3).getStatEnduranceTip());
+            writeRapideInt(lblPoids, (int) tip.get(3).getPoidsTip());
         }
         if (tip.indexOf(new PerformanceTip("Operate")) == nombreAleatoire){
             changeImageViewImg(imgPieceToupie,"Performance_Tip/Operate_tip.png");
+            writeRapideInt(lblStatAttaque, tip.get(4).getStatAttaqueTip());
+            writeRapideInt(lblStatDefense, tip.get(4).getStatDefenseTip());
+            writeRapideInt(lblStatEndurance, tip.get(4).getStatEnduranceTip());
+            writeRapideInt(lblPoids, (int) tip.get(4).getPoidsTip());
         }
         if (tip.indexOf(new PerformanceTip("Evolution")) == nombreAleatoire){
             changeImageViewImg(imgPieceToupie,"Performance_Tip/PerformanceTip_Evolution.png");
+            writeRapideInt(lblStatAttaque, tip.get(5).getStatAttaqueTip());
+            writeRapideInt(lblStatDefense, tip.get(5).getStatDefenseTip());
+            writeRapideInt(lblStatEndurance, tip.get(5).getStatEnduranceTip());
+            writeRapideInt(lblPoids, (int) tip.get(5).getPoidsTip());
         }
+
     }
 
     public void clearAll(){
@@ -257,5 +369,10 @@ public class HelloController implements Initializable {
         changeImageViewImg(imgCoffre,"Bouton_Spécial/toupie-invocation.png");
         changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
 
+    }
+    public void writeRapideInt(Label lblTexte, int intTexte)
+    {
+        lblTexte.setText(Integer.toString(intTexte));
+        return;
     }
 }

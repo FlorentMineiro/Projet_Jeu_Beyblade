@@ -94,7 +94,7 @@
                </image>
             </ImageView>
             <Button layoutX="23.0" layoutY="323.0" mnemonicParsing="false" onMouseClicked="#btnFichePerso" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #FFD700;" styleClass="f" text="Fiche Personnage" wrapText="true" />
-            <Button layoutX="223.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#btnModeCombat" prefHeight="62.0" prefWidth="153.0" style="-fx-background-color: #FFD700;" text="Mode Combat" />
+            <Button layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnModeCombat" prefHeight="62.0" prefWidth="153.0" style="-fx-background-color: #FFD700;" text="Mode Combat" />
             <Button layoutX="472.0" layoutY="319.0" mnemonicParsing="false" onMouseClicked="#btnBoutique" prefHeight="55.0" prefWidth="109.0" style="-fx-background-color: #FFD700;" text="Boutique" />
          </children>
       </AnchorPane>
