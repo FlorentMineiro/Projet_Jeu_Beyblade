@@ -11,7 +11,7 @@
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
    <children>
       <ImageView fx:id="imgFond" fitHeight="399.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="apInvocation" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="apInvocation" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fx:id="imgInvocation" fitHeight="400.0" fitWidth="601.0">
                <image>
@@ -67,7 +67,7 @@
             <ImageView fx:id="imgPieceToupie" fitHeight="111.0" fitWidth="153.0" layoutX="206.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0">
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0">
                <image>
@@ -84,6 +84,11 @@
                   <Image url="@../../../../../../../../Downloads/Toupie_Retour.png" />
                </image>
             </ImageView>
+            <Label fx:id="lblBeyPoint" layoutX="254.0" layoutY="310.0" style="-fx-background-color: white;" text="...">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="apMenuPrincipal" prefHeight="200.0" prefWidth="200.0" visible="false">

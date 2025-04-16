@@ -85,7 +85,8 @@ public class HelloController implements Initializable {
     ClasseToupie c;
     Rotation r;
     PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
-
+    @FXML
+    private Label lblBeyPoint;
 
 
     @Override
