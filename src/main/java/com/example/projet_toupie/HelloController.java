@@ -51,6 +51,8 @@ public class HelloController implements Initializable {
     @FXML
     private AnchorPane apInvocation;
     private ArrayList<PerformanceTip> tip = new ArrayList<>();
+    @FXML
+    private ImageView imgPieceToupie;
 
 
 
@@ -85,10 +87,6 @@ public class HelloController implements Initializable {
 
 
 
-
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         visible(apCommencement);
@@ -104,9 +102,9 @@ public class HelloController implements Initializable {
 
 
 
-        for(int i=0 ; i < tip.size() ; i++){
-            System.out.println(tip.get(i));
-        }
+
+
+
 
 
 
@@ -212,6 +210,26 @@ public class HelloController implements Initializable {
         changeImageViewImg(imgInvocation , "Environnement/Fond-Invocation.png");
         visible(apInvocation);
         changeZone("Environnement/Fond-Invocation.png",apInvocation);
+
+        int nombreAleatoire = (int) (Math.random()*6);
+        if (tip.indexOf(new PerformanceTip("Defense")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverDefense.png");
+        }
+        if (tip.indexOf(new PerformanceTip("Keep")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverKeep.png");
+        }
+        if (tip.indexOf(new PerformanceTip("Xtend")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverXtend.png");
+        }
+        if (tip.indexOf(new PerformanceTip("Nothing")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverNothing.png");
+        }
+        if (tip.indexOf(new PerformanceTip("Operate")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Performance_Tip/Operate_tip.png");
+        }
+        if (tip.indexOf(new PerformanceTip("Evolution")) == nombreAleatoire){
+            changeImageViewImg(imgPieceToupie,"Performance_Tip/PerformanceTip_Evolution.png");
+        }
     }
 
     public void clearAll(){
