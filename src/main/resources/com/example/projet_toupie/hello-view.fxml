@@ -10,8 +10,58 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
    <children>
-      <ImageView fx:id="imgFond" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0">
+      <ImageView fx:id="imgFond" fitHeight="399.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane fx:id="apInvocation" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="imgInvocation" fitHeight="400.0" fitWidth="601.0">
+               <image>
+                  <Image url="@../../../Environnement/Fond-Invocation.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="439.0" layoutY="90.0" text="Endurance " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblStatDefense" layoutX="523.0" layoutY="210.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblStatAttaque" layoutX="523.0" layoutY="166.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="457.0" layoutY="210.0" text="Défense" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblStatEndurance" layoutX="518.0" layoutY="90.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="457.0" layoutY="166.0" text="Attaque" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPoids" layoutX="523.0" layoutY="251.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="470.0" layoutY="251.0" text="Poids" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Button layoutX="507.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#btnSuivant" style="-fx-background-color: white;" text=" -&gt;" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0">
                <image>
@@ -23,7 +73,7 @@
                   <Image url="@../../../../../../../../Downloads/toupie-invocation.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgRetour" fitHeight="77.0" fitWidth="67.0" layoutX="14.0" layoutY="309.0" onMouseClicked="#btnRetour">
+            <ImageView fx:id="imgRetour" fitHeight="62.0" fitWidth="89.0" layoutX="21.0" layoutY="324.0" onMouseClicked="#btnRetour">
                <image>
                   <Image url="@../../../../../../../../Downloads/Toupie_Retour.png" />
                </image>

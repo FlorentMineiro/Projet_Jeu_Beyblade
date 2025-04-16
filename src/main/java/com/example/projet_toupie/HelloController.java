@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -35,6 +36,21 @@ public class HelloController implements Initializable {
     @FXML
     private ImageView imgCoffre;
     private String mapCourante;
+    @FXML
+    private ImageView imgRetour;
+    @FXML
+    private Label lblStatAttaque;
+    @FXML
+    private Label lblStatEndurance;
+    @FXML
+    private ImageView imgInvocation;
+    @FXML
+    private Label lblStatDefense;
+    @FXML
+    private Label lblPoids;
+    @FXML
+    private AnchorPane apInvocation;
+    private ArrayList<PerformanceTip> tip = new ArrayList<>();
 
 
 
@@ -65,8 +81,12 @@ public class HelloController implements Initializable {
     ToupiePersonnage t = new ToupiePersonnage("null","null","null",null,0,0,0,null);
     ClasseToupie c;
     Rotation r;
-    @FXML
-    private ImageView imgRetour;
+    PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
+
+
+
+
+
 
 
     @Override
@@ -74,6 +94,19 @@ public class HelloController implements Initializable {
         visible(apCommencement);
         invisible(apMenuPrincipal);
         invisible(apBoutique);
+        invisible(apInvocation);
+        tip.add(new PerformanceTip("Defense",3,9,6,15,"Performance_Tip/DriverDefense.png"));
+        tip.add(new PerformanceTip("Keep",2,9,7,16,"Performance_Tip/DriverKeep.png"));
+        tip.add(new PerformanceTip("Nothing",2,5,9,14,"Performance_Tip/DriverNothing.png"));
+        tip.add(new PerformanceTip("Xtend",1,6,10,13,"Performance_Tip/DriverXtend.png"));
+        tip.add(new PerformanceTip("Operate",8,3,4,10,"Performance_Tip/Operate_tip.png"));
+        tip.add(new PerformanceTip("Evolution",7,4,7,12,"Performance_Tip/PerformanceTip_Evolution.png"));
+
+
+
+        for(int i=0 ; i < tip.size() ; i++){
+            System.out.println(tip.get(i));
+        }
 
 
 
@@ -175,12 +208,17 @@ public class HelloController implements Initializable {
 
     @FXML
     public void btnCoffreToupie(MouseEvent mouseEvent) {
+        clearAll();
+        changeImageViewImg(imgInvocation , "Environnement/Fond-Invocation.png");
+        visible(apInvocation);
+        changeZone("Environnement/Fond-Invocation.png",apInvocation);
     }
 
     public void clearAll(){
         invisible(apBoutique);
         invisible(apMenuPrincipal);
         invisible(apCommencement);
+        invisible(apInvocation);
     }
 
 
@@ -190,5 +228,16 @@ public class HelloController implements Initializable {
         changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
         visible(apMenuPrincipal);
         changeZone("Environnement/Ecran_d'accueil_3.png",apMenuPrincipal);
+    }
+
+    @FXML
+    public void btnSuivant(MouseEvent event) {
+        clearAll();
+        changeImageViewImg(imgFond,"Environnement/fond-boutique_2.png");
+        visible(apBoutique);
+        changeZone("Environnement/fond-boutique_2.png",apBoutique);
+        changeImageViewImg(imgCoffre,"Bouton_Spécial/toupie-invocation.png");
+        changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
+
     }
 }
