@@ -27,6 +27,7 @@ public class HelloController implements Initializable {
     public AnchorPane apCommencement;
     @FXML
     public AnchorPane apMenuPrincipal;
+
     @FXML
     private AnchorPane apBoutique;
 
@@ -52,9 +53,13 @@ public class HelloController implements Initializable {
     private AnchorPane apInvocation;
     private ArrayList<PerformanceTip> tip = new ArrayList<>();
     private ArrayList<ForgeDisc> disc = new ArrayList<>();
+    private ArrayList<EnergyLayer> layer = new ArrayList<>();
     @FXML
     private ImageView imgPieceToupie;
-
+    @FXML
+    private Label lblBeyPoint;
+    @FXML
+    private ImageView imgLogo;
 
 
 
@@ -67,26 +72,16 @@ public class HelloController implements Initializable {
     Rotation gauche = new Rotation(false,true,false);
     Rotation doubleRotation = new Rotation(false,false,true);
 
-    ToupiePersonnage Kerbeus = new ToupiePersonnage("Kerbeus","Central","Defense", défense,6,8,2,droite);
-    ToupiePersonnage Bushin_Ashura = new ToupiePersonnage("Bushin Ashura","Hurricane","Keep", défense,5,9,4,droite);
-    ToupiePersonnage Roar_Bahamut = new ToupiePersonnage("Roar Bahamut","Giga","Moment-10", défense,7,10,4,gauche);
-    ToupiePersonnage Brave_Valkyrie = new ToupiePersonnage("Brave Valkyrie","2A","Evolution", attaque,3,4,10,droite);
-    ToupiePersonnage Hell_Salamander = new ToupiePersonnage("Hell Salamander","12","Operate", endurance,8,5,6,gauche);
-    ToupiePersonnage Drain_Fafnir = new ToupiePersonnage("Drain Fafnir","8","Nothing", endurance,9,5,3,gauche);
-    ToupiePersonnage Z_Achilles = new ToupiePersonnage("Z-Achilles","11","Xtend", attaque,6,5,8,droite);
-    ToupiePersonnage Lucifer_The_End = new ToupiePersonnage("Lucifer The End","Kou","Drift", endurance,9,6,3,droite);
-    ToupiePersonnage Astral_Spriggan = new ToupiePersonnage("Astral Spriggan ","Over","Quattro-0", attaque,7,6,8,doubleRotation);
-    ToupiePersonnage Master_Diablos = new ToupiePersonnage("Master Diabolos + + Diabolos GT Chip","","Generate(GT)",equilibre,8,7,8,doubleRotation);
-    ToupiePersonnage Nova_Neptune = new ToupiePersonnage("Nova Neptune","Vertical","Zephyr",equilibre,5,5,6,droite);
-    ToupiePersonnage Knight_Shield = new ToupiePersonnage("Knight Core + Shield Blade","4-80 Disc","Balan ",equilibre,6,6,6,droite);
 
 
-    ToupiePersonnage t = new ToupiePersonnage("null","null","null",null,0,0,0,null);
+
+    ToupiePersonnage t = new ToupiePersonnage(null,null,null,null,0,0,0,0,null,"null");
     ClasseToupie c;
     Rotation r;
     PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
-    @FXML
-    private Label lblBeyPoint;
+
+    EnergyLayer e;
+
 
 
     @Override
@@ -125,6 +120,42 @@ public class HelloController implements Initializable {
         disc.add(DiskHurricane);
         disc.add(Disk2A);
 
+        GTSystem gtLayerBushin = new GTSystem("Ashura","Ten","Bushin");
+        SparkingSystem spBraveValkyrie = new SparkingSystem("Brave","2A");
+
+        EnergyLayer LayerKerbeus = new EnergyLayer("Kerbeus", EnergyLayer.SystemeLayer.SINGLE,droite,2,6,5,33,"Energy_Layer/LayerKerbeus.png");
+        EnergyLayer LayerHellSalamander = new EnergyLayer("Hell Salamander", EnergyLayer.SystemeLayer.cho_z,gauche,4,4,6,62,"Energy_Layer/LayerHellSalamander.png");
+        EnergyLayer LayerDrainFafnir = new EnergyLayer("Drain Fafnir", EnergyLayer.SystemeLayer.GOD,gauche,3,4,8,37,"Energy_Layer/LayerDrainFafnir.png");
+        EnergyLayer LayerZAchilles = new EnergyLayer("Z Achilles", EnergyLayer.SystemeLayer.cho_z,droite,8,3,4,43,"Energy_Layer/LayerZAchilles.png");
+        EnergyLayer LayerBraveValkyrie= new EnergyLayer("Brave Valkyrie", EnergyLayer.SystemeLayer.SPARKING,droite,9,3,3,62,"Energy_Layer/EnergyLayer_BraveValkyrie.png", spBraveValkyrie);
+        EnergyLayer LayerAshuraBushinChip = new EnergyLayer("Ashura", EnergyLayer.SystemeLayer.GT,droite,1,2,1,2.9,"Energy_Layer/GatinkoChipAshura.png",gtLayerBushin);
+        EnergyLayer LayerAshuraBushinWeight = new EnergyLayer("Ten", EnergyLayer.SystemeLayer.GT,droite,0,1,1,4.6,"Energy_Layer/LayerWeightTen.png",gtLayerBushin);
+        EnergyLayer LayerAshuraBushinBase = new EnergyLayer("Bushin", EnergyLayer.SystemeLayer.GT,droite,1,3,1,7.3,"Energy_Layer/LayerBaseBushin.png",gtLayerBushin);
+        EnergyLayer LayerAshuraBushin = new EnergyLayer("Bushin Ashura", EnergyLayer.SystemeLayer.GT,droite,1,7,4,20.2,"",gtLayerBushin);
+
+        layer.add(LayerKerbeus);
+        layer.add(LayerHellSalamander);
+        layer.add(LayerDrainFafnir);
+        layer.add(LayerZAchilles);
+        layer.add(LayerBraveValkyrie);
+        layer.add(LayerAshuraBushinChip);
+        layer.add(LayerAshuraBushinWeight);
+        layer.add(LayerAshuraBushinBase);
+
+
+        ToupiePersonnage Kerbeus = new ToupiePersonnage(LayerKerbeus,DiskCentral,Defense, défense,300,2,8,5,droite,"");
+        ToupiePersonnage Bushin_Ashura = new ToupiePersonnage(LayerAshuraBushin,DiskHurricane,Keep, défense,345,3,8,4,droite,"");
+        //ToupiePersonnage Roar_Bahamut = new ToupiePersonnage("Roar Bahamut","Giga","Moment-10", défense,7,10,4,gauche);
+        ToupiePersonnage Brave_Valkyrie = new ToupiePersonnage(LayerBraveValkyrie,Disk2A,Evolution, attaque,350,9,3,2,droite,"");
+        ToupiePersonnage Hell_Salamander = new ToupiePersonnage(LayerHellSalamander,Disk12,Operate, endurance,330,4,5,6,gauche,"");
+        ToupiePersonnage Drain_Fafnir = new ToupiePersonnage(LayerDrainFafnir,Disk8,Nothing, endurance,335,2,3,9,gauche,"");
+        ToupiePersonnage Z_Achilles = new ToupiePersonnage(LayerZAchilles,Disk11,Xtend, attaque,340,7,4,4,droite,"");
+        //ToupiePersonnage Lucifer_The_End = new ToupiePersonnage("Lucifer The End","Kou","Drift", endurance,9,6,3,droite);
+        //ToupiePersonnage Astral_Spriggan = new ToupiePersonnage("Astral Spriggan ","Over","Quattro-0", attaque,7,6,8,doubleRotation);
+        //ToupiePersonnage Master_Diablos = new ToupiePersonnage("Master Diabolos +  Diabolos GT Chip","","Generate(GT)",equilibre,8,7,8,doubleRotation);
+        //ToupiePersonnage Nova_Neptune = new ToupiePersonnage("Nova Neptune","Vertical","Zephyr",equilibre,5,5,6,droite);
+        //ToupiePersonnage Flare_Dragon= new ToupiePersonnage("Flare Dragon","Around","Planet ",equilibre,4,3,3,droite);
+
 
 
 
@@ -138,6 +169,10 @@ public class HelloController implements Initializable {
 
 
     }
+
+
+
+
 
     @FXML
     public void btnToupieEndurance(MouseEvent mouseEvent) {
@@ -169,7 +204,7 @@ public class HelloController implements Initializable {
     @FXML
     public void btnToupieAttaque(MouseEvent mouseEvent) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle("Vous avez Choisi Endurance");
+        a.setTitle("Vous avez Choisi Attaque");
         a.setHeaderText("Le nom de votre toupie est : Brave Valkyrie Evolution 2A");
         a.setContentText("Les toupies de type attaques envoient des attaques très puissantes");
 
@@ -219,6 +254,8 @@ public class HelloController implements Initializable {
         changeZone("Environnement/fond-boutique_2.png",apBoutique);
         changeImageViewImg(imgCoffre,"Bouton_Spécial/toupie-invocation.png");
         changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
+        changeImageViewImg(imgLogo,"Logo/Logo_BeyPoint.png");
+        writeRapideInt(lblBeyPoint,t.getNombreBeyPoints());
 
 
     }
@@ -238,12 +275,14 @@ public class HelloController implements Initializable {
         visible(apInvocation);
         changeZone("Environnement/Fond-Invocation.png",apInvocation);
 
-        int chiffreAlea = (int) (Math.random()*2);
+        int chiffreAlea = (int) (Math.random()*3);
 
         if (1 == chiffreAlea){
             afficheForgeDisc();
-        }else {
+        }else if (2 == chiffreAlea){
             affichePerformanceTip();
+        }else {
+            afficheEnergyLayer();
         }
 
 
@@ -251,99 +290,41 @@ public class HelloController implements Initializable {
 
     public void afficheForgeDisc(){
         int nombreAleatoire = (int) (Math.random()*6);
-        if (disc.indexOf(new ForgeDisc("8")) == nombreAleatoire){
+        ForgeDisc selectedDisc = disc.get(nombreAleatoire);
+        changeImageViewImg(imgPieceToupie, selectedDisc.getUrlDisc());
+        writeRapideInt(lblStatAttaque, selectedDisc.getStatAttaqueDisc());
+        writeRapideInt(lblStatDefense, selectedDisc.getStatDefenseDisc());
+        writeRapideInt(lblStatEndurance, selectedDisc.getStatEnduranceDisc());
+        writeRapideInt(lblPoids, (int) selectedDisc.getPoidsDisc());
 
-            changeImageViewImg(imgPieceToupie,"Forge_Discs/Disk8.png");
-            writeRapideInt(lblStatAttaque, disc.get(0).getStatAttaqueDisc());
-            writeRapideInt(lblStatDefense, disc.get(0).getStatDefenseDisc());
-            writeRapideInt(lblStatEndurance, disc.get(0).getStatEnduranceDisc());
-            writeRapideInt(lblPoids, (int) disc.get(0).getPoidsDisc());
-        }
-        if (disc.indexOf(new ForgeDisc("11")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Forge_Discs/Disk11.png");
-            writeRapideInt(lblStatAttaque, disc.get(1).getStatAttaqueDisc());
-            writeRapideInt(lblStatDefense, disc.get(1).getStatDefenseDisc());
-            writeRapideInt(lblStatEndurance, disc.get(1).getStatEnduranceDisc());
-            writeRapideInt(lblPoids, (int) disc.get(1).getPoidsDisc());
-        }
-        if (disc.indexOf(new ForgeDisc("12")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Forge_Discs/Disk12.png");
-            writeRapideInt(lblStatAttaque, disc.get(2).getStatAttaqueDisc());
-            writeRapideInt(lblStatDefense, disc.get(2).getStatDefenseDisc());
-            writeRapideInt(lblStatEndurance, disc.get(2).getStatEnduranceDisc());
-            writeRapideInt(lblPoids, (int) disc.get(2).getPoidsDisc());
-        }
-        if (disc.indexOf(new ForgeDisc("Central")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Forge_Discs/DiskCentral.png");
-            writeRapideInt(lblStatAttaque, disc.get(3).getStatAttaqueDisc());
-            writeRapideInt(lblStatDefense, disc.get(3).getStatDefenseDisc());
-            writeRapideInt(lblStatEndurance, disc.get(3).getStatEnduranceDisc());
-            writeRapideInt(lblPoids, (int) disc.get(3).getPoidsDisc());
-        }
-        if (disc.indexOf(new ForgeDisc("Hurricane")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Forge_Discs/DiskHurricane.png");
-            writeRapideInt(lblStatAttaque, disc.get(4).getStatAttaqueDisc());
-            writeRapideInt(lblStatDefense, disc.get(4).getStatDefenseDisc());
-            writeRapideInt(lblStatEndurance, disc.get(4).getStatEnduranceDisc());
-            writeRapideInt(lblPoids, (int) disc.get(4).getPoidsDisc());
-        }
-        if (disc.indexOf(new ForgeDisc("2A")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Forge_Discs/ForgeDisc_2A.png");
-            writeRapideInt(lblStatAttaque, disc.get(5).getStatAttaqueDisc());
-            writeRapideInt(lblStatDefense, disc.get(5).getStatDefenseDisc());
-            writeRapideInt(lblStatEndurance, disc.get(5).getStatEnduranceDisc());
-            writeRapideInt(lblPoids, (int) disc.get(5).getPoidsDisc());
-        }
+
+
 
     }
 
     public void affichePerformanceTip(){
         int nombreAleatoire = (int) (Math.random()*6);
-        if (tip.indexOf(new PerformanceTip("Defense")) == nombreAleatoire){
+        PerformanceTip selectedTip = tip.get(nombreAleatoire);
+        changeImageViewImg(imgPieceToupie, selectedTip.getUrlTip());
+        writeRapideInt(lblStatAttaque, selectedTip.getStatAttaqueTip());
+        writeRapideInt(lblStatDefense, selectedTip.getStatDefenseTip());
+        writeRapideInt(lblStatEndurance, selectedTip.getStatEnduranceTip());
+        writeRapideInt(lblPoids, (int) selectedTip.getPoidsTip());
 
-            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverDefense.png");
-            writeRapideInt(lblStatAttaque, tip.get(0).getStatAttaqueTip());
-            writeRapideInt(lblStatDefense, tip.get(0).getStatDefenseTip());
-            writeRapideInt(lblStatEndurance, tip.get(0).getStatEnduranceTip());
-            writeRapideInt(lblPoids, (int) tip.get(0).getPoidsTip());
-        }
-        if (tip.indexOf(new PerformanceTip("Keep")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverKeep.png");
-            writeRapideInt(lblStatAttaque, tip.get(1).getStatAttaqueTip());
-            writeRapideInt(lblStatDefense, tip.get(1).getStatDefenseTip());
-            writeRapideInt(lblStatEndurance, tip.get(1).getStatEnduranceTip());
-            writeRapideInt(lblPoids, (int) tip.get(1).getPoidsTip());
-        }
-        if (tip.indexOf(new PerformanceTip("Nothing")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverXtend.png");
-            writeRapideInt(lblStatAttaque, tip.get(2).getStatAttaqueTip());
-            writeRapideInt(lblStatDefense, tip.get(2).getStatDefenseTip());
-            writeRapideInt(lblStatEndurance, tip.get(2).getStatEnduranceTip());
-            writeRapideInt(lblPoids, (int) tip.get(2).getPoidsTip());
-        }
-        if (tip.indexOf(new PerformanceTip("Xtend")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Performance_Tip/DriverNothing.png");
-            writeRapideInt(lblStatAttaque, tip.get(3).getStatAttaqueTip());
-            writeRapideInt(lblStatDefense, tip.get(3).getStatDefenseTip());
-            writeRapideInt(lblStatEndurance, tip.get(3).getStatEnduranceTip());
-            writeRapideInt(lblPoids, (int) tip.get(3).getPoidsTip());
-        }
-        if (tip.indexOf(new PerformanceTip("Operate")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Performance_Tip/Operate_tip.png");
-            writeRapideInt(lblStatAttaque, tip.get(4).getStatAttaqueTip());
-            writeRapideInt(lblStatDefense, tip.get(4).getStatDefenseTip());
-            writeRapideInt(lblStatEndurance, tip.get(4).getStatEnduranceTip());
-            writeRapideInt(lblPoids, (int) tip.get(4).getPoidsTip());
-        }
-        if (tip.indexOf(new PerformanceTip("Evolution")) == nombreAleatoire){
-            changeImageViewImg(imgPieceToupie,"Performance_Tip/PerformanceTip_Evolution.png");
-            writeRapideInt(lblStatAttaque, tip.get(5).getStatAttaqueTip());
-            writeRapideInt(lblStatDefense, tip.get(5).getStatDefenseTip());
-            writeRapideInt(lblStatEndurance, tip.get(5).getStatEnduranceTip());
-            writeRapideInt(lblPoids, (int) tip.get(5).getPoidsTip());
-        }
 
     }
+    public void afficheEnergyLayer(){
+        int nombreAleatoire = (int) (Math.random()*8);
+        EnergyLayer selectedTip = layer.get(nombreAleatoire);
+        changeImageViewImg(imgPieceToupie, selectedTip.getUrlLayer());
+        writeRapideInt(lblStatAttaque, selectedTip.getStatAttaqueLayer());
+        writeRapideInt(lblStatDefense, selectedTip.getStatDefenseLayer());
+        writeRapideInt(lblStatEndurance, selectedTip.getStatEnduranceLayer());
+        writeRapideInt(lblPoids, (int) selectedTip.getPoidsLayer());
+
+
+    }
+
 
     public void clearAll(){
         invisible(apBoutique);

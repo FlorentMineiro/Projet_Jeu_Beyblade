@@ -3,10 +3,12 @@ package com.example.projet_toupie;
 import java.util.ArrayList;
 
 public class ToupiePersonnage {
-    private String energyLayer;
-    private String forgeDiscs;
-    private String performanceTip;
+    private EnergyLayer energyLayer;
+    private ForgeDisc forgeDiscs;
+    private PerformanceTip performanceTip;
     private ClasseToupie classeToupie;
+    private int vieMax;
+    private int vieActuelle;
     private int attaque;
     private int defense;
     private int endurance;
@@ -15,33 +17,51 @@ public class ToupiePersonnage {
     private int nombreBeyPoints;
     private int esquive;
     private Rotation rotation;
-    private ArrayList<String> listToupie;
+    private String urlToupie;
 
-    public ToupiePersonnage(String energyLayer, String forgeDiscs, String performanceTip,ClasseToupie classeToupie, int endurance, int defense, int attaque , Rotation rotation) {
+    public ToupiePersonnage(EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance, Rotation rotation,String urlToupie) {
         this.energyLayer = energyLayer;
         this.forgeDiscs = forgeDiscs;
         this.performanceTip = performanceTip;
         this.classeToupie = classeToupie;
-
-        this.endurance = endurance;
-        this.defense = defense;
+        this.vieMax = vieMax;
         this.attaque = attaque;
+        this.defense = defense;
+        this.endurance = endurance;
+        this.coupCritique = coupCritique;
+        this.esquive = esquive;
         this.nombreBeyPoints = 1000;
-        this.listToupie = new ArrayList<>();
         this.rotation = rotation;
-
-
+        this.urlToupie = urlToupie;
     }
 
-    public String getEnergyLayer() {
+    public int getVieMax() {
+
+
+        return vieMax;
+    }
+
+    public int getVieActuelle() {
+        return vieActuelle;
+    }
+
+    public Rotation getRotation() {
+        return rotation;
+    }
+
+    public String getUrlToupie() {
+        return urlToupie;
+    }
+
+    public EnergyLayer getEnergyLayer() {
         return energyLayer;
     }
 
-    public String getForgeDiscs() {
+    public ForgeDisc getForgeDiscs() {
         return forgeDiscs;
     }
 
-    public String getPerformanceTip() {
+    public PerformanceTip getPerformanceTip() {
         return performanceTip;
     }
 
@@ -74,11 +94,9 @@ public class ToupiePersonnage {
         return esquive;
     }
 
-    public ArrayList<String> getListToupie() {
-        return listToupie;
+    public void setNombreBeyPoints(int nombreBeyPoints) {
+        this.nombreBeyPoints = nombreBeyPoints;
     }
-
-
 
     public int alea(){
         return (int) (Math.random() * 101);
