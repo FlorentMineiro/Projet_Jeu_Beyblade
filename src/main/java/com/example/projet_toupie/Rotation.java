@@ -1,41 +1,18 @@
 package com.example.projet_toupie;
 
 public class Rotation {
-    private boolean droite;
-    private boolean gauche;
-    private boolean doubleRotation;
+    private String typeRotation;
     private int statAttaque_v2;
     private int statDefense_v2;
     private int statEsquive_v2;
 
-    public Rotation(boolean droite, boolean gauche, boolean doubleRotation) {
-        this.droite = droite;
-        this.gauche = gauche;
-        this.doubleRotation = doubleRotation;
+
+    public Rotation(String typeRotation) {
+        this.typeRotation = typeRotation;
     }
 
-    public boolean isDroite() {
-        return droite;
-    }
-
-    public void setDroite(boolean droite) {
-        this.droite = droite;
-    }
-
-    public boolean isGauche() {
-        return gauche;
-    }
-
-    public void setGauche(boolean gauche) {
-        this.gauche = gauche;
-    }
-
-    public boolean isDoubleRotation() {
-        return doubleRotation;
-    }
-
-    public void setDoubleRotation(boolean doubleRotation) {
-        this.doubleRotation = doubleRotation;
+    public String getTypeRotation() {
+        return typeRotation;
     }
 
     public int getStatAttaque_v2() {

@@ -54,28 +54,52 @@ public class HelloController implements Initializable {
     private ArrayList<PerformanceTip> tip = new ArrayList<>();
     private ArrayList<ForgeDisc> disc = new ArrayList<>();
     private ArrayList<EnergyLayer> layer = new ArrayList<>();
+    private ArrayList<ToupiePersonnage> listToupie = new ArrayList<>();
     @FXML
     private ImageView imgPieceToupie;
     @FXML
     private Label lblBeyPoint;
     @FXML
     private ImageView imgLogo;
+    @FXML
+    private ImageView imgToupiePerso;
+    @FXML
+    private Label lblNomToupie;
+    @FXML
+    private AnchorPane apFichePerso;
+    @FXML
+    private Label lblRotationToupie;
+    @FXML
+    private Label lblVieMaxToupie;
+    @FXML
+    private Label lblEnduranceToupie;
+    @FXML
+    private Label lblAttaqueToupie;
+    @FXML
+    private Label lblDefenseToupie;
+    @FXML
+    private Label lblTypeToupie;
+
+    int choixToupie = 0;
+    /*ToupiePersonnage Drain_Fafnir;
+    ToupiePersonnage Brave_Valkyrie;
+    ToupiePersonnage Kerbeus;*/
 
 
 
-    ClasseToupie attaque = new ClasseToupie(true,false,false);
-    ClasseToupie défense = new ClasseToupie(false,true,false);
-    ClasseToupie endurance = new ClasseToupie(false,false,true);
-    ClasseToupie equilibre = new ClasseToupie(false,false,false);
+    ClasseToupie attaque = new ClasseToupie("Attaque");
+    ClasseToupie défense = new ClasseToupie("Défense");
+    ClasseToupie endurance = new ClasseToupie("Endurance");
+    ClasseToupie equilibre = new ClasseToupie("Equilibre");
 
-    Rotation droite = new Rotation(true,false,false);
-    Rotation gauche = new Rotation(false,true,false);
-    Rotation doubleRotation = new Rotation(false,false,true);
-
-
+    Rotation droite = new Rotation("droite");
+    Rotation gauche = new Rotation("gauche");
+    Rotation doubleRotation = new Rotation("double-rotation");
 
 
-    ToupiePersonnage t = new ToupiePersonnage(null,null,null,null,0,0,0,0,null,"null");
+
+
+    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,null,"null");
     ClasseToupie c;
     Rotation r;
     PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
@@ -90,6 +114,7 @@ public class HelloController implements Initializable {
         invisible(apMenuPrincipal);
         invisible(apBoutique);
         invisible(apInvocation);
+        invisible(apFichePerso);
 
         PerformanceTip Defense = new PerformanceTip("Defense",3,9,6,15,"Performance_Tip/DriverDefense.png");
 
@@ -143,13 +168,13 @@ public class HelloController implements Initializable {
         layer.add(LayerAshuraBushinBase);
 
 
-        ToupiePersonnage Kerbeus = new ToupiePersonnage(LayerKerbeus,DiskCentral,Defense, défense,300,2,8,5,droite,"");
-        ToupiePersonnage Bushin_Ashura = new ToupiePersonnage(LayerAshuraBushin,DiskHurricane,Keep, défense,345,3,8,4,droite,"");
+        ToupiePersonnage Kerbeus = new ToupiePersonnage("Kerbeus Central Defense",LayerKerbeus,DiskCentral,Defense, défense,300,2,8,5,droite,"");
+        ToupiePersonnage Bushin_Ashura = new ToupiePersonnage("Bushin Ashura Hurricane Keep",LayerAshuraBushin,DiskHurricane,Keep, défense,345,3,8,4,droite,"");
         //ToupiePersonnage Roar_Bahamut = new ToupiePersonnage("Roar Bahamut","Giga","Moment-10", défense,7,10,4,gauche);
-        ToupiePersonnage Brave_Valkyrie = new ToupiePersonnage(LayerBraveValkyrie,Disk2A,Evolution, attaque,350,9,3,2,droite,"");
-        ToupiePersonnage Hell_Salamander = new ToupiePersonnage(LayerHellSalamander,Disk12,Operate, endurance,330,4,5,6,gauche,"");
-        ToupiePersonnage Drain_Fafnir = new ToupiePersonnage(LayerDrainFafnir,Disk8,Nothing, endurance,335,2,3,9,gauche,"");
-        ToupiePersonnage Z_Achilles = new ToupiePersonnage(LayerZAchilles,Disk11,Xtend, attaque,340,7,4,4,droite,"");
+         ToupiePersonnage Brave_Valkyrie = new ToupiePersonnage("Brave Valkyrie Evolution 2A ",LayerBraveValkyrie,Disk2A,Evolution, attaque,350,9,3,2,droite,"");
+        ToupiePersonnage Hell_Salamander = new ToupiePersonnage("HellSalamander 12 Operate  ",LayerHellSalamander,Disk12,Operate, endurance,330,4,5,6,gauche,"");
+         ToupiePersonnage Drain_Fafnir = new ToupiePersonnage("Drain Fafnir 8 Nothing ",LayerDrainFafnir,Disk8,Nothing, endurance,335,2,3,9,gauche,"");
+        ToupiePersonnage Z_Achilles = new ToupiePersonnage("Z Achilles 11 Xtend  ",LayerZAchilles,Disk11,Xtend, attaque,340,7,4,4,droite,"");
         //ToupiePersonnage Lucifer_The_End = new ToupiePersonnage("Lucifer The End","Kou","Drift", endurance,9,6,3,droite);
         //ToupiePersonnage Astral_Spriggan = new ToupiePersonnage("Astral Spriggan ","Over","Quattro-0", attaque,7,6,8,doubleRotation);
         //ToupiePersonnage Master_Diablos = new ToupiePersonnage("Master Diabolos +  Diabolos GT Chip","","Generate(GT)",equilibre,8,7,8,doubleRotation);
@@ -157,6 +182,18 @@ public class HelloController implements Initializable {
         //ToupiePersonnage Flare_Dragon= new ToupiePersonnage("Flare Dragon","Around","Planet ",equilibre,4,3,3,droite);
 
 
+
+        listToupie.add(Kerbeus);
+        listToupie.add(Bushin_Ashura);
+        listToupie.add(Brave_Valkyrie);
+        listToupie.add(Hell_Salamander);
+        listToupie.add(Drain_Fafnir);
+        listToupie.add(Z_Achilles);
+
+
+        System.out.println("Indice de Kerbeus "+listToupie.indexOf(Kerbeus));
+        System.out.println("Indice de Brave Valkyrie   "+listToupie.indexOf(Brave_Valkyrie));
+        System.out.println("Indice de Drain Fafnir   "+listToupie.indexOf(Drain_Fafnir));
 
 
 
@@ -186,6 +223,8 @@ public class HelloController implements Initializable {
         visible(apMenuPrincipal);
         changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
 
+        choixToupie = 1;
+
 
     }
 
@@ -199,6 +238,8 @@ public class HelloController implements Initializable {
         clearAll();
         visible(apMenuPrincipal);
         changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
+
+        choixToupie = 2;
     }
 
     @FXML
@@ -213,6 +254,7 @@ public class HelloController implements Initializable {
 
         visible(apMenuPrincipal);
         changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
+        choixToupie = 3;
 
     }
 
@@ -262,6 +304,48 @@ public class HelloController implements Initializable {
 
     @FXML
     public void btnFichePerso(MouseEvent event) {
+        clearAll();
+        if (choixToupie == 1){
+            writeRapideString(lblNomToupie, listToupie.get(4).getNomToupie());
+            changeImageViewImg(imgToupiePerso,"Toupie/fafnir_gpt.png");
+            visible(apFichePerso);
+            changeZone("Toupie/fafnir_gpt.png",apFichePerso);
+            writeRapideInt(lblAttaqueToupie, listToupie.get(4).getAttaqueToupie());
+            writeRapideInt(lblDefenseToupie, listToupie.get(4).getDefenseToupie());
+            writeRapideInt(lblEnduranceToupie, listToupie.get(4).getEnduranceToupie());
+            writeRapideInt(lblVieMaxToupie, listToupie.get(4).getVieMaxToupie());
+            writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(4).getRotation().getTypeRotation()));
+            writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(4).getClasseToupie().getTypeToupie()));
+
+
+        }
+        if (choixToupie == 2){
+
+            changeImageViewImg(imgToupiePerso,"Toupie/kerbeus_gpt.png");
+            visible(apFichePerso);
+            changeZone("Toupie/kerbeus_gpt.png",apFichePerso);
+            writeRapideString(lblNomToupie, listToupie.get(0).getNomToupie());
+            writeRapideInt(lblAttaqueToupie, listToupie.get(0).getAttaqueToupie());
+            writeRapideInt(lblDefenseToupie, listToupie.get(0).getDefenseToupie());
+            writeRapideInt(lblEnduranceToupie, listToupie.get(0).getEnduranceToupie());
+            writeRapideInt(lblVieMaxToupie, listToupie.get(0).getVieMaxToupie());
+            writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(0).getRotation().getTypeRotation()));
+            writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(0).getClasseToupie().getTypeToupie()));
+
+        }
+        if (choixToupie == 3){
+            changeImageViewImg(imgToupiePerso,"Toupie/valkyrie_gpt.png");
+            visible(apFichePerso);
+            changeZone("Toupie/valkyrie_gpt.png",apFichePerso);
+            writeRapideString(lblNomToupie, listToupie.get(2).getNomToupie());
+            writeRapideInt(lblAttaqueToupie, listToupie.get(2).getAttaqueToupie());
+            writeRapideInt(lblDefenseToupie, listToupie.get(2).getDefenseToupie());
+            writeRapideInt(lblEnduranceToupie, listToupie.get(2).getEnduranceToupie());
+            writeRapideInt(lblVieMaxToupie, listToupie.get(2).getVieMaxToupie());
+            writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(2).getRotation().getTypeRotation()));
+            writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(2).getClasseToupie().getTypeToupie()));
+
+        }
     }
 
     @FXML
@@ -331,6 +415,7 @@ public class HelloController implements Initializable {
         invisible(apMenuPrincipal);
         invisible(apCommencement);
         invisible(apInvocation);
+        invisible(apFichePerso);
     }
 
 
@@ -356,5 +441,14 @@ public class HelloController implements Initializable {
     {
         lblTexte.setText(Integer.toString(intTexte));
         return;
+    }
+    public void writeRapideString(Label lblTexte, String stringTexte)
+    {
+        lblTexte.setText(stringTexte);
+        return;
+    }
+
+    @FXML
+    public void btnDetailToupie(MouseEvent event) {
     }
 }

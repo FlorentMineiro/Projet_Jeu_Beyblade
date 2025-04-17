@@ -3,6 +3,7 @@ package com.example.projet_toupie;
 import java.util.ArrayList;
 
 public class ToupiePersonnage {
+    private String nomToupie;
     private EnergyLayer energyLayer;
     private ForgeDisc forgeDiscs;
     private PerformanceTip performanceTip;
@@ -19,8 +20,10 @@ public class ToupiePersonnage {
     private Rotation rotation;
     private String urlToupie;
 
-    public ToupiePersonnage(EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance, Rotation rotation,String urlToupie) {
+    public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance, Rotation rotation,String urlToupie) {
+        this.nomToupie = nomToupie;
         this.energyLayer = energyLayer;
+
         this.forgeDiscs = forgeDiscs;
         this.performanceTip = performanceTip;
         this.classeToupie = classeToupie;
@@ -35,7 +38,11 @@ public class ToupiePersonnage {
         this.urlToupie = urlToupie;
     }
 
-    public int getVieMax() {
+    public String getNomToupie() {
+        return nomToupie;
+    }
+
+    public int getVieMaxToupie() {
 
 
         return vieMax;
@@ -69,16 +76,16 @@ public class ToupiePersonnage {
         return classeToupie;
     }
 
-    public int getAttaque() {
+    public int getAttaqueToupie() {
 
         return attaque;
     }
 
-    public int getDefense() {
+    public int getDefenseToupie() {
         return defense;
     }
 
-    public int getEndurance() {
+    public int getEnduranceToupie() {
         return endurance;
     }
 
