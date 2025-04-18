@@ -38,6 +38,11 @@
             <Label layoutX="358.0" layoutY="285.0" prefHeight="17.0" prefWidth="55.0" style="-fx-background-color: white;" text="Rotation : " />
             <Label fx:id="lblTypeToupie" layoutX="430.0" layoutY="321.0" prefHeight="17.0" prefWidth="63.0" text="..." textFill="WHITE" />
             <Label layoutX="358.0" layoutY="321.0" prefHeight="17.0" prefWidth="43.0" style="-fx-background-color: white;" text="Type : " />
+            <ImageView fx:id="imgRetour2" fitHeight="55.0" fitWidth="82.0" layoutX="10.0" layoutY="340.0" onMouseClicked="#btnRetour2">
+               <image>
+                  <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="apInvocation" prefHeight="200.0" prefWidth="200.0" visible="false">

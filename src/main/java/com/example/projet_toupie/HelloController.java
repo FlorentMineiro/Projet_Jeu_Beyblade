@@ -55,6 +55,10 @@ public class HelloController implements Initializable {
     private ArrayList<ForgeDisc> disc = new ArrayList<>();
     private ArrayList<EnergyLayer> layer = new ArrayList<>();
     private ArrayList<ToupiePersonnage> listToupie = new ArrayList<>();
+    private ArrayList<ToupieEnnemie> listToupieEnnemie = new ArrayList<>();
+
+
+
     @FXML
     private ImageView imgPieceToupie;
     @FXML
@@ -79,6 +83,9 @@ public class HelloController implements Initializable {
     private Label lblDefenseToupie;
     @FXML
     private Label lblTypeToupie;
+    @FXML
+    private ImageView imgRetour2;
+
 
     int choixToupie = 0;
     /*ToupiePersonnage Drain_Fafnir;
@@ -96,16 +103,23 @@ public class HelloController implements Initializable {
     Rotation gauche = new Rotation("gauche");
     Rotation doubleRotation = new Rotation("double-rotation");
 
+    ToupieEnnemie KerbeusE;
+    ToupieEnnemie BraveValkyrieE;
+    ToupieEnnemie HellSalamanderE;
+    ToupieEnnemie DrainFafnirE;
+    ToupieEnnemie ZAchillesE;
+    ToupieEnnemie BushinAshuraE;
+
 
 
 
     ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,null,"null");
+    ToupieEnnemie te = new ToupieEnnemie("null",null,null,null,null,0,0,0,0,null,"null");
     ClasseToupie c;
     Rotation r;
     PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
 
     EnergyLayer e;
-
 
 
     @Override
@@ -123,6 +137,9 @@ public class HelloController implements Initializable {
         PerformanceTip Xtend = new PerformanceTip("Xtend",1,6,10,13,"Performance_Tip/DriverXtend.png");
         PerformanceTip Operate = new PerformanceTip("Operate",8,3,4,10,"Performance_Tip/Operate_tip.png");
         PerformanceTip Evolution = new PerformanceTip("Evolution",7,4,7,12,"Performance_Tip/PerformanceTip_Evolution.png");
+        PerformanceTip Drift = new PerformanceTip("Drift",8,3,4,10,"Performance_Tip/DriverDrift.png");
+        PerformanceTip Moment = new PerformanceTip("Moment",7,4,7,12,"Performance_Tip/DriverMoment.png");
+
 
         tip.add(Defense);
         tip.add(Keep);
@@ -146,7 +163,7 @@ public class HelloController implements Initializable {
         disc.add(Disk2A);
 
         GTSystem gtLayerBushin = new GTSystem("Ashura","Ten","Bushin");
-        SparkingSystem spBraveValkyrie = new SparkingSystem("Brave","2A");
+        SparkingSystem spBraveValkyrie = new SparkingSystem("Brave","2A","Valkyrie");
 
         EnergyLayer LayerKerbeus = new EnergyLayer("Kerbeus", EnergyLayer.SystemeLayer.SINGLE,droite,2,6,5,33,"Energy_Layer/LayerKerbeus.png");
         EnergyLayer LayerHellSalamander = new EnergyLayer("Hell Salamander", EnergyLayer.SystemeLayer.cho_z,gauche,4,4,6,62,"Energy_Layer/LayerHellSalamander.png");
@@ -168,13 +185,13 @@ public class HelloController implements Initializable {
         layer.add(LayerAshuraBushinBase);
 
 
-        ToupiePersonnage Kerbeus = new ToupiePersonnage("Kerbeus Central Defense",LayerKerbeus,DiskCentral,Defense, défense,300,2,8,5,droite,"");
-        ToupiePersonnage Bushin_Ashura = new ToupiePersonnage("Bushin Ashura Hurricane Keep",LayerAshuraBushin,DiskHurricane,Keep, défense,345,3,8,4,droite,"");
+        ToupiePersonnage Kerbeus = new ToupiePersonnage("Kerbeus Central Defense",LayerKerbeus,DiskCentral,Defense, défense,300,2,8,5,droite,"Toupie/kerbeus_gpt.png");
+        ToupiePersonnage Bushin_Ashura = new ToupiePersonnage("Bushin Ashura Hurricane Keep",LayerAshuraBushin,DiskHurricane,Keep, défense,345,3,8,4,droite,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
         //ToupiePersonnage Roar_Bahamut = new ToupiePersonnage("Roar Bahamut","Giga","Moment-10", défense,7,10,4,gauche);
-         ToupiePersonnage Brave_Valkyrie = new ToupiePersonnage("Brave Valkyrie Evolution 2A ",LayerBraveValkyrie,Disk2A,Evolution, attaque,350,9,3,2,droite,"");
-        ToupiePersonnage Hell_Salamander = new ToupiePersonnage("HellSalamander 12 Operate  ",LayerHellSalamander,Disk12,Operate, endurance,330,4,5,6,gauche,"");
-         ToupiePersonnage Drain_Fafnir = new ToupiePersonnage("Drain Fafnir 8 Nothing ",LayerDrainFafnir,Disk8,Nothing, endurance,335,2,3,9,gauche,"");
-        ToupiePersonnage Z_Achilles = new ToupiePersonnage("Z Achilles 11 Xtend  ",LayerZAchilles,Disk11,Xtend, attaque,340,7,4,4,droite,"");
+         ToupiePersonnage Brave_Valkyrie = new ToupiePersonnage("Brave Valkyrie Evolution 2A ",LayerBraveValkyrie,Disk2A,Evolution, attaque,350,9,3,2,droite,"Toupie/valkyrie_gpt.png");
+        ToupiePersonnage Hell_Salamander = new ToupiePersonnage("HellSalamander 12 Operate  ",LayerHellSalamander,Disk12,Operate, endurance,330,4,5,6,gauche,"Toupie/Beyblade_Salamander.png");
+         ToupiePersonnage Drain_Fafnir = new ToupiePersonnage("Drain Fafnir 8 Nothing ",LayerDrainFafnir,Disk8,Nothing, endurance,335,2,3,9,gauche,"Toupie/fafnir_gpt.png");
+        ToupiePersonnage Z_Achilles = new ToupiePersonnage("Z Achilles 11 Xtend  ",LayerZAchilles,Disk11,Xtend, attaque,340,7,4,4,droite,"Toupie/ZA_.11.Xt_2.png");
         //ToupiePersonnage Lucifer_The_End = new ToupiePersonnage("Lucifer The End","Kou","Drift", endurance,9,6,3,droite);
         //ToupiePersonnage Astral_Spriggan = new ToupiePersonnage("Astral Spriggan ","Over","Quattro-0", attaque,7,6,8,doubleRotation);
         //ToupiePersonnage Master_Diablos = new ToupiePersonnage("Master Diabolos +  Diabolos GT Chip","","Generate(GT)",equilibre,8,7,8,doubleRotation);
@@ -191,9 +208,25 @@ public class HelloController implements Initializable {
         listToupie.add(Z_Achilles);
 
 
-        System.out.println("Indice de Kerbeus "+listToupie.indexOf(Kerbeus));
+        /*System.out.println("Indice de Kerbeus "+listToupie.indexOf(Kerbeus));
         System.out.println("Indice de Brave Valkyrie   "+listToupie.indexOf(Brave_Valkyrie));
-        System.out.println("Indice de Drain Fafnir   "+listToupie.indexOf(Drain_Fafnir));
+        System.out.println("Indice de Drain Fafnir   "+listToupie.indexOf(Drain_Fafnir));*/
+
+        KerbeusE = new ToupieEnnemie("Kerbeus Central Defense",LayerKerbeus,DiskCentral,Defense, défense,300,2,8,5,droite,"Toupie/kerbeus_gpt.png");
+        BraveValkyrieE =new ToupieEnnemie("Brave Valkyrie Evolution 2A ",LayerBraveValkyrie,Disk2A,Evolution, attaque,350,9,3,2,droite,"Toupie/valkyrie_gpt.png");
+        HellSalamanderE = new ToupieEnnemie("HellSalamander 12 Operate  ",LayerHellSalamander,Disk12,Operate, endurance,330,4,5,6,gauche,"Toupie/Beyblade_Salamander.png");
+        DrainFafnirE =new ToupieEnnemie("Drain Fafnir 8 Nothing ",LayerDrainFafnir,Disk8,Nothing, endurance,335,2,3,9,gauche,"Toupie/fafnir_gpt.png");
+        BushinAshuraE = new ToupieEnnemie("Bushin Ashura Hurricane Keep",LayerAshuraBushin,DiskHurricane,Keep, défense,345,3,8,4,droite,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
+        ZAchillesE =new ToupieEnnemie("Z Achilles 11 Xtend  ",LayerZAchilles,Disk11,Xtend, attaque,340,7,4,4,droite,"Toupie/ZA_.11.Xt_2.png");
+
+        listToupieEnnemie.add(KerbeusE);
+        listToupieEnnemie.add(BraveValkyrieE);
+        listToupieEnnemie.add(HellSalamanderE);
+        listToupieEnnemie.add(DrainFafnirE);
+        listToupieEnnemie.add(BushinAshuraE);
+        listToupieEnnemie.add(ZAchillesE);
+
+        //System.out.println(listToupieEnnemie.indexOf(HellSalamanderE));
 
 
 
@@ -316,6 +349,7 @@ public class HelloController implements Initializable {
             writeRapideInt(lblVieMaxToupie, listToupie.get(4).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(4).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(4).getClasseToupie().getTypeToupie()));
+            changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
 
 
         }
@@ -331,6 +365,7 @@ public class HelloController implements Initializable {
             writeRapideInt(lblVieMaxToupie, listToupie.get(0).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(0).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(0).getClasseToupie().getTypeToupie()));
+            changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
 
         }
         if (choixToupie == 3){
@@ -344,8 +379,10 @@ public class HelloController implements Initializable {
             writeRapideInt(lblVieMaxToupie, listToupie.get(2).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(2).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(2).getClasseToupie().getTypeToupie()));
+            changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
 
         }
+
     }
 
     @FXML
@@ -450,5 +487,10 @@ public class HelloController implements Initializable {
 
     @FXML
     public void btnDetailToupie(MouseEvent event) {
+    }
+
+    @FXML
+    public void btnRetour2(MouseEvent event) {
+        btnRetour(null);
     }
 }
