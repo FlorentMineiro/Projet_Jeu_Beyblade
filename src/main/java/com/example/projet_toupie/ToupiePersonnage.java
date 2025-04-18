@@ -1,7 +1,5 @@
 package com.example.projet_toupie;
 
-import java.util.ArrayList;
-
 public class ToupiePersonnage {
     private String nomToupie;
     private EnergyLayer energyLayer;
@@ -10,7 +8,7 @@ public class ToupiePersonnage {
     private ClasseToupie classeToupie;
     private int vieMax;
     private int vieActuelle;
-    private int attaque;
+    private float attaque;
     private int defense;
     private int endurance;
 
@@ -19,6 +17,8 @@ public class ToupiePersonnage {
     private int esquive;
     private Rotation rotation;
     private String urlToupie;
+
+    ToupieEnnemie toupieEnnemie;
 
     public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance, Rotation rotation,String urlToupie) {
         this.nomToupie = nomToupie;
@@ -76,7 +76,7 @@ public class ToupiePersonnage {
         return classeToupie;
     }
 
-    public int getAttaqueToupie() {
+    public float getAttaqueToupie() {
 
         return attaque;
     }
@@ -100,9 +100,55 @@ public class ToupiePersonnage {
     public int getEsquive() {
         return esquive;
     }
+    public float attaqueGlobale(ToupieEnnemie toupieEnnemie) {
+        // Dégâts de base avec ton multiplicateur standard
+        float degat = (float) (1.5 * this.attaque);
+
+        // On récupère les types des deux toupies
+        String typePerso = this.classeToupie.getTypeToupie(); // ex: "Attaque"
+        String typeEnnemi = toupieEnnemie.getClasseToupieEnnemie().getTypeToupie(); // ex: "Endurance"
+
+        // Bonus/malus en fonction du type
+        if ("Attaque".equalsIgnoreCase(typePerso)) {
+            if ("Endurance".equalsIgnoreCase(typeEnnemi)) {
+                degat *= (float)1.2; // Bonus contre Endurance
+            } else if ("Défense".equalsIgnoreCase(typeEnnemi)) {
+                degat *= (float)0.8; // Malus contre Défense
+            }
+        }
+
+        return degat;
+    }
+
+
+
 
     public void setNombreBeyPoints(int nombreBeyPoints) {
         this.nombreBeyPoints = nombreBeyPoints;
+    }
+
+    public void setVieActuelle(int vieActuelle) {
+        this.vieActuelle = vieActuelle;
+    }
+
+    public void setAttaque(float attaque) {
+        this.attaque = attaque;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public void setEndurance(int endurance) {
+        this.endurance = endurance;
+    }
+
+    public void setCoupCritique(int coupCritique) {
+        this.coupCritique = coupCritique;
+    }
+
+    public void setEsquive(int esquive) {
+        this.esquive = esquive;
     }
 
     public int alea(){

@@ -11,7 +11,7 @@
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
    <children>
       <ImageView fx:id="imgFond" fitHeight="399.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="apFichePerso" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="apFichePerso" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="601.0">
                <image>
@@ -167,6 +167,94 @@
             <Label layoutX="468.0" layoutY="260.0" text="Attaque" />
             <Label layoutX="262.0" layoutY="260.0" text="Défense" />
             <Label layoutX="58.0" layoutY="260.0" text="Endurance" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="apSelectionAdversaire" prefHeight="462.0" prefWidth="600.0" visible="false">
+         <children>
+            <ImageView fx:id="imgMenuCombat" fitHeight="503.0" fitWidth="600.0" layoutY="-103.0">
+               <image>
+                  <Image url="@../../../Environnement/Fond-SelectionToupie2.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="164.0" layoutY="14.0" text="Choisissez votre adversaire" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="14.0" layoutY="56.0" onMouseClicked="#btnAdvValkyrie">
+               <image>
+                  <Image url="@../../../Toupie/valkyrie_gpt.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="69.0" fitWidth="72.0" layoutX="128.0" layoutY="62.0" onMouseClicked="#btnAdvFafnir">
+               <image>
+                  <Image url="@../../../Toupie/fafnir_gpt.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="69.0" fitWidth="72.0" layoutX="243.0" layoutY="55.0" onMouseClicked="#btnAdvKerbeus">
+               <image>
+                  <Image url="@../../../Toupie/kerbeus_gpt.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="362.0" layoutY="49.0" onMouseClicked="#btnAdvSalamander">
+               <image>
+                  <Image url="@../../../Toupie/Beyblade_Salamander.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="91.0" fitWidth="89.0" layoutX="473.0" layoutY="44.0" onMouseClicked="#btnAdvZachilles">
+               <image>
+                  <Image url="@../../../Toupie/ZA_.11.Xt_2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="82.0" fitWidth="89.0" layoutX="24.0" layoutY="210.0" onMouseClicked="#btnAdvAshura">
+               <image>
+                  <Image url="@../../../Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblAdversaireZachilles" layoutX="486.0" layoutY="129.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAdversaireSalamander" layoutX="371.0" layoutY="128.0" prefHeight="42.0" prefWidth="82.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAdversaireKerbeus" layoutX="251.0" layoutY="137.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAdversaireFafnir" layoutX="136.0" layoutY="142.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAdversaireValkyrie" layoutX="14.0" layoutY="142.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAdversaireAshura" layoutX="37.0" layoutY="298.0" prefHeight="42.0" prefWidth="99.0" text="..." textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="apLancerToupie" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="imgStadium" fitHeight="402.0" fitWidth="605.0">
+               <image>
+                  <Image url="@../../../Environnement/Stadium_Beyblade.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblLancer" alignment="CENTER" layoutX="15.0" layoutY="115.0" prefHeight="70.0" prefWidth="581.0" text="..." textAlignment="CENTER" textFill="GOLD">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
