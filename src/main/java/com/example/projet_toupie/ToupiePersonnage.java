@@ -6,8 +6,8 @@ public class ToupiePersonnage {
     private ForgeDisc forgeDiscs;
     private PerformanceTip performanceTip;
     private ClasseToupie classeToupie;
-    private int vieMax;
-    private int vieActuelle;
+    private float vieMax;
+    private float vieActuelle;
     private float attaque;
     private int defense;
     private int endurance;
@@ -19,6 +19,7 @@ public class ToupiePersonnage {
     private String urlToupie;
 
     ToupieEnnemie toupieEnnemie;
+
 
     public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance, Rotation rotation,String urlToupie) {
         this.nomToupie = nomToupie;
@@ -42,13 +43,13 @@ public class ToupiePersonnage {
         return nomToupie;
     }
 
-    public int getVieMaxToupie() {
+    public float getVieMaxToupie() {
 
 
         return vieMax;
     }
 
-    public int getVieActuelle() {
+    public float getVieActuelle() {
         return vieActuelle;
     }
 
@@ -100,25 +101,49 @@ public class ToupiePersonnage {
     public int getEsquive() {
         return esquive;
     }
-    public float attaqueGlobale(ToupieEnnemie toupieEnnemie) {
-        // Dégâts de base avec ton multiplicateur standard
-        float degat = (float) (1.5 * this.attaque);
+    public float attaqueGlobale(ToupiePersonnage cible) {
+        String typePerso = this.classeToupie.getTypeToupie();
+        String typeEnnemi = cible.getClasseToupie().getTypeToupie();
+        float degat = 1.5f * this.attaque;
 
-        // On récupère les types des deux toupies
-        String typePerso = this.classeToupie.getTypeToupie(); // ex: "Attaque"
-        String typeEnnemi = toupieEnnemie.getClasseToupieEnnemie().getTypeToupie(); // ex: "Endurance"
-
-        // Bonus/malus en fonction du type
         if ("Attaque".equalsIgnoreCase(typePerso)) {
             if ("Endurance".equalsIgnoreCase(typeEnnemi)) {
-                degat *= (float)1.2; // Bonus contre Endurance
+                degat *= 1.2f;
             } else if ("Défense".equalsIgnoreCase(typeEnnemi)) {
-                degat *= (float)0.8; // Malus contre Défense
+                degat *= 0.8f;
             }
         }
 
         return degat;
     }
+
+    public float reductionAttaque(ToupiePersonnage attaquant) {
+        // Dégâts initiaux reçus (on suppose que l'attaquant attaque à pleine force)
+        float degatsRecus = attaquant.attaqueGlobale(this); // appel à attaqueGlobale avec "this" en tant que cible
+
+        // Réduction selon la défense de la toupie actuelle (la cible)
+        float facteurDefense = 1 - (this.defense * 0.02f); // chaque point de défense réduit de 2%
+        if (facteurDefense < 0.1f) facteurDefense = 0.1f; // limite minimale (ne jamais annuler totalement les dégâts)
+
+        degatsRecus *= facteurDefense;
+
+        // Gestion des types (défense contre autres)
+        String typeDefenseur = this.classeToupie.getTypeToupie(); // type de la toupie actuelle (défenseur)
+        String typeAttaquant = attaquant.getClasseToupie().getTypeToupie(); // type de l'adversaire (attaquant)
+
+        if ("Défense".equalsIgnoreCase(typeDefenseur)) {
+            if ("Endurance".equalsIgnoreCase(typeAttaquant)) {
+                degatsRecus *= 0.8f; // Bonus de défense contre endurance
+            } else if ("Attaque".equalsIgnoreCase(typeAttaquant)) {
+                degatsRecus *= 1.2f; // Malus de défense contre attaque
+            }
+        }
+
+        return degatsRecus;
+    }
+
+
+
 
 
 
@@ -127,7 +152,7 @@ public class ToupiePersonnage {
         this.nombreBeyPoints = nombreBeyPoints;
     }
 
-    public void setVieActuelle(int vieActuelle) {
+    public void setVieActuelle(float vieActuelle) {
         this.vieActuelle = vieActuelle;
     }
 
@@ -151,7 +176,11 @@ public class ToupiePersonnage {
         this.esquive = esquive;
     }
 
+    public void setVieMax(float vieMax) {
+        this.vieMax = vieMax;
+    }
+
     public int alea(){
-        return (int) (Math.random() * 101);
+        return (int) (Math.random() * 11);
     }
 }

@@ -21,14 +21,35 @@ public class QTELancer {
     }
 
     // Bonus/Malus appliqués selon le résultat
-    public void appliquerEffets(ToupiePersonnage toupie, ToupieEnnemie toupieEnnemie) {
+    public float appliquerEffets(ToupiePersonnage attaquant, ToupiePersonnage cible) {
+        float bonusMalus = 0;
         if (reussi) {
             System.out.println("QTE réussi ! Bonus de lancement !");
-            toupie.setAttaque((float) ((toupie.attaqueGlobale(toupieEnnemie)) * 1.2));
+            if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie()))
+               bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.3);
+            else {
+                bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.2);
+            }
+            if ("endurance".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
+                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.3));
+            }else {
+                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.2));
+            }
+
 
         } else {
             System.out.println("QTE raté... Malus de lancement !");
-            toupie.setAttaque((float) ((toupie.attaqueGlobale(toupieEnnemie)) * 1.2));
+            if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
+               bonusMalus = (float) ((attaquant.attaqueGlobale(cible)) * 0.8);
+            }else {
+                bonusMalus = (float) ((attaquant.attaqueGlobale(cible) * 0.9));
+            }
+            if ("endurance".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
+                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.8));
+            }else {
+                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.9));
+            }
         }
+        return bonusMalus;
     }
 }

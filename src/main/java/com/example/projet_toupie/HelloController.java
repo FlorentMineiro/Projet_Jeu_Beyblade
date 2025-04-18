@@ -222,7 +222,7 @@ public class HelloController implements Initializable {
                 ,DiskCentral
                 ,Defense,
                 typeDefense,
-                300,
+                100,
                 2,
                 8,
                 5,
@@ -233,7 +233,7 @@ public class HelloController implements Initializable {
                 ,DiskHurricane
                 ,Keep
                 ,typeDefense
-                ,345
+                ,145
                 ,3
                 ,8
                 ,4
@@ -245,7 +245,7 @@ public class HelloController implements Initializable {
                  ,Disk2A
                  ,Evolution
                  ,typeAttaque
-                 ,350
+                 ,150
                  ,9
                  ,3
                  ,2
@@ -256,7 +256,7 @@ public class HelloController implements Initializable {
                 ,Disk12,
                 Operate
                 , typeEndurance
-                ,330
+                ,130
                 ,4
                 ,5
                 ,6
@@ -267,7 +267,7 @@ public class HelloController implements Initializable {
                  ,Disk8
                  ,Nothing
                  , typeEndurance
-                 ,335
+                 ,135
                  ,2
                  ,3
                  ,9
@@ -278,7 +278,7 @@ public class HelloController implements Initializable {
                 ,Disk11
                 ,Xtend
                 , typeAttaque
-                ,340
+                ,140
                 ,7
                 ,4
                 ,4
@@ -443,7 +443,7 @@ public class HelloController implements Initializable {
             writeRapideFloat(lblAttaqueToupie, listToupie.get(4).getAttaqueToupie());
             writeRapideInt(lblDefenseToupie, listToupie.get(4).getDefenseToupie());
             writeRapideInt(lblEnduranceToupie, listToupie.get(4).getEnduranceToupie());
-            writeRapideInt(lblVieMaxToupie, listToupie.get(4).getVieMaxToupie());
+            writeRapideFloat(lblVieMaxToupie, listToupie.get(4).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(4).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(4).getClasseToupie().getTypeToupie()));
             changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
@@ -459,7 +459,7 @@ public class HelloController implements Initializable {
             writeRapideFloat(lblAttaqueToupie, listToupie.get(0).getAttaqueToupie());
             writeRapideInt(lblDefenseToupie, listToupie.get(0).getDefenseToupie());
             writeRapideInt(lblEnduranceToupie, listToupie.get(0).getEnduranceToupie());
-            writeRapideInt(lblVieMaxToupie, listToupie.get(0).getVieMaxToupie());
+            writeRapideFloat(lblVieMaxToupie, listToupie.get(0).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(0).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(0).getClasseToupie().getTypeToupie()));
             changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
@@ -473,7 +473,7 @@ public class HelloController implements Initializable {
             writeRapideFloat(lblAttaqueToupie, listToupie.get(2).getAttaqueToupie());
             writeRapideInt(lblDefenseToupie, listToupie.get(2).getDefenseToupie());
             writeRapideInt(lblEnduranceToupie, listToupie.get(2).getEnduranceToupie());
-            writeRapideInt(lblVieMaxToupie, listToupie.get(2).getVieMaxToupie());
+            writeRapideFloat(lblVieMaxToupie, listToupie.get(2).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(2).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(2).getClasseToupie().getTypeToupie()));
             changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
