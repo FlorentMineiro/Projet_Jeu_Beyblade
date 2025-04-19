@@ -53,7 +53,7 @@ public class EnergyLayer {
         this.sparkingSystem = sparkingSystem;
         this.dbSystem = null;
     }
-    public EnergyLayer(String nomLayer, SystemeLayer systemeLayer, int statAttaqueLayer,Rotation rotationLayer, int statDefenseLayer, int statEnduranceLayer, double poidsLayer, String urlLayer, DBSystem dbSystem) {
+    public EnergyLayer(String nomLayer, SystemeLayer systemeLayer,Rotation rotationLayer, int statAttaqueLayer, int statDefenseLayer, int statEnduranceLayer, double poidsLayer, String urlLayer, DBSystem dbSystem) {
         this(nomLayer, systemeLayer,rotationLayer, statAttaqueLayer, statDefenseLayer, statEnduranceLayer, poidsLayer, urlLayer);
         this.gtSystem = null;
         this.sparkingSystem = null;

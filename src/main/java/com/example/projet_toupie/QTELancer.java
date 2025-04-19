@@ -23,31 +23,35 @@ public class QTELancer {
     // Bonus/Malus appliqués selon le résultat
     public float appliquerEffets(ToupiePersonnage attaquant, ToupiePersonnage cible) {
         float bonusMalus = 0;
+
         if (reussi) {
             System.out.println("QTE réussi ! Bonus de lancement !");
             if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie()))
-               bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.3);
+               bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.4);
             else {
-                bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.2);
+                bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.3);
             }
             if ("endurance".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
                 attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.3));
             }else {
                 attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.2));
             }
+            if ("defense".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())) {
+                bonusMalus = (float) (attaquant.retourneDefense(cible)* 2.4);
+            }
 
 
         } else {
             System.out.println("QTE raté... Malus de lancement !");
             if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
-               bonusMalus = (float) ((attaquant.attaqueGlobale(cible)) * 0.8);
+               bonusMalus = (float) ((attaquant.attaqueGlobale(cible)) * 0.85);
             }else {
-                bonusMalus = (float) ((attaquant.attaqueGlobale(cible) * 0.9));
+                bonusMalus = (float) ((attaquant.attaqueGlobale(cible) * 0.8));
             }
             if ("endurance".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
-                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.8));
+                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.85));
             }else {
-                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.9));
+                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.8));
             }
         }
         return bonusMalus;

@@ -21,7 +21,7 @@ public class ToupiePersonnage {
     ToupieEnnemie toupieEnnemie;
 
 
-    public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance, Rotation rotation,String urlToupie) {
+    public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance,int coupCritique,int esquive, Rotation rotation,String urlToupie) {
         this.nomToupie = nomToupie;
         this.energyLayer = energyLayer;
 
@@ -32,11 +32,21 @@ public class ToupiePersonnage {
         this.attaque = attaque;
         this.defense = defense;
         this.endurance = endurance;
+
         this.coupCritique = coupCritique;
         this.esquive = esquive;
         this.nombreBeyPoints = 1000;
         this.rotation = rotation;
         this.urlToupie = urlToupie;
+    }
+
+    public ToupiePersonnage() {
+        this.nomToupie = "Inconnue";
+
+        this.classeToupie = null;
+        this.vieMax = 1000;
+        this.attaque = 50;
+        this.defense = 50;
     }
 
     public String getNomToupie() {
@@ -104,13 +114,13 @@ public class ToupiePersonnage {
     public float attaqueGlobale(ToupiePersonnage cible) {
         String typePerso = this.classeToupie.getTypeToupie();
         String typeEnnemi = cible.getClasseToupie().getTypeToupie();
-        float degat = 1.5f * this.attaque;
+        float degat = (float) (this.attaque * 1.5);
 
         if ("Attaque".equalsIgnoreCase(typePerso)) {
             if ("Endurance".equalsIgnoreCase(typeEnnemi)) {
-                degat *= 1.2f;
+                degat *= 1.3;
             } else if ("Défense".equalsIgnoreCase(typeEnnemi)) {
-                degat *= 0.8f;
+                degat *= 0.8;
             }
         }
 
@@ -122,8 +132,10 @@ public class ToupiePersonnage {
         float degatsRecus = attaquant.attaqueGlobale(this); // appel à attaqueGlobale avec "this" en tant que cible
 
         // Réduction selon la défense de la toupie actuelle (la cible)
-        float facteurDefense = 1 - (this.defense * 0.02f); // chaque point de défense réduit de 2%
-        if (facteurDefense < 0.1f) facteurDefense = 0.1f; // limite minimale (ne jamais annuler totalement les dégâts)
+        float facteurDefense = 1 - (this.defense * 0.03f); // chaque point de défense réduit de 2%
+        if (facteurDefense < 0.1f) {
+            facteurDefense = 0.1f; // limite minimale (ne jamais annuler totalement les dégâts)
+        }
 
         degatsRecus *= facteurDefense;
 
@@ -138,10 +150,43 @@ public class ToupiePersonnage {
                 degatsRecus *= 1.2f; // Malus de défense contre attaque
             }
         }
+        if (degatsRecus < 0){
+            degatsRecus = 0;
+        }
 
         return degatsRecus;
     }
+    public float perdPV(ToupiePersonnage attaquant){
+            float degatBase = (float) (this.attaque * 1.2);
+            float degatTotal = (float) (0.5 * degatBase)+reductionAttaque(attaquant);
+            this.vieActuelle -= degatTotal;
+            if(jetEsquive()){
+                degatTotal = 0;
+            }
 
+            return degatTotal;
+
+    }
+    public float retourneDefense(ToupiePersonnage attaquant) {
+        float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
+
+        if (degatSubi > 0) {
+            float contreDegat = degatSubi * 0.5f; // Par exemple, elle renvoie 50% des dégâts subis
+            attaquant.vieActuelle -= contreDegat;
+
+
+        }
+
+        return degatSubi; // On retourne quand même les dégâts que cette toupie a subis
+    }
+
+
+    public boolean jetEsquive(){
+        if (alea() <= esquive){
+            return true;
+        }
+        return false;
+    }
 
 
 
@@ -181,6 +226,6 @@ public class ToupiePersonnage {
     }
 
     public int alea(){
-        return (int) (Math.random() * 11);
+        return (int) (Math.random() * 101);
     }
 }

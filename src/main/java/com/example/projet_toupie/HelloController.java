@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -55,6 +56,9 @@ public class HelloController implements Initializable {
     private Label lblPoids;
     @FXML
     private AnchorPane apInvocation;
+    private QTELancer qteLancer; // Instance du QTE
+    private ToupiePersonnage attaquant; // Remplacer avec les bons objets
+    private ToupiePersonnage cible;
     private ArrayList<PerformanceTip> tip = new ArrayList<>();
     private ArrayList<ForgeDisc> disc = new ArrayList<>();
     private ArrayList<EnergyLayer> layer = new ArrayList<>();
@@ -139,13 +143,16 @@ public class HelloController implements Initializable {
 
 
 
-    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,null,"null");
+    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,null,"null");
     ToupieEnnemie te = new ToupieEnnemie("null",null,null,null,null,0,0,0,0,null,"null");
     ClasseToupie c;
     Rotation r;
     PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
 
     EnergyLayer e;
+
+
+
 
 
 
@@ -160,15 +167,54 @@ public class HelloController implements Initializable {
         invisible(apLancerToupie);
 
 
-        PerformanceTip Defense = new PerformanceTip("Defense",3,9,6,15,"Performance_Tip/DriverDefense.png");
+        PerformanceTip Defense = new PerformanceTip("Defense",
+                5,
+                30,
+                20
+                ,15
+                ,"Performance_Tip/DriverDefense.png");
 
-        PerformanceTip Keep = new PerformanceTip("Keep",2,9,7,16,"Performance_Tip/DriverKeep.png");
-        PerformanceTip Nothing = new PerformanceTip("Nothing",2,5,9,14,"Performance_Tip/DriverNothing.png");
-        PerformanceTip Xtend = new PerformanceTip("Xtend",1,6,10,13,"Performance_Tip/DriverXtend.png");
-        PerformanceTip Operate = new PerformanceTip("Operate",8,3,4,10,"Performance_Tip/Operate_tip.png");
-        PerformanceTip Evolution = new PerformanceTip("Evolution",7,4,7,12,"Performance_Tip/PerformanceTip_Evolution.png");
-        PerformanceTip Drift = new PerformanceTip("Drift",8,3,4,10,"Performance_Tip/DriverDrift.png");
-        PerformanceTip Moment = new PerformanceTip("Moment",7,4,7,12,"Performance_Tip/DriverMoment.png");
+        PerformanceTip Keep = new PerformanceTip("Keep",
+                5,
+                25,
+                20,
+                16
+                ,"Performance_Tip/DriverKeep.png");
+        PerformanceTip Nothing = new PerformanceTip("Nothing",
+                10,
+                10,
+                30
+                ,14
+                ,"Performance_Tip/DriverNothing.png");
+        PerformanceTip Xtend = new PerformanceTip("Xtend"
+                ,20
+                ,15
+                ,20
+                ,13
+                ,"Performance_Tip/DriverXtend.png");
+        PerformanceTip Operate = new PerformanceTip("Operate"
+                ,15
+                ,15
+                ,25
+                ,10,"Performance_Tip/Operate_tip.png");
+        PerformanceTip Evolution = new PerformanceTip("Evolution"
+                ,30
+                ,5
+                ,5
+                ,12
+                ,"Performance_Tip/PerformanceTip_Evolution.png");
+        PerformanceTip Drift = new PerformanceTip("Drift"
+                ,5
+                ,15
+                ,40
+                ,10
+                ,"Performance_Tip/DriverDrift.png");
+        PerformanceTip Moment = new PerformanceTip("Moment"
+                ,10
+                ,30
+                ,30
+                ,12
+                ,"Performance_Tip/DriverMoment.png");
 
 
         tip.add(Defense);
@@ -180,12 +226,60 @@ public class HelloController implements Initializable {
         tip.add(Drift);
         tip.add(Moment);
 
-        ForgeDisc Disk8 = new ForgeDisc("8",3,4,8,18.5,"Forge_Discs/Disk8.png");
-        ForgeDisc Disk11 = new ForgeDisc("11",7,6,9,31.5,"Forge_Discs/Disk11.png");
-        ForgeDisc Disk12 = new ForgeDisc("12",8,5,5,24.5,"Forge_Discs/Disk12.png");
-        ForgeDisc DiskCentral = new ForgeDisc("Central",4,8,5,23.5,"Forge_Discs/DiskCentral.png");
-        ForgeDisc DiskHurricane = new ForgeDisc("Hurricane",9,3,4,28.5,"Forge_Discs/DiskHurricane.png");
-        ForgeDisc Disk2A = new ForgeDisc("2A",6,6,7,18.5,"Forge_Discs/ForgeDisc_2A.png");
+        ForgeDisc Disk8 = new ForgeDisc("8"
+                ,10
+                ,10
+                ,25
+                ,18.5
+                ,"Forge_Discs/Disk8.png");
+        ForgeDisc Disk11 = new ForgeDisc("11"
+                ,20
+                ,15
+                ,10
+                ,31.5
+                ,"Forge_Discs/Disk11.png");
+        ForgeDisc Disk12 = new ForgeDisc("12"
+                ,15
+                ,10
+                ,20
+                ,24.5
+                ,"Forge_Discs/Disk12.png");
+        ForgeDisc DiskCentral = new ForgeDisc("Central"
+                ,10
+                ,25
+                ,15
+                ,23.5
+                ,"Forge_Discs/DiskCentral.png");
+        ForgeDisc DiskHurricane = new ForgeDisc("Hurricane"
+                ,15
+                ,30
+                ,15
+                ,28.5
+                ,"Forge_Discs/DiskHurricane.png");
+        ForgeDisc Disk2A = new ForgeDisc("2A"
+                ,25
+                ,10
+                ,10
+                ,18.5
+                ,"Forge_Discs/ForgeDisc_2A.png");
+        ForgeDisc Chassis2D = new ForgeDisc("2D",
+                30,
+                35,
+                5,
+                27,
+                "Forge_Discs/Chassis2D.png");
+        ForgeDisc DiskKou = new ForgeDisc("Kou",
+                15,
+                25,
+                20,
+                21.5,
+                "Forge_Discs/DiscKou.png");
+        ForgeDisc DiskGiga = new ForgeDisc("Giga",
+                25,
+                20,
+                30,
+                30,
+                "Forge_Discs/DiskGiga.png");
 
         disc.add(Disk8);
         disc.add(Disk11);
@@ -193,20 +287,122 @@ public class HelloController implements Initializable {
         disc.add(DiskCentral);
         disc.add(DiskHurricane);
         disc.add(Disk2A);
+        disc.add(Chassis2D);
+        disc.add(DiskKou);
+        disc.add(DiskGiga);
 
         GTSystem gtLayerBushin = new GTSystem("Ashura","Ten","Bushin");
         SparkingSystem spBraveValkyrie = new SparkingSystem("Brave","2A","Valkyrie");
+        SparkingSystem spLuciferTheEnd2D = new SparkingSystem("The End", "2D", "Lucifer");
+        DBSystem DbGiga = new DBSystem("Roar","10");
+        DBSystem dbLuciferKou = new DBSystem("Lucifer the End","Kou");
 
-        EnergyLayer LayerKerbeus = new EnergyLayer("Kerbeus", EnergyLayer.SystemeLayer.SINGLE,droite,2,6,5,33,"Energy_Layer/LayerKerbeus.png");
-        EnergyLayer LayerHellSalamander = new EnergyLayer("Hell Salamander", EnergyLayer.SystemeLayer.cho_z,gauche,4,4,6,62,"Energy_Layer/LayerHellSalamander.png");
-        EnergyLayer LayerDrainFafnir = new EnergyLayer("Drain Fafnir", EnergyLayer.SystemeLayer.GOD,gauche,3,4,8,37,"Energy_Layer/LayerDrainFafnir.png");
-        EnergyLayer LayerZAchilles = new EnergyLayer("Z Achilles", EnergyLayer.SystemeLayer.cho_z,droite,8,3,4,43,"Energy_Layer/LayerZAchilles.png");
-        EnergyLayer LayerBraveValkyrie= new EnergyLayer("Brave Valkyrie", EnergyLayer.SystemeLayer.SPARKING,droite,9,3,3,62,"Energy_Layer/EnergyLayer_BraveValkyrie.png", spBraveValkyrie);
-        EnergyLayer LayerAshuraBushinChip = new EnergyLayer("Ashura", EnergyLayer.SystemeLayer.GT,droite,1,2,1,2.9,"Energy_Layer/GatinkoChipAshura.png",gtLayerBushin);
-        EnergyLayer LayerAshuraBushinWeight = new EnergyLayer("Ten", EnergyLayer.SystemeLayer.GT,droite,0,1,1,4.6,"Energy_Layer/LayerWeightTen.png",gtLayerBushin);
-        EnergyLayer LayerAshuraBushinBase = new EnergyLayer("Bushin", EnergyLayer.SystemeLayer.GT,droite,1,3,1,7.3,"Energy_Layer/LayerBaseBushin.png",gtLayerBushin);
-        EnergyLayer LayerAshuraBushin = new EnergyLayer("Bushin Ashura", EnergyLayer.SystemeLayer.GT,droite,1,7,4,20.2,"",gtLayerBushin);
 
+        EnergyLayer LayerKerbeus = new EnergyLayer("Kerbeus", EnergyLayer.SystemeLayer.SINGLE, droite, 30, 60, 40, 33, "Energy_Layer/LayerKerbeus.png");
+        EnergyLayer LayerHellSalamander = new EnergyLayer("Hell Salamander", EnergyLayer.SystemeLayer.cho_z, gauche, 45, 45, 60, 62, "Energy_Layer/LayerHellSalamander.png");
+        EnergyLayer LayerDrainFafnir = new EnergyLayer("Drain Fafnir", EnergyLayer.SystemeLayer.GOD, gauche, 35, 45, 80, 37, "Energy_Layer/LayerDrainFafnir.png");
+        EnergyLayer LayerZAchilles = new EnergyLayer("Z Achilles", EnergyLayer.SystemeLayer.cho_z, droite, 80, 30, 40, 43, "Energy_Layer/LayerZAchilles.png");
+        EnergyLayer LayerBraveValkyrie = new EnergyLayer("Brave Valkyrie", EnergyLayer.SystemeLayer.SPARKING, droite, 90, 30, 30, 62, "Energy_Layer/EnergyLayer_BraveValkyrie.png", spBraveValkyrie);
+
+// Layers GT (Bushin Ashura)
+        EnergyLayer LayerAshuraBushinChip = new EnergyLayer("Ashura", EnergyLayer.SystemeLayer.GT, droite, 15, 20, 10, 2.9f, "Energy_Layer/GatinkoChipAshura.png", gtLayerBushin);
+        EnergyLayer LayerAshuraBushinWeight = new EnergyLayer("Ten", EnergyLayer.SystemeLayer.GT, droite, 5, 15, 10, 4.6f, "Energy_Layer/LayerWeightTen.png", gtLayerBushin);
+        EnergyLayer LayerAshuraBushinBase = new EnergyLayer("Bushin", EnergyLayer.SystemeLayer.GT, droite, 10, 40, 15, 7.3f, "Energy_Layer/LayerBaseBushin.png", gtLayerBushin);
+        EnergyLayer LayerAshuraBushin = new EnergyLayer("Bushin Ashura", EnergyLayer.SystemeLayer.GT, droite, 30, 70, 35, 20.2f, "", gtLayerBushin);
+
+// Pièces spéciales
+        EnergyLayer LayerEndBlade = new EnergyLayer(" The End "
+                , EnergyLayer.SystemeLayer.DB
+                , droite
+                , 95
+                , 60
+                , 30
+                , 30
+                , "Energy_Layer/BladeEndCore.png"
+                ,dbLuciferKou);
+        EnergyLayer LayerLuciferARmor= new EnergyLayer("Lucifer"
+                , EnergyLayer.SystemeLayer.DB
+                , gauche
+                , 70
+                , 80
+                , 25
+                , 25
+                , "Energy_Layer/CoreLuciferII.png"
+                ,dbLuciferKou);
+        EnergyLayer superkingChipLucifer = new EnergyLayer(
+                "Lucifer",
+                EnergyLayer.SystemeLayer.SPARKING,
+                gauche,
+                25,  // attaque
+                40,  // défense
+                30,  // endurance
+                3.0f,
+                "Energy_Layer/ChipLucifer.png",
+                spLuciferTheEnd2D
+        );
+        EnergyLayer RingTheEnd = new EnergyLayer(
+                "The End",
+                EnergyLayer.SystemeLayer.SPARKING,
+                gauche,
+                30,
+                50,
+                40,
+                5.0f,
+                "Energy_Layer/RingTheEnd.png",
+                spLuciferTheEnd2D
+        );
+
+        EnergyLayer LayerBladeRoar = new EnergyLayer("Roar"
+                , EnergyLayer.SystemeLayer.DB
+                , droite
+                , 85
+                , 50
+                , 35
+                , 28
+                , "Energy_Layer/BladeRoar.png"
+                ,DbGiga);
+        EnergyLayer LayerArmor10 = new EnergyLayer(" 10"
+                , EnergyLayer.SystemeLayer.DB
+                , droite
+                , 10
+                , 70
+                , 45
+                , 18
+                , "Energy_Layer/Armor10.png"
+                ,DbGiga);
+        EnergyLayer LayerLuciferTheEnd = new EnergyLayer(
+                "Lucifer The End",
+                EnergyLayer.SystemeLayer.SPARKING,
+                droite,
+                35,  // attaque
+                80,  // défense
+                90,  // endurance
+                32.8f,
+                "Energy_Layer/LayerLuciferTheEnd.png",
+                spLuciferTheEnd2D
+        );
+        EnergyLayer LayerRoarBahamut = new EnergyLayer(
+                "Roar Bahamut",
+                EnergyLayer.SystemeLayer.DB,
+                gauche,
+                30,  // attaque
+                90,  // défense
+                70,  // endurance
+                31.5f,
+                "Energy_Layer/LayerRoarBahamut.png",
+                DbGiga
+        );
+        EnergyLayer LayerLuciferTheEndDB = new EnergyLayer(
+                "Lucifer The End",
+                EnergyLayer.SystemeLayer.DB,
+                droite,
+                45,  // attaque
+                60,  // défense
+                65,  // endurance
+                24.3f, // poids
+                "Energy_Layer/LayerLuciferTheEndDB.png",
+                dbLuciferKou
+        );
         layer.add(LayerKerbeus);
         layer.add(LayerHellSalamander);
         layer.add(LayerDrainFafnir);
@@ -215,6 +411,12 @@ public class HelloController implements Initializable {
         layer.add(LayerAshuraBushinChip);
         layer.add(LayerAshuraBushinWeight);
         layer.add(LayerAshuraBushinBase);
+        layer.add(LayerEndBlade);
+        layer.add(LayerArmor10);
+        layer.add(LayerBladeRoar);
+        layer.add(RingTheEnd);
+        layer.add(superkingChipLucifer);
+        layer.add(LayerLuciferARmor);
 
 
         ToupiePersonnage Kerbeus = new ToupiePersonnage("Kerbeus Central Defense"
@@ -222,10 +424,12 @@ public class HelloController implements Initializable {
                 ,DiskCentral
                 ,Defense,
                 typeDefense,
-                100,
-                2,
-                8,
-                5,
+                1500,
+                35,
+                85,
+                60,
+                20,
+                65,
                 droite,
                 "Toupie/kerbeus_gpt.png");
         ToupiePersonnage Bushin_Ashura = new ToupiePersonnage("Bushin Ashura Hurricane Keep"
@@ -233,22 +437,39 @@ public class HelloController implements Initializable {
                 ,DiskHurricane
                 ,Keep
                 ,typeDefense
-                ,145
-                ,3
-                ,8
-                ,4
+                ,1450
+                ,45
+                ,80
+                ,65
+                ,25
+                ,75
                 ,droite
                 ,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
-        //ToupiePersonnage Roar_Bahamut = new ToupiePersonnage("Roar Bahamut","Giga","Moment-10", défense,7,10,4,gauche);
+        ToupiePersonnage Roar_Bahamut = new ToupiePersonnage("Roar Bahamut"
+                ,LayerRoarBahamut
+                ,DiskGiga
+                ,Moment
+                , typeDefense
+                ,1800
+                ,30
+                ,90
+                ,70
+
+                ,20
+                ,55
+                ,gauche
+                ,"Toupie/Roar_Bahamut.png");
          ToupiePersonnage Brave_Valkyrie = new ToupiePersonnage("Brave Valkyrie Evolution 2A "
                  ,LayerBraveValkyrie
                  ,Disk2A
                  ,Evolution
                  ,typeAttaque
-                 ,150
-                 ,9
-                 ,3
-                 ,2
+                 ,1200
+                 ,90
+                 ,45
+                 ,50
+                 ,85
+                 ,45
                  ,droite
                  ,"Toupie/valkyrie_gpt.png");
         ToupiePersonnage Hell_Salamander = new ToupiePersonnage("HellSalamander 12 Operate"
@@ -256,10 +477,12 @@ public class HelloController implements Initializable {
                 ,Disk12,
                 Operate
                 , typeEndurance
-                ,130
-                ,4
-                ,5
-                ,6
+                ,1350
+                ,60
+                ,55
+                ,85
+                ,40
+                ,70
                 ,gauche
                 ,"Toupie/Beyblade_Salamander.png");
          ToupiePersonnage Drain_Fafnir = new ToupiePersonnage("Drain Fafnir 8 Nothing "
@@ -267,10 +490,12 @@ public class HelloController implements Initializable {
                  ,Disk8
                  ,Nothing
                  , typeEndurance
-                 ,135
-                 ,2
-                 ,3
-                 ,9
+                 ,1400
+                 ,50
+                 ,40
+                 ,90
+                 ,30
+                 ,80
                  ,gauche
                  ,"Toupie/fafnir_gpt.png");
         ToupiePersonnage Z_Achilles = new ToupiePersonnage("Z Achilles 11 Xtend"
@@ -278,13 +503,42 @@ public class HelloController implements Initializable {
                 ,Disk11
                 ,Xtend
                 , typeAttaque
-                ,140
-                ,7
-                ,4
-                ,4
+                ,1250
+                ,85
+                ,50
+                ,60
+                ,75
+                ,55
                 ,droite
                 ,"Toupie/ZA_.11.Xt_2.png");
-        //ToupiePersonnage Lucifer_The_End = new ToupiePersonnage("Lucifer The End","Kou","Drift", endurance,9,6,3,droite);
+        ToupiePersonnage Lucifer_The_EndDB = new ToupiePersonnage("Lucifer The End"
+                ,LayerLuciferTheEndDB
+                ,DiskKou
+                ,Drift
+                , typeEndurance
+                ,1700
+                ,35
+                ,80
+                ,90
+
+        ,25
+        ,60
+        ,droite
+        ,"Toupie/BBSK_Lucifer_The_End_Kou_Drift_Beyblade.png");
+        ToupiePersonnage Lucifer_The_EndSparking = new ToupiePersonnage("Lucifer The End"
+                ,LayerLuciferTheEnd
+                ,Chassis2D
+                ,Drift
+                , typeEndurance
+                ,1800
+                ,40
+                ,85
+                ,95
+
+                ,30
+                ,65
+                ,droite
+                ,"Toupie/BBSK_Lucifer_The_End_Kou_Drift_Beyblade.png");
         //ToupiePersonnage Astral_Spriggan = new ToupiePersonnage("Astral Spriggan ","Over","Quattro-0", attaque,7,6,8,doubleRotation);
         //ToupiePersonnage Master_Diablos = new ToupiePersonnage("Master Diabolos +  Diabolos GT Chip","","Generate(GT)",equilibre,8,7,8,doubleRotation);
         //ToupiePersonnage Nova_Neptune = new ToupiePersonnage("Nova Neptune","Vertical","Zephyr",equilibre,5,5,6,droite);
@@ -298,6 +552,9 @@ public class HelloController implements Initializable {
         listToupie.add(Hell_Salamander);
         listToupie.add(Drain_Fafnir);
         listToupie.add(Z_Achilles);
+        listToupie.add(Roar_Bahamut);
+        listToupie.add(Lucifer_The_EndDB);
+        listToupie.add(Lucifer_The_EndSparking);
 
 
         /*System.out.println("Indice de Kerbeus "+listToupie.indexOf(Kerbeus));
@@ -324,6 +581,8 @@ public class HelloController implements Initializable {
         System.out.println("Drain Fafnir  "+listToupieEnnemie.indexOf(DrainFafnirE));
         System.out.println("Bushin Ashura   "+listToupieEnnemie.indexOf(BushinAshuraE));
         System.out.println("Z achilles   "+listToupieEnnemie.indexOf(ZAchillesE));
+
+
 
 
 
@@ -517,7 +776,7 @@ public class HelloController implements Initializable {
     }
 
     public void afficheForgeDisc(){
-        int nombreAleatoire = (int) (Math.random()*6);
+        int nombreAleatoire = (int) (Math.random()*9);
         ForgeDisc selectedDisc = disc.get(nombreAleatoire);
         changeImageViewImg(imgPieceToupie, selectedDisc.getUrlDisc());
         writeRapideInt(lblStatAttaque, selectedDisc.getStatAttaqueDisc());
@@ -542,7 +801,7 @@ public class HelloController implements Initializable {
 
     }
     public void afficheEnergyLayer(){
-        int nombreAleatoire = (int) (Math.random()*8);
+        int nombreAleatoire = (int) (Math.random()*15);
         EnergyLayer selectedTip = layer.get(nombreAleatoire);
         changeImageViewImg(imgPieceToupie, selectedTip.getUrlLayer());
         writeRapideInt(lblStatAttaque, selectedTip.getStatAttaqueLayer());
@@ -672,4 +931,7 @@ public class HelloController implements Initializable {
 
         timeline.play();
     }
+
+
+
 }

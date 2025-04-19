@@ -5,7 +5,7 @@ public class DBSystem {
     private String core;
     private String armor;
 
-    public DBSystem(String blade, String core, String armor) {
+    public DBSystem(String blade, String core) {
         this.blade = blade;
         this.core = core;
         this.armor = armor;
