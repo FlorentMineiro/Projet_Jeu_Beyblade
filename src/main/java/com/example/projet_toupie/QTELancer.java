@@ -56,4 +56,12 @@ public class QTELancer {
         }
         return bonusMalus;
     }
+
+    public void setReussi(boolean reussi) {
+        this.reussi = reussi;
+    }
+
+    public boolean isReussi() {
+        return reussi;
+    }
 }

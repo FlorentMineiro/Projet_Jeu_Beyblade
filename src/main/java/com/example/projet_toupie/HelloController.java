@@ -150,10 +150,7 @@ public class HelloController implements Initializable {
     PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
 
     EnergyLayer e;
-
-
-
-
+    private ToupiePersonnage toupieJoueur;
 
 
     @Override
@@ -915,22 +912,44 @@ public class HelloController implements Initializable {
         List<String> etapes = List.of("3", "2", "1", "Hypervitesse !");
         Timeline timeline = new Timeline();
 
+        // Sélection du joueur comme attaquant
+        ToupiePersonnage attaquant = this.toupieJoueur; // ou le nom de ton joueur
+
+        // Sélection de la cible ennemie aléatoire
+        Random random = new Random();
+        ToupieEnnemie cibleEnnemie = listToupieEnnemie.get(random.nextInt(listToupieEnnemie.size()));
+
+        // Cast vers ToupiePersonnage
+        ToupiePersonnage cible = (ToupiePersonnage) cibleEnnemie;
+
         for (int i = 0; i < etapes.size(); i++) {
             final int index = i;
             KeyFrame keyFrame = new KeyFrame(Duration.seconds(i + 1), e -> {
                 lblLancer.setText(etapes.get(index));
+
+                if (index == 1) {  // Lancer le QTE à 2 secondes
+                    boolean reussi = qteLancer.executerQTE();
+                    qteLancer.setReussi(reussi); // si tu as une variable "reussi" dans la classe
+                    float effet = qteLancer.appliquerEffets(attaquant, cible);
+
+                    if (reussi) {
+                        System.out.println("QTE réussi ! Effet bonus : " + effet);
+                    } else {
+                        System.out.println("QTE échoué... Malus : " + effet);
+                    }
+                }
             });
             timeline.getKeyFrames().add(keyFrame);
         }
 
         timeline.setOnFinished(e -> {
-            // Lancer l'action après le "Hypervitesse !"
             System.out.println("Go !");
-            // ex : demarrerQTE();
+            // phase suivante
         });
 
         timeline.play();
     }
+
 
 
 

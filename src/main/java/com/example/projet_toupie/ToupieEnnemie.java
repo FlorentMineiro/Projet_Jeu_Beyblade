@@ -1,6 +1,6 @@
 package com.example.projet_toupie;
 
-public class ToupieEnnemie {
+public class ToupieEnnemie extends ToupiePersonnage {
 
 
         private String nomToupieEnnemie;
@@ -9,7 +9,7 @@ public class ToupieEnnemie {
         private PerformanceTip performanceTipEnnemie;
         private ClasseToupie classeToupieEnnemie;
         private int vieMaxEnnemie;
-        private int vieActuelle;
+        private int vieActuelleEnnemie;
         private int attaqueEnnemie;
         private int defenseEnnemie;
         private int enduranceEnnemie;
@@ -61,8 +61,8 @@ public class ToupieEnnemie {
         return vieMaxEnnemie;
     }
 
-    public int getVieActuelle() {
-        return vieActuelle;
+    public int getVieActuelleEnnemie() {
+        return vieActuelleEnnemie;
     }
 
     public int getAttaqueEnnemie() {
