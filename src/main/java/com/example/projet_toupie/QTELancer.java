@@ -27,7 +27,7 @@ public class QTELancer {
         if (reussi) {
             System.out.println("QTE réussi ! Bonus de lancement !");
             if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie()))
-               bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.4);
+                bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.4);
             else {
                 bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.3);
             }
@@ -44,18 +44,19 @@ public class QTELancer {
         } else {
             System.out.println("QTE raté... Malus de lancement !");
             if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
-               bonusMalus = (float) ((attaquant.attaqueGlobale(cible)) * 0.85);
+                bonusMalus = (float) ((attaquant.attaqueGlobale(cible)) * 0.8);
             }else {
-                bonusMalus = (float) ((attaquant.attaqueGlobale(cible) * 0.8));
+                bonusMalus = (float) ((attaquant.attaqueGlobale(cible) * 0.75));
             }
             if ("endurance".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
-                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.85));
-            }else {
                 attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.8));
+            }else {
+                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.75));
             }
         }
         return bonusMalus;
     }
+
 
     public void setReussi(boolean reussi) {
         this.reussi = reussi;

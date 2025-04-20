@@ -11,7 +11,7 @@
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
    <children>
       <ImageView fx:id="imgFond" fitHeight="399.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="apFichePerso" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="apFichePerso" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="601.0">
                <image>
@@ -255,6 +255,22 @@
                   <Font name="System Bold" size="48.0" />
                </font>
             </Label>
+            <Label fx:id="lblQTE" alignment="CENTER" layoutX="70.0" layoutY="238.0" onKeyPressed="#keyQTE" prefHeight="49.0" prefWidth="72.0" text="..." textFill="GOLD">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="apDuelToupie" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="imgStadium2" fitHeight="402.0" fitWidth="605.0">
+               <image>
+                  <Image url="@../../../Environnement/Stadium_Beyblade.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgToupieDuPerso" fitHeight="82.0" fitWidth="129.0" layoutX="99.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgToupieDeEnnemi" fitHeight="91.0" fitWidth="122.0" layoutX="412.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </children>
