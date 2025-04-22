@@ -3,11 +3,13 @@ package com.example.projet_toupie;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -58,7 +60,7 @@ public class HelloController implements Initializable {
     private Label lblPoids;
     @FXML
     private AnchorPane apInvocation;
-    private QTELancer qteLancer; // Instance du QTE
+    private QTELancer qteLancer = new QTELancer(3); // Instance du QTE
     private ToupiePersonnage attaquant; // Remplacer avec les bons objets
     private ToupiePersonnage cible;
     private ArrayList<PerformanceTip> tip = new ArrayList<>();
@@ -124,6 +126,19 @@ public class HelloController implements Initializable {
     private ImageView imgStadium;
     @FXML
     private AnchorPane apLancerToupie;
+    EnergyLayer e;
+    private ToupiePersonnage toupieJoueur;
+    private ToupieEnnemie toupieAdv;
+    @FXML
+    private Label lblQTE;
+    @FXML
+    private ImageView imgStadium2;
+    @FXML
+    private AnchorPane apDuelToupie;
+    @FXML
+    private ImageView imgToupieDuPerso;
+    @FXML
+    private ImageView imgToupieDeEnnemi;
 
 
     int choixToupie = 0;
@@ -152,24 +167,35 @@ public class HelloController implements Initializable {
 
 
 
-    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,null,"null");
-    ToupieEnnemie te = new ToupieEnnemie("null",null,null,null,null,0,0,0,0,null,"null");
-    ClasseToupie c;
-    Rotation r;
-    PerformanceTip pt = new PerformanceTip("null",0,0,0,0,"null");
-
-    EnergyLayer e;
-    private ToupiePersonnage toupieJoueur;
+    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,0,null,"null");
     @FXML
-    private Label lblQTE;
+    private ProgressBar barreVieToupiePerso;
     @FXML
-    private ImageView imgStadium2;
+    private Label lblNombrePVToupiePerso;
     @FXML
-    private AnchorPane apDuelToupie;
+    private ProgressBar barrevieToupieEnnemie;
     @FXML
-    private ImageView imgToupieDuPerso;
+    private Label lblNombrePVToupieEnnemie;
     @FXML
-    private ImageView imgToupieDeEnnemi;
+    private ImageView imgBoutonCombat4;
+    @FXML
+    private ImageView imgBoutonCombat5;
+    @FXML
+    private ImageView imgBoutonCombat2;
+    @FXML
+    private ImageView imgBoutonCombat3;
+    @FXML
+    private ImageView imgBoutonCombat1;
+    @FXML
+    private Label lblToupieEnnModeCombat;
+    @FXML
+    private Label lblToupiePersoModeCombat;
+    @FXML
+    private ImageView imgEsquive;
+    @FXML
+    private Label lblTour;
+    @FXML
+    private Label lblNombreTour;
 
 
     @Override
@@ -437,6 +463,7 @@ public class HelloController implements Initializable {
                 ,Defense,
                 typeDefense,
                 1500,
+                1500,
                 35,
                 85,
                 60,
@@ -450,6 +477,7 @@ public class HelloController implements Initializable {
                 ,Keep
                 ,typeDefense
                 ,1450
+                ,1450
                 ,45
                 ,80
                 ,65
@@ -462,6 +490,7 @@ public class HelloController implements Initializable {
                 ,DiskGiga
                 ,Moment
                 , typeDefense
+                ,1800
                 ,1800
                 ,30
                 ,90
@@ -477,6 +506,7 @@ public class HelloController implements Initializable {
                  ,Evolution
                  ,typeAttaque
                  ,1200
+                 ,1200
                  ,90
                  ,45
                  ,50
@@ -489,6 +519,7 @@ public class HelloController implements Initializable {
                 ,Disk12,
                 Operate
                 , typeEndurance
+                ,1350
                 ,1350
                 ,60
                 ,55
@@ -503,6 +534,7 @@ public class HelloController implements Initializable {
                  ,Nothing
                  , typeEndurance
                  ,1400
+                 ,1400
                  ,50
                  ,40
                  ,90
@@ -515,6 +547,7 @@ public class HelloController implements Initializable {
                 ,Disk11
                 ,Xtend
                 , typeAttaque
+                ,1250
                 ,1250
                 ,85
                 ,50
@@ -529,6 +562,7 @@ public class HelloController implements Initializable {
                 ,Drift
                 , typeEndurance
                 ,1700
+                ,1700
                 ,35
                 ,80
                 ,90
@@ -542,6 +576,7 @@ public class HelloController implements Initializable {
                 ,Chassis2D
                 ,Drift
                 , typeEndurance
+                ,1800
                 ,1800
                 ,40
                 ,85
@@ -569,16 +604,93 @@ public class HelloController implements Initializable {
         listToupie.add(Lucifer_The_EndSparking);
 
 
-        /*System.out.println("Indice de Kerbeus "+listToupie.indexOf(Kerbeus));
+      System.out.println("Indice de Kerbeus "+listToupie.indexOf(Kerbeus));
         System.out.println("Indice de Brave Valkyrie   "+listToupie.indexOf(Brave_Valkyrie));
-        System.out.println("Indice de Drain Fafnir   "+listToupie.indexOf(Drain_Fafnir));*/
+        System.out.println("Indice de Drain Fafnir   "+listToupie.indexOf(Drain_Fafnir));
 
-        KerbeusE = new ToupieEnnemie("Kerbeus Central Defense",LayerKerbeus,DiskCentral,Defense, typeDefense,300,2,8,5,droite,"Toupie/kerbeus_gpt.png");
-        BraveValkyrieE =new ToupieEnnemie("Brave Valkyrie Evolution 2A ",LayerBraveValkyrie,Disk2A,Evolution, typeAttaque,350,9,3,2,droite,"Toupie/valkyrie_gpt.png");
-        HellSalamanderE = new ToupieEnnemie("HellSalamander 12 Operate  ",LayerHellSalamander,Disk12,Operate, typeEndurance,330,4,5,6,gauche,"Toupie/Beyblade_Salamander.png");
-        DrainFafnirE =new ToupieEnnemie("Drain Fafnir 8 Nothing ",LayerDrainFafnir,Disk8,Nothing, typeEndurance,335,2,3,9,gauche,"Toupie/fafnir_gpt.png");
-        BushinAshuraE = new ToupieEnnemie("Bushin Ashura Hurricane Keep",LayerAshuraBushin,DiskHurricane,Keep, typeDefense,345,3,8,4,droite,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
-        ZAchillesE =new ToupieEnnemie("Z Achilles 11 Xtend  ",LayerZAchilles,Disk11,Xtend, typeAttaque,340,7,4,4,droite,"Toupie/ZA_.11.Xt_2.png");
+        KerbeusE = new ToupieEnnemie("Kerbeus Central Defense"
+                ,LayerKerbeus
+                ,DiskCentral
+                ,Defense
+                , typeDefense,
+                2500,
+                2500,
+                35,
+                85,
+                60,
+                20,
+                65,
+                droite
+                ,"Toupie/kerbeus_gpt.png");
+        BraveValkyrieE =new ToupieEnnemie("Brave Valkyrie Evolution 2A "
+                ,LayerBraveValkyrie
+                ,Disk2A
+                ,Evolution
+                , typeAttaque
+                ,2200
+                ,2200
+                ,90
+                ,45
+                ,50
+                ,85
+                ,45
+                ,droite
+                ,"Toupie/valkyrie_gpt.png");
+        HellSalamanderE = new ToupieEnnemie("HellSalamander 12 Operate"
+                ,LayerHellSalamander
+                ,Disk12,Operate
+                , typeEndurance
+                ,2350
+                ,2350
+                ,60
+                ,55
+                ,85
+                ,40
+                ,70
+                ,gauche
+                ,"Toupie/Beyblade_Salamander.png");
+        DrainFafnirE =new ToupieEnnemie("Drain Fafnir 8 Nothing "
+                ,LayerDrainFafnir
+                ,Disk8
+                ,Nothing
+                , typeEndurance
+                ,2400
+                ,2400
+                ,2
+                ,3
+                ,9
+                ,30
+                ,80
+                ,gauche
+                ,"Toupie/fafnir_gpt.png");
+        BushinAshuraE = new ToupieEnnemie("Bushin Ashura Hurricane Keep"
+                ,LayerAshuraBushin
+                ,DiskHurricane
+                ,Keep
+                , typeDefense
+                ,2450
+                ,2450
+                ,45
+                ,80
+                ,65
+                ,25
+                ,75
+                ,droite
+                ,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
+        ZAchillesE =new ToupieEnnemie("Z Achilles 11 Xtend"
+                ,LayerZAchilles
+                ,Disk11
+                ,Xtend
+                , typeAttaque
+                ,2250
+                ,2250
+                ,7
+                ,4
+                ,4
+                ,75
+                ,55
+                ,droite
+                ,"Toupie/ZA_.11.Xt_2.png");
 
         listToupieEnnemie.add(KerbeusE);
         listToupieEnnemie.add(BraveValkyrieE);
@@ -587,17 +699,18 @@ public class HelloController implements Initializable {
         listToupieEnnemie.add(BushinAshuraE);
         listToupieEnnemie.add(ZAchillesE);
 
+
+
+
+       apLancerToupie.setOnKeyPressed(this::keyQTE);
+        apLancerToupie.setFocusTraversable(true);
+        apLancerToupie.requestFocus();
         System.out.println("Hell Salamander"+listToupieEnnemie.indexOf(HellSalamanderE));
         System.out.println("Kerbeus   "+listToupieEnnemie.indexOf(KerbeusE));
         System.out.println("Brave Valkyrie"+listToupieEnnemie.indexOf(BraveValkyrieE));
         System.out.println("Drain Fafnir  "+listToupieEnnemie.indexOf(DrainFafnirE));
         System.out.println("Bushin Ashura   "+listToupieEnnemie.indexOf(BushinAshuraE));
         System.out.println("Z achilles   "+listToupieEnnemie.indexOf(ZAchillesE));
-
-
-       apLancerToupie.setOnKeyPressed(this::keyQTE);
-        apLancerToupie.setFocusTraversable(true);
-        apLancerToupie.requestFocus();
 
 
 
@@ -886,12 +999,42 @@ public class HelloController implements Initializable {
     public void btnAdvFafnir(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
+        changeImageViewImg(imgToupieDeEnnemi,"Toupie/fafnir_gpt.png");
+        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(3).getVieActuelleEnnemie());
+        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(3).getNomToupieEnnemie());
+        if (choixToupie == 1){
+            affichageCombatFafnir();
+        }
+        if (choixToupie == 2){
+            affichageCombatKerbeus();
+        }
+        if (choixToupie == 3){
+            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
+            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
+            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
+        }
+
     }
 
     @FXML
     public void btnAdvZachilles(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
+        changeImageViewImg(imgToupieDeEnnemi,"Toupie/ZA_.11.Xt_2.png");
+        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(5).getVieActuelleEnnemie());
+        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(5).getNomToupieEnnemie());
+        if (choixToupie == 1){
+            affichageCombatFafnir();
+        }
+        if (choixToupie == 2){
+            affichageCombatKerbeus();
+        }
+        if (choixToupie == 3){
+            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
+            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
+            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
+        }
+
 
     }
 
@@ -899,25 +1042,116 @@ public class HelloController implements Initializable {
     public void btnAdvValkyrie(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
+
+
+        changeImageViewImg(imgToupieDeEnnemi,"Toupie/valkyrie_gpt.png");
+        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(1).getVieActuelleEnnemie());
+        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(1).getNomToupieEnnemie());
+        if (choixToupie == 1){
+            affichageCombatFafnir();
+        }
+        if (choixToupie == 2){
+            affichageCombatKerbeus();
+        }
+        if (choixToupie == 3){
+            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
+            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
+            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
+        }
+
     }
 
     @FXML
     public void btnAdvAshura(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
+        changeImageViewImg(imgToupieDeEnnemi,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
+        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(4).getVieActuelleEnnemie());
+        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(4).getNomToupieEnnemie());
+        if (choixToupie == 1){
+            affichageCombatFafnir();
+        }
+        if (choixToupie == 2){
+            affichageCombatKerbeus();
+        }
+        if (choixToupie == 3){
+            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
+            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
+            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
+        }
+
     }
 
     @FXML
     public void btnAdvSalamander(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
+        changeImageViewImg(imgToupieDeEnnemi,"Toupie/Beyblade_Salamander.png");
+        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(2).getVieActuelleEnnemie());
+        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(2).getNomToupieEnnemie());
+        if (choixToupie == 1){
+            affichageCombatFafnir();
+        }
+        if (choixToupie == 2){
+            affichageCombatKerbeus();
+        }
+        if (choixToupie == 3){
+            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
+            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
+            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
+        }
+
     }
 
     @FXML
     public void btnAdvKerbeus(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
+        changeImageViewImg(imgToupieDeEnnemi,"Toupie/kerbeus_gpt.png");
+        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(0).getVieActuelleEnnemie());
+        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(0).getNomToupieEnnemie());
+        if (choixToupie == 1){
+            changeImageViewImg(imgToupieDuPerso,"Toupie/fafnir_gpt.png");
+            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(3).getVieActuelleToupie());
+            writeRapideString(lblToupiePersoModeCombat,listToupie.get(3).getNomToupie());
+        }
+        if (choixToupie == 2){
+            affichageCombatKerbeus();
+        }
+        if (choixToupie == 3){
+            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
+            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
+            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
+        }
+
     }
+    public void affichageCombatKerbeus(){
+        int nombreTour = 1;
+        changeImageViewImg(imgToupieDuPerso,"Toupie/kerbeus_gpt.png");
+        writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(0).getVieActuelleToupie());
+        writeRapideString(lblToupiePersoModeCombat,listToupie.get(0).getNomToupie());
+        changeImageViewImg(imgBoutonCombat1,"Bouton-Combat/Bouton-attaque.png");
+        changeImageViewImg(imgBoutonCombat2,"Bouton-Combat/Bouton-esquive.png");
+
+        changeImageViewImg(imgBoutonCombat3,"Bouton-Combat/Bouton-protection.png");
+        lblTour.setVisible(true);
+        writeRapideInt(lblNombreTour,nombreTour);
+
+    }
+    public void affichageCombatFafnir(){
+        int nombreTour = 1;
+        changeImageViewImg(imgToupieDuPerso,"Toupie/fafnir_gpt.png");
+        writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(0).getVieActuelleToupie());
+        writeRapideString(lblToupiePersoModeCombat,listToupie.get(0).getNomToupie());
+        changeImageViewImg(imgBoutonCombat1,"Bouton-Combat/Bouton-attaque.png");
+        changeImageViewImg(imgBoutonCombat2,"Bouton-Combat/Bouton-esquive.png");
+
+        changeImageViewImg(imgBoutonCombat3,"Bouton-Combat/Bouton-RotationSteal.png");
+        lblTour.setVisible(true);
+        writeRapideInt(lblNombreTour,nombreTour);
+
+    }
+
 
     public void momentLancer(){
         clearAll();
@@ -931,14 +1165,15 @@ public class HelloController implements Initializable {
         Timeline timeline = new Timeline();
 
         // Sélection du joueur comme attaquant
-        ToupiePersonnage attaquant = this.toupieJoueur; // ou le nom de ton joueur
+         this.attaquant = this.toupieJoueur; // ou le nom de ton joueur
 
         // Sélection de la cible ennemie aléatoire
         Random random = new Random();
         ToupieEnnemie cibleEnnemie = listToupieEnnemie.get(random.nextInt(listToupieEnnemie.size()));
 
         // Cast vers ToupiePersonnage
-        ToupiePersonnage cible = (ToupiePersonnage) cibleEnnemie;
+         this.cible = (ToupiePersonnage) cibleEnnemie;
+        this.qteLancer = new QTELancer(3);
 
         for (int i = 0; i < etapes.size(); i++) {
             final int index = i;
@@ -949,6 +1184,7 @@ public class HelloController implements Initializable {
 
                 if (index == 0){// Lancer le QTE à 2 secondes
                     lancerQTEClavier();
+
                     boolean reussi = qteLancer.executerQTE();
                     qteLancer.setReussi(reussi); // si tu as une variable "reussi" dans la classe
                     float effet = qteLancer.appliquerEffets(attaquant, cible);
@@ -957,8 +1193,11 @@ public class HelloController implements Initializable {
                     if (reussi) {
                         System.out.println("QTE réussi ! Effet bonus : " + effet);
 
+
                     } else {
                         System.out.println("QTE échoué... Malus : " + effet);
+
+
 
 
                     }
@@ -970,20 +1209,45 @@ public class HelloController implements Initializable {
 
         timeline.setOnFinished(e -> {
             System.out.println("Go !");
-            fight();
-            System.out.println("Nous sommes bien passé dans apDuelToupie !!");
-            // phase suivante
+
+            // Lancer fight() un peu après le QTE
+            Platform.runLater(() -> {
+                // délai léger pour laisser le temps aux alertes d'être lues
+                PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+                pause.setOnFinished(ev -> {
+                    fight();
+                    System.out.println("Nous sommes bien passé dans apDuelToupie !!");
+                });
+                pause.play();
+            });
         });
+
 
         timeline.play();
 
     }
     public void fight(){
+
+
+
+
         clearAll();
+
+
         changeImageViewImg(imgStadium2 , "Environnement/Stadium_Beyblade.png");
         visible(apDuelToupie);
         changeZone("Environnement/Stadium_Beyblade.png",apDuelToupie);
+
+
+
+
+
+
+
+
+
     }
+
 
 
 
@@ -1054,4 +1318,24 @@ public class HelloController implements Initializable {
     }
 
 
+    @FXML
+    public void btnProtection(MouseEvent event) {
+    }
+
+    @FXML
+    public void btnRotationSteal(MouseEvent event) {
+    }
+
+    @FXML
+    public void btnEsquive(MouseEvent event) {
+
+    }
+
+    @FXML
+    public void btnAttaque(MouseEvent event) {
+        if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() > 0){
+            toupieAdv.perdPV(toupieJoueur.attaqueGlobale());
+        }
+
+    }
 }

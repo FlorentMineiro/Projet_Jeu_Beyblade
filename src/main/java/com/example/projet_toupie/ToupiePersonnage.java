@@ -17,11 +17,12 @@ public class ToupiePersonnage {
     private int esquive;
     private Rotation rotation;
     private String urlToupie;
+    private Tour tourAllie;
 
     ToupieEnnemie toupieEnnemie;
 
 
-    public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax, int attaque, int defense, int endurance,int coupCritique,int esquive, Rotation rotation,String urlToupie) {
+    public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax,int vieActuelle, int attaque, int defense, int endurance,int coupCritique,int esquive, Rotation rotation,String urlToupie) {
         this.nomToupie = nomToupie;
         this.energyLayer = energyLayer;
 
@@ -29,6 +30,7 @@ public class ToupiePersonnage {
         this.performanceTip = performanceTip;
         this.classeToupie = classeToupie;
         this.vieMax = vieMax;
+        this.vieActuelle = vieActuelle;
         this.attaque = attaque;
         this.defense = defense;
         this.endurance = endurance;
@@ -59,7 +61,11 @@ public class ToupiePersonnage {
         return vieMax;
     }
 
-    public float getVieActuelle() {
+    public Tour getTourAllie() {
+        return tourAllie;
+    }
+
+    public float getVieActuelleToupie() {
         return vieActuelle;
     }
 
@@ -100,7 +106,8 @@ public class ToupiePersonnage {
         return endurance;
     }
 
-    public int getCoupCritique() {
+    public int getCoupCritiqueToupie() {
+
         return coupCritique;
     }
 
@@ -123,6 +130,29 @@ public class ToupiePersonnage {
                 degat *= 0.8;
             }
         }
+        if (alea() <= getCoupCritiqueToupie()){
+            degat *= 2;
+        }
+
+
+        return degat;
+    }
+    public float attaqueGlobale() {
+        String typePerso = this.classeToupie.getTypeToupie();
+        String typeEnnemi = this.classeToupie.getTypeToupie();
+        float degat = (float) (this.attaque * 1.5);
+
+        if ("Attaque".equalsIgnoreCase(typePerso)) {
+            if ("Endurance".equalsIgnoreCase(typeEnnemi)) {
+                degat *= 1.3;
+            } else if ("Défense".equalsIgnoreCase(typeEnnemi)) {
+                degat *= 0.8;
+            }
+        }
+        if (alea() <= getCoupCritiqueToupie()){
+            degat *= 2;
+        }
+
 
         return degat;
     }
@@ -165,6 +195,41 @@ public class ToupiePersonnage {
             }
 
             return degatTotal;
+
+    }
+    public float reductionAttaque(float degatRecus) {
+        // Dégâts initiaux reçus (on suppose que l'attaquant attaque à pleine force)
+      degatRecus -=   this.defense;
+        if ( degatRecus < 0){
+            degatRecus = 0;
+        }
+
+
+
+        // Gestion des types (défense contre autres)
+        String typeDefenseur = this.classeToupie.getTypeToupie(); // type de la toupie actuelle (défenseur)
+        String typeAttaquant = this.classeToupie.getTypeToupie(); // type de l'adversaire (attaquant)
+
+        if ("Défense".equalsIgnoreCase(typeDefenseur)) {
+            if ("Endurance".equalsIgnoreCase(typeAttaquant)) {
+                 degatRecus *= 0.8f; // Bonus de défense contre endurance
+            } else if ("Attaque".equalsIgnoreCase(typeAttaquant)) {
+                degatRecus *= 1.2f; // Malus de défense contre attaque
+            }
+        }
+
+
+        return degatRecus;
+    }
+    public float perdPV(float degat){
+        float degatBase = (float) (this.attaque * 1.2);
+        float degatTotal = (float) (0.5 * degatBase)+reductionAttaque(degat);
+        this.vieActuelle -= degatTotal;
+        if(jetEsquive()){
+            degatTotal = 0;
+        }
+
+        return degatTotal;
 
     }
     public float retourneDefense(ToupiePersonnage attaquant) {

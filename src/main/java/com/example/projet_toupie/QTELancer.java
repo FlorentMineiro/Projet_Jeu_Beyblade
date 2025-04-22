@@ -1,9 +1,16 @@
 package com.example.projet_toupie;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
+
+import java.text.BreakIterator;
+
 public class QTELancer {
     // Durée max pour réussir le QTE (ex: 3 secondes)
     private int tempsMax;
     private boolean reussi;
+    private BreakIterator lblQTEMessage;
 
     public QTELancer(int tempsMax) {
         this.tempsMax = tempsMax;
@@ -20,42 +27,127 @@ public class QTELancer {
         return reussi;
     }
 
-    // Bonus/Malus appliqués selon le résultat
     public float appliquerEffets(ToupiePersonnage attaquant, ToupiePersonnage cible) {
-        float bonusMalus = 0;
+
 
         if (reussi) {
             System.out.println("QTE réussi ! Bonus de lancement !");
-            if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie()))
-                bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.4);
-            else {
-                bonusMalus = (float) (attaquant.attaqueGlobale(cible) * 1.3);
-            }
-            if ("endurance".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
-                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.3));
-            }else {
-                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.2));
-            }
-            if ("defense".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())) {
-                bonusMalus = (float) (attaquant.retourneDefense(cible)* 2.4);
-            }
 
+            switch (attaquant.getClasseToupie().getTypeToupie().toLowerCase()) {
+                case "attaque":
+                    float effetTotal = attaquant.attaqueGlobale(cible) * 0.35f;
+                    attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.1));
+                    attaquant.setAttaque(attaquant.attaqueGlobale(cible) + effetTotal);
+                    /*Platform.runLater(() -> {
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Bonus de QTE !");
+                        alert.setHeaderText(null);
+                        alert.setContentText("QTE réussi ! Bonus appliqué !");
+                        alert.show(); // 👈 NE BLOQUE PAS LE THREAD
+
+
+                    });*/
+
+                    break;
+
+
+                case "endurance":
+                    effetTotal = attaquant.attaqueGlobale(cible) * 0.2f;
+                    attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.3));
+                    attaquant.setAttaque(attaquant.attaqueGlobale(cible) + effetTotal);
+                    /*Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Bonus de QTE !");
+                        alert.setHeaderText(null);
+                        alert.setContentText("QTE réussi ! Bonus appliqué !");
+                        alert.show(); // 👈 NE BLOQUE PAS LE THREAD
+
+                    });*/
+
+                    break;
+
+                case "défense":
+                     attaquant.retourneDefense(cible);
+                    effetTotal = attaquant.attaqueGlobale(cible) * 0.2f;
+                    attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 1.1));
+                    attaquant.setAttaque(attaquant.attaqueGlobale(cible) + effetTotal);
+                    /*Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Bonus de QTE !");
+                        alert.setHeaderText(null);
+                        alert.setContentText("QTE réussi ! Bonus appliqué !");
+                        alert.show(); // 👈 NE BLOQUE PAS LE THREAD
+
+                    });*/
+                    break;
+
+                default:
+                    System.out.println("Pas de Bonus !!");
+                    break;
+            }
 
         } else {
             System.out.println("QTE raté... Malus de lancement !");
-            if ("attaque".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
-                bonusMalus = (float) ((attaquant.attaqueGlobale(cible)) * 0.8);
-            }else {
-                bonusMalus = (float) ((attaquant.attaqueGlobale(cible) * 0.75));
+
+            switch (attaquant.getClasseToupie().getTypeToupie().toLowerCase()) {
+                case "attaque":
+                    float effetTotal = attaquant.attaqueGlobale(cible) * 0.2f;
+                    attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.75));
+                    attaquant.setAttaque(attaquant.attaqueGlobale(cible) - effetTotal);
+                    /*Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Bonus de QTE !");
+                        alert.setHeaderText(null);
+                        alert.setContentText("QTE réussi ! Bonus appliqué !");
+                        alert.show(); // 👈 NE BLOQUE PAS LE THREAD
+
+                    });*/
+
+                    break;
+
+                case "endurance":
+                    effetTotal = attaquant.attaqueGlobale(cible) * 0.25f;
+                    attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.8));
+                    attaquant.setAttaque(attaquant.attaqueGlobale(cible) - effetTotal);
+                    /*Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Bonus de QTE !");
+                        alert.setHeaderText(null);
+                        alert.setContentText("QTE réussi ! Bonus appliqué !");
+                        alert.show(); // 👈 NE BLOQUE PAS LE THREAD
+
+                    });*/
+
+                    break;
+
+                case "défense":
+
+                    effetTotal = attaquant.attaqueGlobale(cible) * 0.25f;
+                    attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.75));
+                    attaquant.setAttaque(attaquant.attaqueGlobale(cible) - effetTotal);
+                    /*Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Bonus de QTE !");
+                        alert.setHeaderText(null);
+                        alert.setContentText("QTE réussi ! Bonus appliqué !");
+                        alert.show(); // 👈 NE BLOQUE PAS LE THREAD
+
+                    });*/
+
+                    break;
+
+                default:
+                    System.out.println("Pas de Bonus !!");
+                    break;
             }
-            if ("endurance".equalsIgnoreCase(attaquant.getClasseToupie().getTypeToupie())){
-                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.8));
-            }else {
-                attaquant.setVieMax((float) (attaquant.getVieMaxToupie() * 0.75));
-            }
+
         }
-        return bonusMalus;
+
+
+        return 0;
     }
+
 
 
     public void setReussi(boolean reussi) {
