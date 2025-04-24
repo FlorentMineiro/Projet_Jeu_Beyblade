@@ -41,6 +41,9 @@ public class ToupieEnnemie extends ToupiePersonnage {
             this.urlToupieEnnemie = urlToupieEnnemiee;
         }
 
+    public ToupieEnnemie() {
+    }
+
     public Tour getTourEnnemie() {
         return tourEnnemie;
     }
@@ -165,6 +168,35 @@ public class ToupieEnnemie extends ToupiePersonnage {
         return degatTotal;
 
     }
+    public float reductionAttaque2(float degat , String attaquant){
+        degat -= this.defenseEnnemie;
+        if (degat < 0) degat = 0;
+
+
+
+        // Avantages/désavantages de type
+        if ("Défense".equalsIgnoreCase(String.valueOf(getClasseToupie()))) {
+            if ("Endurance".equalsIgnoreCase(attaquant)) {
+                degat *= 0.8f;
+            } else if ("Attaque".equalsIgnoreCase(attaquant)) {
+                degat *= 1.2f;
+            }
+        }
+
+
+            return degat;
+    }
+    public float perdPV2(float degat, String attaquant) {
+        if (jetEsquive()) {
+            return 0;
+        }
+
+        float degatTotal = reductionAttaque2(degat, attaquant); // Ne rien ajouter d’autre
+        this.vieActuelleEnnemie -= degatTotal;
+
+        return degatTotal;
+    }
+
     public float retourneDefense(ToupieEnnemie attaquant) {
         float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
 
@@ -177,6 +209,7 @@ public class ToupieEnnemie extends ToupiePersonnage {
 
         return degatSubi; // On retourne quand même les dégâts que cette toupie a subis
     }
+
 
 
     public boolean jetEsquive(){

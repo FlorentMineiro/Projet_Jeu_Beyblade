@@ -274,6 +274,11 @@
             <ImageView fx:id="imgToupieDeEnnemi" fitHeight="91.0" fitWidth="122.0" layoutX="412.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" />
             <ProgressBar fx:id="barreVieToupiePerso" layoutX="45.0" layoutY="54.0" prefHeight="17.0" prefWidth="200.0" progress="0.0" />
             <ProgressBar fx:id="barrevieToupieEnnemie" layoutX="363.0" layoutY="54.0" prefWidth="200.0" progress="0.0" />
+            <ImageView fx:id="imgPourAttaquer" fitHeight="70.0" fitWidth="89.0" layoutX="14.0" layoutY="318.0" onMouseClicked="#btnClickAttaque">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/Bouton-attaque.png" />
+               </image>
+            </ImageView>
             <Label fx:id="lblNombrePVToupieEnnemie" alignment="CENTER" layoutX="435.0" layoutY="90.0" prefHeight="32.0" prefWidth="99.0" text="...">
                <font>
                   <Font name="System Bold" size="22.0" />
@@ -284,11 +289,6 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgBoutonCombat5" fitHeight="69.0" fitWidth="72.0" layoutX="485.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgBoutonCombat4" fitHeight="62.0" fitWidth="72.0" layoutX="363.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgBoutonCombat1" fitHeight="62.0" fitWidth="63.0" layoutX="52.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgBoutonCombat3" fitHeight="62.0" fitWidth="63.0" layoutX="261.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgBoutonCombat2" fitHeight="62.0" fitWidth="63.0" layoutX="150.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="lblToupieEnnModeCombat" layoutX="379.0" layoutY="258.0" text="...">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -309,18 +309,13 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <ImageView fx:id="imgPourEsquiver" fitHeight="70.0" fitWidth="82.0" layoutX="128.0" layoutY="318.0" onMouseClicked="#btnEsquive">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/Bouton-esquive.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="200.0" fitWidth="200.0" onMouseClicked="#btnAttaque" visible="false">
-         <image>
-            <Image url="@../../../../../../../../Downloads/Bouton-attaque.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="imgEsquive" fitHeight="131.0" fitWidth="200.0" onMouseClicked="#btnEsquive" visible="false">
-         <image>
-            <Image url="@../../../../../../../../Downloads/Bouton-esquive.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="173.0" fitWidth="200.0" onMouseClicked="#btnRotationSteal" visible="false">
          <image>
             <Image url="@../../../../../../../../Downloads/Bouton-rotationsteal.png" />

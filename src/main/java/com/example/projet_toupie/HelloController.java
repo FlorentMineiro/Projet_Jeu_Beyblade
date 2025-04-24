@@ -127,8 +127,8 @@ public class HelloController implements Initializable {
     @FXML
     private AnchorPane apLancerToupie;
     EnergyLayer e;
-    private ToupiePersonnage toupieJoueur;
-    private ToupieEnnemie toupieAdv;
+    private ToupiePersonnage toupieJoueur = new ToupiePersonnage();
+    private ToupieEnnemie toupieAdv = new ToupieEnnemie();
     @FXML
     private Label lblQTE;
     @FXML
@@ -142,6 +142,7 @@ public class HelloController implements Initializable {
 
 
     int choixToupie = 0;
+    int choixToupieEnn = 0;
     /*ToupiePersonnage Drain_Fafnir;
     ToupiePersonnage Brave_Valkyrie;
     ToupiePersonnage Kerbeus;*/
@@ -177,25 +178,17 @@ public class HelloController implements Initializable {
     @FXML
     private Label lblNombrePVToupieEnnemie;
     @FXML
-    private ImageView imgBoutonCombat4;
-    @FXML
-    private ImageView imgBoutonCombat5;
-    @FXML
-    private ImageView imgBoutonCombat2;
-    @FXML
-    private ImageView imgBoutonCombat3;
-    @FXML
-    private ImageView imgBoutonCombat1;
-    @FXML
     private Label lblToupieEnnModeCombat;
     @FXML
     private Label lblToupiePersoModeCombat;
     @FXML
-    private ImageView imgEsquive;
-    @FXML
     private Label lblTour;
     @FXML
     private Label lblNombreTour;
+    @FXML
+    private ImageView imgPourEsquiver;
+    @FXML
+    private ImageView imgPourAttaquer;
 
 
     @Override
@@ -999,41 +992,16 @@ public class HelloController implements Initializable {
     public void btnAdvFafnir(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
-        changeImageViewImg(imgToupieDeEnnemi,"Toupie/fafnir_gpt.png");
-        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(3).getVieActuelleEnnemie());
-        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(3).getNomToupieEnnemie());
-        if (choixToupie == 1){
-            affichageCombatFafnir();
-        }
-        if (choixToupie == 2){
-            affichageCombatKerbeus();
-        }
-        if (choixToupie == 3){
-            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
-            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
-            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
-        }
-
+        initialiserCombat("Toupie/fafnir_gpt.png");
+        choixToupieEnn = 1;
     }
 
     @FXML
     public void btnAdvZachilles(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
-        changeImageViewImg(imgToupieDeEnnemi,"Toupie/ZA_.11.Xt_2.png");
-        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(5).getVieActuelleEnnemie());
-        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(5).getNomToupieEnnemie());
-        if (choixToupie == 1){
-            affichageCombatFafnir();
-        }
-        if (choixToupie == 2){
-            affichageCombatKerbeus();
-        }
-        if (choixToupie == 3){
-            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
-            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
-            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
-        }
+        initialiserCombat("Toupie/ZA_.11.Xt_2.png");
+        choixToupieEnn = 2;
 
 
     }
@@ -1044,20 +1012,10 @@ public class HelloController implements Initializable {
         demarrerCompteARebours();
 
 
-        changeImageViewImg(imgToupieDeEnnemi,"Toupie/valkyrie_gpt.png");
-        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(1).getVieActuelleEnnemie());
-        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(1).getNomToupieEnnemie());
-        if (choixToupie == 1){
-            affichageCombatFafnir();
-        }
-        if (choixToupie == 2){
-            affichageCombatKerbeus();
-        }
-        if (choixToupie == 3){
-            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
-            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
-            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
-        }
+
+        initialiserCombat("Toupie/valkyrie_gpt.png");
+        choixToupieEnn = 3;
+
 
     }
 
@@ -1065,20 +1023,8 @@ public class HelloController implements Initializable {
     public void btnAdvAshura(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
-        changeImageViewImg(imgToupieDeEnnemi,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
-        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(4).getVieActuelleEnnemie());
-        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(4).getNomToupieEnnemie());
-        if (choixToupie == 1){
-            affichageCombatFafnir();
-        }
-        if (choixToupie == 2){
-            affichageCombatKerbeus();
-        }
-        if (choixToupie == 3){
-            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
-            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
-            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
-        }
+        initialiserCombat("Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
+        choixToupieEnn = 4;
 
     }
 
@@ -1086,20 +1032,8 @@ public class HelloController implements Initializable {
     public void btnAdvSalamander(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
-        changeImageViewImg(imgToupieDeEnnemi,"Toupie/Beyblade_Salamander.png");
-        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(2).getVieActuelleEnnemie());
-        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(2).getNomToupieEnnemie());
-        if (choixToupie == 1){
-            affichageCombatFafnir();
-        }
-        if (choixToupie == 2){
-            affichageCombatKerbeus();
-        }
-        if (choixToupie == 3){
-            changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
-            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
-            writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
-        }
+        initialiserCombat("Toupie/Beyblade_Salamander.png");
+        choixToupieEnn = 5;
 
     }
 
@@ -1107,48 +1041,33 @@ public class HelloController implements Initializable {
     public void btnAdvKerbeus(MouseEvent event) {
         momentLancer();
         demarrerCompteARebours();
-        changeImageViewImg(imgToupieDeEnnemi,"Toupie/kerbeus_gpt.png");
+       initialiserCombat("Toupie/kerbeus_gpt.png");
+        choixToupieEnn = 6;
+
+    }
+    public void initialiserCombat(String imgToupie){
+
+        changeImageViewImg(imgToupieDeEnnemi,imgToupie);
         writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(0).getVieActuelleEnnemie());
         writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(0).getNomToupieEnnemie());
         if (choixToupie == 1){
-            changeImageViewImg(imgToupieDuPerso,"Toupie/fafnir_gpt.png");
-            writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(3).getVieActuelleToupie());
-            writeRapideString(lblToupiePersoModeCombat,listToupie.get(3).getNomToupie());
+            affichageCombatGenerique("Toupie/fafnir_gpt.png",
+                    listToupie.get(0).getVieActuelleToupie(),
+                    listToupie.get(0).getNomToupie(),
+                    "Bouton-Combat/Bouton-RotationSteal.png");
         }
         if (choixToupie == 2){
-            affichageCombatKerbeus();
+            affichageCombatGenerique("Toupie/kerbeus_gpt.png",
+                    listToupie.get(0).getVieActuelleToupie(),
+                    listToupie.get(0).getNomToupie(),
+                    "Bouton-Combat/Bouton-protection.png");
+
         }
         if (choixToupie == 3){
             changeImageViewImg(imgToupieDuPerso,"Toupie/valkyrie_gpt.png");
             writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(2).getVieActuelleToupie());
             writeRapideString(lblToupiePersoModeCombat,listToupie.get(2).getNomToupie());
         }
-
-    }
-    public void affichageCombatKerbeus(){
-        int nombreTour = 1;
-        changeImageViewImg(imgToupieDuPerso,"Toupie/kerbeus_gpt.png");
-        writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(0).getVieActuelleToupie());
-        writeRapideString(lblToupiePersoModeCombat,listToupie.get(0).getNomToupie());
-        changeImageViewImg(imgBoutonCombat1,"Bouton-Combat/Bouton-attaque.png");
-        changeImageViewImg(imgBoutonCombat2,"Bouton-Combat/Bouton-esquive.png");
-
-        changeImageViewImg(imgBoutonCombat3,"Bouton-Combat/Bouton-protection.png");
-        lblTour.setVisible(true);
-        writeRapideInt(lblNombreTour,nombreTour);
-
-    }
-    public void affichageCombatFafnir(){
-        int nombreTour = 1;
-        changeImageViewImg(imgToupieDuPerso,"Toupie/fafnir_gpt.png");
-        writeRapideFloat(lblNombrePVToupiePerso,listToupie.get(0).getVieActuelleToupie());
-        writeRapideString(lblToupiePersoModeCombat,listToupie.get(0).getNomToupie());
-        changeImageViewImg(imgBoutonCombat1,"Bouton-Combat/Bouton-attaque.png");
-        changeImageViewImg(imgBoutonCombat2,"Bouton-Combat/Bouton-esquive.png");
-
-        changeImageViewImg(imgBoutonCombat3,"Bouton-Combat/Bouton-RotationSteal.png");
-        lblTour.setVisible(true);
-        writeRapideInt(lblNombreTour,nombreTour);
 
     }
 
@@ -1209,13 +1128,13 @@ public class HelloController implements Initializable {
 
         timeline.setOnFinished(e -> {
             System.out.println("Go !");
-
+            fight();
             // Lancer fight() un peu après le QTE
             Platform.runLater(() -> {
                 // délai léger pour laisser le temps aux alertes d'être lues
                 PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
                 pause.setOnFinished(ev -> {
-                    fight();
+
                     System.out.println("Nous sommes bien passé dans apDuelToupie !!");
                 });
                 pause.play();
@@ -1326,16 +1245,44 @@ public class HelloController implements Initializable {
     public void btnRotationSteal(MouseEvent event) {
     }
 
-    @FXML
-    public void btnEsquive(MouseEvent event) {
+
+
+
+    public void vitaMajToutesToupies() {
+     writeRapideFloat(lblNombrePVToupiePerso,toupieJoueur.getVieActuelleToupie() );
+     writeRapideFloat(lblNombrePVToupieEnnemie,toupieAdv.getVieActuelleEnnemie());
+
+    }
+
+    public void affichageCombatGenerique(String imageToupie, float vie, String nom, String bouton3Image) {
+        int nombreTour = 1;
+        changeImageViewImg(imgToupieDuPerso, imageToupie);
+        writeRapideFloat(lblNombrePVToupiePerso, vie);
+        writeRapideString(lblToupiePersoModeCombat, nom);
+        changeImageViewImg(imgPourAttaquer, "Bouton-Combat/Bouton-attaque.png");
+        changeImageViewImg(imgPourEsquiver, "Bouton-Combat/Bouton-esquive.png");
+
+        lblTour.setVisible(true);
+        writeRapideInt(lblNombreTour, nombreTour);
 
     }
 
     @FXML
-    public void btnAttaque(MouseEvent event) {
-        if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() > 0){
-            toupieAdv.perdPV(toupieJoueur.attaqueGlobale());
-        }
+    public void btnClickAttaque(MouseEvent event) {
+
+      if(listToupie.get(0).getVieActuelleToupie() > 0 && listToupieEnnemie.get(0).getVieActuelleEnnemie() > 0){
+          String typeAdv = listToupieEnnemie.get(0).getClasseToupie().getTypeToupie();
+          float degats = listToupie.get(0).attaqueGlobale(typeAdv);
+          listToupieEnnemie.get(0).perdPV2(degats, String.valueOf(listToupie.get(0)));
+
+      }
+
+
+
+
+    }
+    @FXML
+    public void btnEsquive(MouseEvent event) {
 
     }
 }

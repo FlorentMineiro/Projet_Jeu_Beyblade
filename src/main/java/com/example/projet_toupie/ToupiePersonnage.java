@@ -137,9 +137,8 @@ public class ToupiePersonnage {
 
         return degat;
     }
-    public float attaqueGlobale() {
+    public float attaqueGlobale(String typeEnnemi) {
         String typePerso = this.classeToupie.getTypeToupie();
-        String typeEnnemi = this.classeToupie.getTypeToupie();
         float degat = (float) (this.attaque * 1.5);
 
         if ("Attaque".equalsIgnoreCase(typePerso)) {
@@ -153,9 +152,9 @@ public class ToupiePersonnage {
             degat *= 2;
         }
 
-
         return degat;
     }
+
 
     public float reductionAttaque(ToupiePersonnage attaquant) {
         // Dégâts initiaux reçus (on suppose que l'attaquant attaque à pleine force)
@@ -197,41 +196,37 @@ public class ToupiePersonnage {
             return degatTotal;
 
     }
-    public float reductionAttaque(float degatRecus) {
-        // Dégâts initiaux reçus (on suppose que l'attaquant attaque à pleine force)
-      degatRecus -=   this.defense;
-        if ( degatRecus < 0){
-            degatRecus = 0;
-        }
+    public float reductionAttaque2(float degat,String attaquant) {
+        // Réduction de base
+        degat -= this.defense;
+        if (degat < 0) degat = 0;
 
 
 
-        // Gestion des types (défense contre autres)
-        String typeDefenseur = this.classeToupie.getTypeToupie(); // type de la toupie actuelle (défenseur)
-        String typeAttaquant = this.classeToupie.getTypeToupie(); // type de l'adversaire (attaquant)
-
-        if ("Défense".equalsIgnoreCase(typeDefenseur)) {
-            if ("Endurance".equalsIgnoreCase(typeAttaquant)) {
-                 degatRecus *= 0.8f; // Bonus de défense contre endurance
-            } else if ("Attaque".equalsIgnoreCase(typeAttaquant)) {
-                degatRecus *= 1.2f; // Malus de défense contre attaque
+        // Avantages/désavantages de type
+        if ("Défense".equalsIgnoreCase(String.valueOf(getClasseToupie()))) {
+            if ("Endurance".equalsIgnoreCase(attaquant)) {
+                degat *= 0.8f;
+            } else if ("Attaque".equalsIgnoreCase(attaquant)) {
+                degat *= 1.2f;
             }
         }
 
-
-        return degatRecus;
+        return degat;
     }
-    public float perdPV(float degat){
-        float degatBase = (float) (this.attaque * 1.2);
-        float degatTotal = (float) (0.5 * degatBase)+reductionAttaque(degat);
-        this.vieActuelle -= degatTotal;
-        if(jetEsquive()){
-            degatTotal = 0;
+
+    public float perdPV2(float degat , String attaquant) {
+        if (jetEsquive()) {
+            return 0;
         }
 
-        return degatTotal;
+        float degatBase = (float) (this.attaque * 1.2);
+        float degatTotal = (float) (0.5 * degatBase) + reductionAttaque2(degat,attaquant);
+        this.vieActuelle -= degatTotal;
 
+        return degatTotal;
     }
+
     public float retourneDefense(ToupiePersonnage attaquant) {
         float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
 
