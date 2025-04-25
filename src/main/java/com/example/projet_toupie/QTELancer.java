@@ -27,7 +27,7 @@ public class QTELancer {
         return reussi;
     }
 
-    public float appliquerEffets(ToupiePersonnage attaquant, ToupiePersonnage cible) {
+   /* public float appliquerEffets(ToupiePersonnage attaquant, ToupiePersonnage cible) {
 
 
         if (reussi) {
@@ -47,7 +47,7 @@ public class QTELancer {
                         alert.show(); // 👈 NE BLOQUE PAS LE THREAD
 
 
-                    });*/
+                    });
 
                     break;
 
@@ -63,7 +63,7 @@ public class QTELancer {
                         alert.setContentText("QTE réussi ! Bonus appliqué !");
                         alert.show(); // 👈 NE BLOQUE PAS LE THREAD
 
-                    });*/
+                    });
 
                     break;
 
@@ -79,7 +79,7 @@ public class QTELancer {
                         alert.setContentText("QTE réussi ! Bonus appliqué !");
                         alert.show(); // 👈 NE BLOQUE PAS LE THREAD
 
-                    });*/
+                    });
                     break;
 
                 default:
@@ -102,7 +102,7 @@ public class QTELancer {
                         alert.setContentText("QTE réussi ! Bonus appliqué !");
                         alert.show(); // 👈 NE BLOQUE PAS LE THREAD
 
-                    });*/
+                    });
 
                     break;
 
@@ -117,7 +117,7 @@ public class QTELancer {
                         alert.setContentText("QTE réussi ! Bonus appliqué !");
                         alert.show(); // 👈 NE BLOQUE PAS LE THREAD
 
-                    });*/
+                    });
 
                     break;
 
@@ -133,7 +133,7 @@ public class QTELancer {
                         alert.setContentText("QTE réussi ! Bonus appliqué !");
                         alert.show(); // 👈 NE BLOQUE PAS LE THREAD
 
-                    });*/
+                    });
 
                     break;
 
@@ -146,7 +146,7 @@ public class QTELancer {
 
 
         return 0;
-    }
+    }*/
 
 
 

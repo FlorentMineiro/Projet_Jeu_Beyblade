@@ -1,13 +1,19 @@
 package com.example.projet_toupie;
 
 public class Tour {
-    private int nombreTour;
+    private static int numeroTour = 1;
 
-    public Tour(int nombreTour) {
-        this.nombreTour = nombreTour;
+    public static int getNumeroTour() {
+        return numeroTour;
     }
 
-    public int getNombreTour() {
-        return nombreTour;
+    public static int suivant() {
+        numeroTour++;
+        return numeroTour;
+    }
+
+    public static void reset() {
+        numeroTour = 1;
     }
 }
+

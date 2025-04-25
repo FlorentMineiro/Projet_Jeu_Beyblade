@@ -5,7 +5,9 @@ public class ToupiePersonnage {
     private EnergyLayer energyLayer;
     private ForgeDisc forgeDiscs;
     private PerformanceTip performanceTip;
-    private ClasseToupie classeToupie;
+    public static  ClasseToupie classeToupie = new ClasseToupie("Neutre");
+    private ClasseToupie classeToupie2;
+
     private float vieMax;
     private float vieActuelle;
     private float attaque;
@@ -42,13 +44,20 @@ public class ToupiePersonnage {
         this.urlToupie = urlToupie;
     }
 
-    public ToupiePersonnage() {
-        this.nomToupie = "Inconnue";
+    public ToupiePersonnage(String nomToupie, ClasseToupie classeToupie, float vieMax, float vieActuelle, float attaque, int defense, int endurance, int coupCritique, int esquive) {
+        this.nomToupie = nomToupie;
+        this.classeToupie = classeToupie;
+        this.vieMax = vieMax;
+        this.vieActuelle = vieActuelle;
+        this.attaque = attaque;
+        this.defense = defense;
+        this.endurance = endurance;
+        this.coupCritique = coupCritique;
+        this.esquive = esquive;
+    }
 
-        this.classeToupie = null;
-        this.vieMax = 1000;
-        this.attaque = 50;
-        this.defense = 50;
+    public ToupiePersonnage(ClasseToupie classeToupie2) {
+        this.classeToupie2 = classeToupie2;
     }
 
     public String getNomToupie() {
@@ -115,10 +124,11 @@ public class ToupiePersonnage {
         return nombreBeyPoints;
     }
 
+
     public int getEsquive() {
         return esquive;
     }
-    public float attaqueGlobale(ToupiePersonnage cible) {
+    /*public float attaqueGlobale(ToupiePersonnage cible) {
         String typePerso = this.classeToupie.getTypeToupie();
         String typeEnnemi = cible.getClasseToupie().getTypeToupie();
         float degat = (float) (this.attaque * 1.5);
@@ -136,16 +146,16 @@ public class ToupiePersonnage {
 
 
         return degat;
-    }
-    public float attaqueGlobale(String typeEnnemi) {
-        String typePerso = this.classeToupie.getTypeToupie();
+    }*/
+    public float attaqueGlobale() {
+
         float degat = (float) (this.attaque * 1.5);
 
-        if ("Attaque".equalsIgnoreCase(typePerso)) {
-            if ("Endurance".equalsIgnoreCase(typeEnnemi)) {
+        if ("Attaque".equalsIgnoreCase(this.classeToupie.getTypeToupie())) {
+            if ("Endurance".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
                 degat *= 1.3;
-            } else if ("Défense".equalsIgnoreCase(typeEnnemi)) {
-                degat *= 0.8;
+            } else if ("Défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
+                degat *= 0.75;
             }
         }
         if (alea() <= getCoupCritiqueToupie()){
@@ -156,7 +166,7 @@ public class ToupiePersonnage {
     }
 
 
-    public float reductionAttaque(ToupiePersonnage attaquant) {
+   /* public float reductionAttaque(ToupiePersonnage attaquant) {
         // Dégâts initiaux reçus (on suppose que l'attaquant attaque à pleine force)
         float degatsRecus = attaquant.attaqueGlobale(this); // appel à attaqueGlobale avec "this" en tant que cible
 
@@ -195,39 +205,34 @@ public class ToupiePersonnage {
 
             return degatTotal;
 
-    }
-    public float reductionAttaque2(float degat,String attaquant) {
-        // Réduction de base
-        degat -= this.defense;
-        if (degat < 0) degat = 0;
+    }*/
+   public float reduitAttaque(float degat)
+   {
+        /* FACILE +0.5
+        Cette fonction aura pour mission de réduire les dégâts mis en paramètre par rapport à la défense.
+        /!\ Vous ne devez pas retourner un entier négatif car cela risquerait de soigner le monstre, si les dégâts
+        deviennent négatifs, il faudra alors retourner 0.
+        */
+       degat = degat - this.defense;
+       if (degat < 0){
+           degat = 0;
+       }
+       return degat;
+   }
 
-
-
-        // Avantages/désavantages de type
-        if ("Défense".equalsIgnoreCase(String.valueOf(getClasseToupie()))) {
-            if ("Endurance".equalsIgnoreCase(attaquant)) {
-                degat *= 0.8f;
-            } else if ("Attaque".equalsIgnoreCase(attaquant)) {
-                degat *= 1.2f;
-            }
-        }
-
+    public float perdrePDV( float degat) {
+        /* FACILE +0.5
+        Cette fonction aura pour mission de faire perdre des points de vie actuels au monstre par rapport au paramètre degat.
+        Cette fonction retournera en plus le nombre de dêgats que le monstre a subit au total.
+        La formule est : 0.5 * degat + reduitAttaque(degat)
+                                         \__ reduitAttaque correspondant à la fonction ci-dessus
+        */
+        degat = (int)(0.5 * degat + reduitAttaque(degat));
+        this.vieActuelle-= degat;
         return degat;
     }
 
-    public float perdPV2(float degat , String attaquant) {
-        if (jetEsquive()) {
-            return 0;
-        }
-
-        float degatBase = (float) (this.attaque * 1.2);
-        float degatTotal = (float) (0.5 * degatBase) + reductionAttaque2(degat,attaquant);
-        this.vieActuelle -= degatTotal;
-
-        return degatTotal;
-    }
-
-    public float retourneDefense(ToupiePersonnage attaquant) {
+    /*public float retourneDefense(ToupiePersonnage attaquant) {
         float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
 
         if (degatSubi > 0) {
@@ -238,7 +243,7 @@ public class ToupiePersonnage {
         }
 
         return degatSubi; // On retourne quand même les dégâts que cette toupie a subis
-    }
+    }*/
 
 
     public boolean jetEsquive(){
