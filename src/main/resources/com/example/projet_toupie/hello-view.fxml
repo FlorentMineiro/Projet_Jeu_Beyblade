@@ -284,7 +284,7 @@
                   <Image url="@../../../../../../../../Downloads/Bouton-esquive.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgProtection" fitHeight="69.0" fitWidth="82.0" layoutX="247.0" layoutY="319.0" onMouseClicked="#btnProtection">
+            <ImageView fx:id="imgProtection" fitHeight="69.0" fitWidth="82.0" layoutX="247.0" layoutY="319.0" onMouseClicked="#btnProtection" visible="false">
                <image>
                   <Image url="@../../../../../../../../Downloads/Bouton-protection.png" />
                </image>
@@ -319,12 +319,12 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <ImageView fx:id="imgRotationSteal" fitHeight="70.0" fitWidth="82.0" layoutX="245.0" layoutY="318.0" onMouseClicked="#btnRotationSteal">
+               <image>
+                  <Image url="@../../../../../../../../Downloads/Bouton-RotationSteal.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="173.0" fitWidth="200.0" onMouseClicked="#btnRotationSteal" visible="false">
-         <image>
-            <Image url="@../../../../../../../../Downloads/Bouton-RotationSteal.png" />
-         </image>
-      </ImageView>
    </children>
 </StackPane>

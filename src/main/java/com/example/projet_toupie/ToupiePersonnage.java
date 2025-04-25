@@ -214,6 +214,16 @@ public class ToupiePersonnage {
         deviennent négatifs, il faudra alors retourner 0.
         */
        degat = degat - this.defense;
+       if ("Défense".equalsIgnoreCase(this.classeToupie.getTypeToupie())){
+           if ("Endurance".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
+               degat -= 0.8*this.defense;
+           }
+           if ("Attaque".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
+                degat -= 1.2*defense;
+           }
+
+       }
+
        if (degat < 0){
            degat = 0;
        }

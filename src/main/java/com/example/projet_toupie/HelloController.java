@@ -184,6 +184,8 @@ public class HelloController implements Initializable {
     private ImageView imgPourAttaquer;
     @FXML
     private ImageView imgProtection;
+    @FXML
+    private ImageView imgRotationSteal;
 
 
     @Override
@@ -191,6 +193,7 @@ public class HelloController implements Initializable {
         clearAll();
         visible(apCommencement);
         invisibleImage(imgProtection);
+        invisibleImage(imgRotationSteal);
 
 
 
@@ -1144,11 +1147,15 @@ public void retourMenu(){
         changeImageViewImg(imgToupieDeEnnemi,imgToupie);
         writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(0).getVieActuelleEnnemie());
         writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(0).getNomToupieEnnemie());
+        invisibleImage(imgProtection);
+        invisibleImage(imgRotationSteal);
+
         if (choixToupie == 1){
             affichageCombatGenerique("Toupie/fafnir_gpt.png",
                     listToupie.get(4).getVieActuelleToupie(),
                     listToupie.get(4).getNomToupie()
                     );
+            visibleImage(imgRotationSteal);
 
         }
         if (choixToupie == 2){
@@ -1157,7 +1164,7 @@ public void retourMenu(){
                     listToupie.get(0).getVieActuelleToupie(),
                     listToupie.get(0).getNomToupie()
                     );
-            //changeImageViewImg(imgProtection,"Bouton-Combat/Bouton-protection.png");
+            visibleImage(imgProtection);
 
 
 
@@ -1241,9 +1248,7 @@ public void retourMenu(){
         fight(); // On lance automatiquement le combat quand tout est prêt
     }
 
-    @FXML
-    public void btnProtection(MouseEvent event) {
-    }
+
 
     @FXML
     public void btnRotationSteal(MouseEvent event) {
@@ -1271,6 +1276,7 @@ public void retourMenu(){
         changeImageViewImg(imgPourAttaquer, "Bouton-Combat/Bouton-attaque.png");
         changeImageViewImg(imgPourEsquiver, "Bouton-Combat/Bouton-esquive.png");
         changeImageViewImg(imgProtection,"Bouton-Combat/Bouton-protection.png");
+        changeImageViewImg(imgRotationSteal,"Bouton-Combat/Bouton-RotationSteal.png");
         lblTour.setVisible(true);
         writeRapideInt(lblNombreTour, nombreTour);
 
@@ -1359,6 +1365,22 @@ public void retourMenu(){
             vitaMajJoueur();
             vitaMajAdv();
         }
+
+    }
+    @FXML
+    public void btnProtection(MouseEvent event) {
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
+
+        for (Tour = 1 ; Tour <= 3 ; Tour.suivant()){
+
+            if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() > 0){
+                float degatReduit = toupieJoueur.reduitAttaque(toupieAdv.attaqueGlobale());
+                toupieJoueur.perdrePDV(degatReduit);
+                barreVieToupiePerso.setProgress(pourcentageJoueur);
+
+            }
+        }
+
 
     }
     public int alea(){
