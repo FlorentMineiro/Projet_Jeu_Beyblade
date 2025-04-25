@@ -21,6 +21,8 @@ import java.util.ResourceBundle;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import static com.example.projet_toupie.Tour.getNumeroTour;
+
 
 public class HelloController implements Initializable {
 
@@ -1308,6 +1310,7 @@ public void retourMenu(){
             retourMenu();
             reinitialisation();
             reinitialisationBarre();
+            writeRapideInt(lblNombreTour,1);
 
         }
         if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0){
@@ -1322,6 +1325,7 @@ public void retourMenu(){
             reinitialisationBarre();
             toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 1000);
             writeRapideInt(lblBeyPoint , toupieJoueur.getNombreBeyPoints());
+            writeRapideInt(lblNombreTour,1);
 
         }
 
@@ -1335,9 +1339,23 @@ public void retourMenu(){
         toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
         barrevieToupieEnnemie.setProgress(pourcentageAdv);
 
+
         vitaMajJoueur();
+
         writeRapideInt(lblNombreTour , Tour.suivant());
+        toupieJoueur.reduireProtection(); // fin de tour => on décrémente
+        majAffichageProtection(); // met à jour l’image selon le nouvel état
+
+
     }
+    public void majAffichageProtection() {
+        if (toupieJoueur.estEnProtection()) {
+            invisibleImage(imgProtection);
+        } else {
+            visibleImage(imgProtection);
+        }
+    }
+
     public void reinitialisation(){
         toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
         toupieAdv.setVieActuelleEnnemie(toupieAdv.getVieMaxEnnemie());
@@ -1350,7 +1368,7 @@ public void retourMenu(){
     public void btnEsquive(MouseEvent event) {
         if (alea() < toupieJoueur.getEsquive()){
             toupieJoueur.perdrePDV(0);
-            toupieAdv.setVieActuelleEnnemie((float) (0.85 * toupieAdv.getVieActuelleEnnemie()));
+            toupieAdv.setVieActuelleEnnemie((float) (0.95 * toupieAdv.getVieActuelleEnnemie()));
             toupieAdv.getVieActuelleEnnemie() ;
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
             a.setTitle(null);
@@ -1369,20 +1387,16 @@ public void retourMenu(){
     }
     @FXML
     public void btnProtection(MouseEvent event) {
-        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
+        toupieJoueur.activerProtection(); // active la protection pour 3 tours
+        visibleImage(imgProtection); // affiche l’image
 
-        for (Tour = 1 ; Tour <= 3 ; Tour.suivant()){
-
-            if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() > 0){
-                float degatReduit = toupieJoueur.reduitAttaque(toupieAdv.attaqueGlobale());
-                toupieJoueur.perdrePDV(degatReduit);
-                barreVieToupiePerso.setProgress(pourcentageJoueur);
-
-            }
-        }
-
-
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("Augmentation de défense");
+        a.setHeaderText("Pendant 3 tours les dégâts adverses seront réduits");
+        a.setContentText(null);
+        a.showAndWait();
     }
+
     public int alea(){
         int alea = (int) (Math.random() * 101);
         return alea;

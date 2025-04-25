@@ -22,6 +22,7 @@ public class ToupiePersonnage {
     private Tour tourAllie;
 
     ToupieEnnemie toupieEnnemie;
+    private int toursDeProtectionRestants = 0;
 
 
     public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax,int vieActuelle, int attaque, int defense, int endurance,int coupCritique,int esquive, Rotation rotation,String urlToupie) {
@@ -164,6 +165,22 @@ public class ToupiePersonnage {
 
         return degat;
     }
+    public void activerProtection() {
+        this.toursDeProtectionRestants = 4;
+    }
+
+    public boolean estEnProtection() {
+
+
+        return this.toursDeProtectionRestants > 0;
+    }
+
+    public void reduireProtection() {
+
+        if (toursDeProtectionRestants > 0) {
+            toursDeProtectionRestants--;
+        }
+    }
 
 
    /* public float reductionAttaque(ToupiePersonnage attaquant) {
@@ -223,6 +240,11 @@ public class ToupiePersonnage {
            }
 
        }
+       if (estEnProtection()) {
+           degat *= 0.5f;
+           System.out.println("Protection active : dégâts réduits !");
+       }
+
 
        if (degat < 0){
            degat = 0;
