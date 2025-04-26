@@ -1252,9 +1252,7 @@ public void retourMenu(){
 
 
 
-    @FXML
-    public void btnRotationSteal(MouseEvent event) {
-    }
+
 
 
 
@@ -1336,8 +1334,19 @@ public void retourMenu(){
     }
     public void attaqueAdverse(){
         float pourcentageAdv = toupieAdv.getVieActuelleEnnemie()/toupieAdv.getVieMaxEnnemie();
-        toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
+        int alea = alea();
+
+        float degats = toupieAdv.attaqueGlobale();
+        /*if ("Drain Fafnir".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
+            // Absorption des dégâts par Drain Fafnir (20%)
+            float absorption = degats * 0.2f;
+            toupieJoueur.gagnerVie(absorption);  // Gagner des PV au lieu de perdre
+            degats -= absorption;  // Réduire les dégâts restants après absorption
+            System.out.println("Drain Fafnir absorbe " + absorption + " PV !");
+        }*/
+        toupieJoueur.perdrePDV(degats);
         barrevieToupieEnnemie.setProgress(pourcentageAdv);
+        //if ()
 
 
         vitaMajJoueur();
@@ -1366,6 +1375,7 @@ public void retourMenu(){
     }
     @FXML
     public void btnEsquive(MouseEvent event) {
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
         if (alea() < toupieJoueur.getEsquive()){
             toupieJoueur.perdrePDV(0);
             toupieAdv.setVieActuelleEnnemie((float) (0.95 * toupieAdv.getVieActuelleEnnemie()));
@@ -1380,6 +1390,7 @@ public void retourMenu(){
 
         }else {
             toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
+            barreVieToupiePerso.setProgress(pourcentageJoueur);
             vitaMajJoueur();
             vitaMajAdv();
         }
@@ -1396,6 +1407,34 @@ public void retourMenu(){
         a.setContentText(null);
         a.showAndWait();
     }
+
+
+    @FXML
+    public void btnRotationSteal(MouseEvent event) {
+        if ("Drain Fafnir".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
+            // Appel de l'attaque adverse pour calculer et absorber les dégâts
+            float degatsSubis = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
+            toupieJoueur.gagnerVie(degatsSubis);
+            vitaMajJoueur();
+
+            // Mise à jour de la barre de vie du joueur
+            float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
+            barreVieToupiePerso.setProgress(pourcentageJoueur);
+
+            // Si la vie dépasse le maximum, ajuster
+            if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()){
+                toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
+                writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
+            }
+
+            // Log pour vérifier l'absorption
+            System.out.println("Drain Fafnir a absorbé " + (degatsSubis * 0.2f) + " PV après avoir subi " + degatsSubis + " dégâts !");
+        } else {
+            System.out.println("Rotation Steal impossible : ce n'est pas Drain Fafnir !");
+        }
+    }
+
+
 
     public int alea(){
         int alea = (int) (Math.random() * 101);

@@ -1,5 +1,7 @@
 package com.example.projet_toupie;
 
+
+
 public class ToupiePersonnage {
     private String nomToupie;
     private EnergyLayer energyLayer;
@@ -259,10 +261,19 @@ public class ToupiePersonnage {
         La formule est : 0.5 * degat + reduitAttaque(degat)
                                          \__ reduitAttaque correspondant à la fonction ci-dessus
         */
-        degat = (int)(0.5 * degat + reduitAttaque(degat));
+        degat = (float) (0.5 * degat + reduitAttaque(degat));
         this.vieActuelle-= degat;
+
+
         return degat;
     }
+    public void gagnerVie(float quantite) {
+        this.vieActuelle += quantite;
+        if (this.vieActuelle > this.vieMax) {
+            this.vieActuelle = this.vieMax; // pour ne pas dépasser la vie max
+        }
+    }
+
 
     /*public float retourneDefense(ToupiePersonnage attaquant) {
         float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
