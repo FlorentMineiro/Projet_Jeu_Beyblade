@@ -812,14 +812,14 @@ public class HelloController implements Initializable {
     @FXML
     public void btnBoutique(MouseEvent event) {
         clearAll();
-
+        t.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints());
         changeImageViewImg(imgFond,"Environnement/fond-boutique_2.png");
         visible(apBoutique);
         changeZone("Environnement/fond-boutique_2.png",apBoutique);
         changeImageViewImg(imgCoffre,"Bouton_Spécial/toupie-invocation.png");
         changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
         changeImageViewImg(imgLogo,"Logo/Logo_BeyPoint.png");
-        writeRapideInt(lblBeyPoint,t.getNombreBeyPoints());
+        writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
 
 
     }
@@ -891,22 +891,45 @@ public class HelloController implements Initializable {
     @FXML
     public void btnCoffreToupie(MouseEvent mouseEvent) {
         clearAll();
-        changeImageViewImg(imgInvocation , "Environnement/Fond-Invocation.png");
+        changeImageViewImg(imgInvocation, "Environnement/Fond-Invocation.png");
         visible(apInvocation);
-        changeZone("Environnement/Fond-Invocation.png",apInvocation);
+        changeZone("Environnement/Fond-Invocation.png", apInvocation);
 
-        int chiffreAlea = (int) (Math.random()*3);
+        if (toupieJoueur.getNombreBeyPoints() >= 700) {
 
-        if (1 == chiffreAlea){
-            afficheForgeDisc();
-        }else if (2 == chiffreAlea){
-            affichePerformanceTip();
-        }else {
-            afficheEnergyLayer();
+            int chiffreAlea = (int) (Math.random() * 3);
+
+            if (chiffreAlea == 1) {
+                afficheForgeDisc();
+            } else if (chiffreAlea == 2) {
+                affichePerformanceTip();
+            } else {
+                afficheEnergyLayer();
+            }
+
+            toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() - 700);
+            writeRapideInt(lblBeyPoint, toupieJoueur.getNombreBeyPoints());
+
+        } else {
+
+
+            clearAll();
+            //toupieJoueur.setNombreBeyPoints(t.getNombreBeyPoints());
+            changeImageViewImg(imgFond,"Environnement/fond-boutique_2.png");
+            visible(apBoutique);
+            changeZone("Environnement/fond-boutique_2.png",apBoutique);
+            changeImageViewImg(imgCoffre,"Bouton_Spécial/toupie-invocation.png");
+            changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
+            changeImageViewImg(imgLogo,"Logo/Logo_BeyPoint.png");
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setTitle("Pas Assez de BeyPoints");
+            a.setContentText(null);
+            a.setHeaderText("Il vous manque " + (700 - toupieJoueur.getNombreBeyPoints()) + " BeyPoints");
+            a.showAndWait();
+
         }
-
-
     }
+
 
     public void afficheForgeDisc(){
         int nombreAleatoire = (int) (Math.random()*9);
@@ -1020,38 +1043,41 @@ public void retourMenu(){
     public void btnAdvFafnir(MouseEvent event) {
         momentLancer();
         if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(3).getNomToupieEnnemie());
 
         }
         if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(3).getNomToupieEnnemie());
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(3).getNomToupieEnnemie());
 
         }
-        initialiserCombat("Toupie/fafnir_gpt.png");
-        choixToupieEnn = 1;
+        toupieAdv = listToupieEnnemie.get(3);
+
+        initialiserCombat("Toupie/fafnir_gpt.png",3);
+        //choixToupieEnn = 1;
     }
 
     @FXML
     public void btnAdvZachilles(MouseEvent event) {
         momentLancer();
         if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(5).getNomToupieEnnemie());
 
         }
         if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(5).getNomToupieEnnemie());
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(5).getNomToupieEnnemie());
 
         }
-        initialiserCombat("Toupie/ZA_.11.Xt_2.png");
-        choixToupieEnn = 2;
+        toupieAdv = listToupieEnnemie.get(5);
+        initialiserCombat("Toupie/ZA_.11.Xt_2.png",5);
+        //choixToupieEnn = 2;
 
 
     }
@@ -1060,22 +1086,22 @@ public void retourMenu(){
     public void btnAdvValkyrie(MouseEvent event) {
         momentLancer();
         if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
 
         }
         if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
 
         }
 
+        toupieAdv = listToupieEnnemie.get(1);
 
-
-        initialiserCombat("Toupie/valkyrie_gpt.png");
-        choixToupieEnn = 3;
+        initialiserCombat("Toupie/valkyrie_gpt.png",1);
+        //choixToupieEnn = 3;
 
 
     }
@@ -1084,19 +1110,20 @@ public void retourMenu(){
     public void btnAdvAshura(MouseEvent event) {
         momentLancer();
         if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
 
         }
         if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
 
         }
-        initialiserCombat("Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
-        choixToupieEnn = 4;
+        toupieAdv = listToupieEnnemie.get(4);
+        initialiserCombat("Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png",4);
+        //choixToupieEnn = 4;
 
     }
 
@@ -1104,19 +1131,20 @@ public void retourMenu(){
     public void btnAdvSalamander(MouseEvent event) {
         momentLancer();
         if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(4).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
 
         }
         if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
 
         }
-        initialiserCombat("Toupie/Beyblade_Salamander.png");
-        choixToupieEnn = 5;
+        toupieAdv = listToupieEnnemie.get(2);
+        initialiserCombat("Toupie/Beyblade_Salamander.png",2);
+        //choixToupieEnn = 5;
 
     }
 
@@ -1139,16 +1167,17 @@ public void retourMenu(){
             demarrerCompteARebours(listToupie.get(2).getNomToupie(),listToupieEnnemie.get(0).getNomToupieEnnemie());
 
         }
+        toupieAdv = listToupieEnnemie.get(0);
 
-        initialiserCombat("Toupie/kerbeus_gpt.png");
-        choixToupieEnn = 6;
+        initialiserCombat("Toupie/kerbeus_gpt.png",0);
+        //choixToupieEnn = 6;
 
     }
-    public void initialiserCombat(String imgToupie){
+    public void initialiserCombat(String imgToupie,int indiceToupieEnn){
 
         changeImageViewImg(imgToupieDeEnnemi,imgToupie);
-        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(0).getVieActuelleEnnemie());
-        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(0).getNomToupieEnnemie());
+        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(indiceToupieEnn).getVieActuelleEnnemie());
+        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(indiceToupieEnn).getNomToupieEnnemie());
         invisibleImage(imgProtection);
         invisibleImage(imgRotationSteal);
 
@@ -1176,6 +1205,8 @@ public void retourMenu(){
                     ,listToupie.get(2).getVieActuelleToupie()
                     ,listToupie.get(2).getNomToupie()
             );
+            invisibleImage(imgProtection);
+            invisibleImage(imgRotationSteal);
 
         }
 
@@ -1202,12 +1233,12 @@ public void retourMenu(){
                 lblLancer.setText(etapes.get(index));
 
                 if (index == etapes.size() - 1) {
-                    // Ici c'est "Hypervitesse !" = fin du compte à rebours
 
-                    // On initialise les toupies à ce moment-là
+
+
                     initialiserToupies(nomJoueur, nomAdversaire);
 
-                    // Petite pause avant d'entrer dans le stadium
+
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev -> {
                         fight();
@@ -1247,7 +1278,7 @@ public void retourMenu(){
             }
         }
 
-        fight(); // On lance automatiquement le combat quand tout est prêt
+        fight();
     }
 
 
@@ -1284,6 +1315,7 @@ public void retourMenu(){
 
     @FXML
     public void btnClickAttaque(MouseEvent event) {
+        int nombre_A = alea();
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
 
         if(toupieAdv.getVieActuelleEnnemie() > 0 && toupieJoueur.getVieActuelleToupie() > 0){
@@ -1325,40 +1357,87 @@ public void retourMenu(){
             writeRapideInt(lblBeyPoint , toupieJoueur.getNombreBeyPoints());
             writeRapideInt(lblNombreTour,1);
 
+
         }
+        /*if (nombre_A < 20){
+            if ("Kerbeus Central Defense".equalsIgnoreCase(toupieAdv.getNomToupieEnnemie())){
+                protectionEnnemie();
+                toupieAdv.reduireProtectionEnnemie();
+                majAffichageProtectionEnnemie();
+            }
+        }*/
+
 
 
 
 
 
     }
-    public void attaqueAdverse(){
-        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie()/toupieAdv.getVieMaxEnnemie();
-        int alea = alea();
+    public void attaqueAdverse() {
 
         float degats = toupieAdv.attaqueGlobale();
-        /*if ("Drain Fafnir".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
-            // Absorption des dégâts par Drain Fafnir (20%)
-            float absorption = degats * 0.2f;
-            toupieJoueur.gagnerVie(absorption);  // Gagner des PV au lieu de perdre
-            degats -= absorption;  // Réduire les dégâts restants après absorption
-            System.out.println("Drain Fafnir absorbe " + absorption + " PV !");
-        }*/
-        toupieJoueur.perdrePDV(degats);
-        barrevieToupieEnnemie.setProgress(pourcentageAdv);
-        //if ()
 
+        if ("Drain Fafnir".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+            int chance = alea();
+            if (chance < 40) {
+                volRotationEnnemie();
 
-        vitaMajJoueur();
+                float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
+                barrevieToupieEnnemie.setProgress(pourcentageAdv);
+                System.out.println("Absorption réussi");
+            } else {
+                toupieJoueur.perdrePDV(degats);
+                vitaMajJoueur();
+                float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
+                barrevieToupieEnnemie.setProgress(pourcentageAdv);
+                System.out.println("Absorption échouée");
+            }
+        } else {
+            toupieJoueur.perdrePDV(degats);
+            vitaMajJoueur();
+            float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
+            barrevieToupieEnnemie.setProgress(pourcentageAdv);
+            toupieJoueur.reduireProtection();
+            majAffichageProtection();
+        }
 
-        writeRapideInt(lblNombreTour , Tour.suivant());
-        toupieJoueur.reduireProtection(); // fin de tour => on décrémente
-        majAffichageProtection(); // met à jour l’image selon le nouvel état
-
-
+        writeRapideInt(lblNombreTour, Tour.suivant());
     }
+
+
+    public void protectionEnnemie(){
+        toupieAdv.activerProtectionEnnemie();
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("Augmentation de défense");
+        a.setHeaderText("Pendant 3 tours les dégâts adverses seront réduits");
+        a.setContentText(null);
+        a.showAndWait();
+    }
+    public float volRotationEnnemie() {
+        float degatsSubis = (float) (toupieAdv.getVieMaxEnnemie() * 0.2);
+
+        toupieAdv.gagnerVieEnnemie(degatsSubis);
+        vitaMajAdv();
+
+
+        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
+        barrevieToupieEnnemie.setProgress(pourcentageAdv);
+
+
+
+
+        return degatsSubis;
+    }
+
     public void majAffichageProtection() {
         if (toupieJoueur.estEnProtection()) {
+            invisibleImage(imgProtection);
+        } else {
+            visibleImage(imgProtection);
+        }
+    }
+    public void majAffichageProtectionEnnemie() {
+        if (toupieAdv.estEnProtectionEnnemie()) {
             invisibleImage(imgProtection);
         } else {
             visibleImage(imgProtection);
@@ -1412,22 +1491,22 @@ public void retourMenu(){
     @FXML
     public void btnRotationSteal(MouseEvent event) {
         if ("Drain Fafnir".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
-            // Appel de l'attaque adverse pour calculer et absorber les dégâts
+
             float degatsSubis = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
             toupieJoueur.gagnerVie(degatsSubis);
             vitaMajJoueur();
 
-            // Mise à jour de la barre de vie du joueur
+
             float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
             barreVieToupiePerso.setProgress(pourcentageJoueur);
 
-            // Si la vie dépasse le maximum, ajuster
+
             if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()){
                 toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
                 writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
             }
 
-            // Log pour vérifier l'absorption
+
             System.out.println("Drain Fafnir a absorbé " + (degatsSubis * 0.2f) + " PV après avoir subi " + degatsSubis + " dégâts !");
         } else {
             System.out.println("Rotation Steal impossible : ce n'est pas Drain Fafnir !");

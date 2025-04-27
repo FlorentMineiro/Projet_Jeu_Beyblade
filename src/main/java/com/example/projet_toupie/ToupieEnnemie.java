@@ -21,6 +21,7 @@ public class ToupieEnnemie  {
         private Rotation rotationEnnemie;
         private String urlToupieEnnemie;
         private Tour tourEnnemie;
+        private int toursDeProtectionRestants = 0;
 
         public ToupieEnnemie(String nomToupieEnnemie ,EnergyLayer energyLayerEnnemie, ForgeDisc forgeDiscsEnnemie, PerformanceTip performanceTipEnnemie, ClasseToupie classeToupieEnnemie, int vieMaxEnnemie,float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie , int esquiveEnnemie, Rotation rotationEnnemie,String urlToupieEnnemiee) {
             this.nomToupieEnnemie = nomToupieEnnemie;
@@ -238,6 +239,10 @@ public class ToupieEnnemie  {
         if (degat < 0){
             degat = 0;
         }
+        if (estEnProtectionEnnemie()) {
+            degat *= 0.5f;
+            System.out.println("Protection active : dégâts réduits !");
+        }
         return degat;
     }
 
@@ -254,6 +259,12 @@ public class ToupieEnnemie  {
             degat = 0;
         }
         return degat;
+    }
+    public void gagnerVieEnnemie(float quantite) {
+        this.vieActuelleEnnemie += quantite;
+        if (this.vieActuelleEnnemie > this.vieMaxEnnemie) {
+            this.vieActuelleEnnemie = this.vieMaxEnnemie; // pour ne pas dépasser la vie max
+        }
     }
 
    /* public float retourneDefense(ToupieEnnemie attaquant) {
@@ -285,6 +296,22 @@ public class ToupieEnnemie  {
 
        return degat;
    }
+    public void activerProtectionEnnemie() {
+        this.toursDeProtectionRestants = 4;
+    }
+
+    public boolean estEnProtectionEnnemie() {
+
+
+        return this.toursDeProtectionRestants > 0;
+    }
+
+    public void reduireProtectionEnnemie() {
+
+        if (toursDeProtectionRestants > 0) {
+            toursDeProtectionRestants--;
+        }
+    }
 
 
 

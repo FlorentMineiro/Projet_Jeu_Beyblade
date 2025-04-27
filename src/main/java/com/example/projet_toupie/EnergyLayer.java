@@ -60,7 +60,7 @@ public class EnergyLayer {
         this.dbSystem = dbSystem;
     }
 
-    // Redéfinition de equals() pour comparer les objets par leur nom uniquement
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

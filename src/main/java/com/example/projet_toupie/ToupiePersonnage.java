@@ -156,7 +156,7 @@ public class ToupiePersonnage {
 
         if ("Attaque".equalsIgnoreCase(this.classeToupie.getTypeToupie())) {
             if ("Endurance".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
-                degat *= 1.3;
+                degat *= 1.1;
             } else if ("Défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
                 degat *= 0.75;
             }

@@ -7,7 +7,7 @@ import javafx.scene.control.MenuItem;
 import java.text.BreakIterator;
 
 public class QTELancer {
-    // Durée max pour réussir le QTE (ex: 3 secondes)
+
     private int tempsMax;
     private boolean reussi;
     private BreakIterator lblQTEMessage;
@@ -16,7 +16,7 @@ public class QTELancer {
         this.tempsMax = tempsMax;
     }
 
-    // Simulation du QTE (ex: bouton appuyé dans le bon timing)
+
     public boolean executerQTE() {
         int reaction = (int) (Math.random() * 5); // Simule une réaction entre 0 et 4 secondes
         this.reussi = reaction <= tempsMax; // Réussi si assez rapide
