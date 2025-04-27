@@ -11,7 +11,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
    <children>
-      <ImageView fx:id="imgFond" fitHeight="399.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgFond" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <AnchorPane fx:id="apFichePerso" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="601.0">
@@ -20,7 +20,7 @@
                </image>
             </ImageView>
             <ImageView fx:id="imgToupiePerso" fitHeight="150.0" fitWidth="180.0" layoutX="20.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
-            <Button layoutX="58.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#btnDetailToupie" style="-fx-background-color: white;" text="Détails " />
+            <Button layoutX="491.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#btnCollectionToupie" style="-fx-background-color: white;" text="Collections" />
             <Label fx:id="lblNomToupie" layoutX="20.0" layoutY="27.0" prefHeight="62.0" prefWidth="215.0" style="-fx-background-color: white;" text="...">
                <font>
                   <Font name="System Bold" size="16.0" />
@@ -319,9 +319,19 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgRotationSteal" fitHeight="70.0" fitWidth="82.0" layoutX="245.0" layoutY="318.0" onMouseClicked="#btnRotationSteal">
+            <ImageView fx:id="imgRotationSteal" fitHeight="70.0" fitWidth="82.0" layoutX="245.0" layoutY="318.0" onMouseClicked="#btnRotationSteal" visible="false">
                <image>
                   <Image url="@../../../../../../../../Downloads/Bouton-RotationSteal.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgModeSixLames" fitHeight="70.0" fitWidth="82.0" layoutX="348.0" layoutY="318.0" onMouseClicked="#btnModeSixLames">
+               <image>
+                  <Image url="@../../../Bouton-Combat/mode-6-lames.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgModeTroisLames" fitHeight="70.0" fitWidth="82.0" layoutX="463.0" layoutY="318.0" onMouseClicked="#btnModeTroislames">
+               <image>
+                  <Image url="@../../../Bouton-Combat/Mode-3-lames.png" />
                </image>
             </ImageView>
          </children>

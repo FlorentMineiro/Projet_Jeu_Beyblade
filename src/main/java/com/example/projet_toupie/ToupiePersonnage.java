@@ -162,7 +162,7 @@ public class ToupiePersonnage {
             }
         }
         if (alea() <= getCoupCritiqueToupie()){
-            degat *= 2;
+            degat *= 1.3;
         }
 
         return degat;
@@ -182,6 +182,9 @@ public class ToupiePersonnage {
         if (toursDeProtectionRestants > 0) {
             toursDeProtectionRestants--;
         }
+    }
+    public boolean finProtection(){
+        return this.toursDeProtectionRestants == 0;
     }
 
 

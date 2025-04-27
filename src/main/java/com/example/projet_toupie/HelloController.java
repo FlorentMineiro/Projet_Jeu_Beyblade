@@ -37,8 +37,6 @@ public class HelloController implements Initializable {
 
     private Node zoomableNode;
     @FXML
-    private ImageView imgFond;
-    @FXML
     private ImageView imgCoffre;
     private String mapCourante;
     @FXML
@@ -188,6 +186,12 @@ public class HelloController implements Initializable {
     private ImageView imgProtection;
     @FXML
     private ImageView imgRotationSteal;
+    @FXML
+    private ImageView imgModeSixLames;
+    @FXML
+    private ImageView imgFond;
+    @FXML
+    private ImageView imgModeTroisLames;
 
 
     @Override
@@ -608,8 +612,8 @@ public class HelloController implements Initializable {
                 ,Defense
                 , typeDefense,
 
-                1500,
-                1500,
+                2000,
+                2000,
                 35,
                 85,
                 60,
@@ -623,9 +627,9 @@ public class HelloController implements Initializable {
                 ,Evolution
                 , typeAttaque
                 ,
-                1200
+                1700
                 ,
-                1200
+                1700
                 ,90
                 ,45
                 ,50
@@ -638,8 +642,8 @@ public class HelloController implements Initializable {
                 ,Disk12,Operate
                 , typeEndurance
                 ,
-                1350
-                ,1350
+                1750
+                ,1750
                 ,60
                 ,55
                 ,85
@@ -652,8 +656,8 @@ public class HelloController implements Initializable {
                 ,Disk8
                 ,Nothing
                 , typeEndurance
-                ,1400
-                ,1400
+                ,1900
+                ,1900
                 ,50
                 ,40
                 ,90
@@ -666,8 +670,8 @@ public class HelloController implements Initializable {
                 ,DiskHurricane
                 ,Keep
                 , typeDefense
-                ,2450
-                ,2450
+                ,1950
+                ,1950
                 ,45
                 ,80
                 ,65
@@ -680,8 +684,8 @@ public class HelloController implements Initializable {
                 ,Disk11
                 ,Xtend
                 , typeAttaque
-                ,2250
-                ,2250
+                ,1750
+                ,1750
                 ,85
                 ,50
                 ,60
@@ -873,6 +877,12 @@ public class HelloController implements Initializable {
         }
 
     }
+    @FXML
+    public void btnCollectionToupie(MouseEvent event) {
+        clearAll();
+
+
+    }
 
     @FXML
     public void btnModeCombat(MouseEvent event) {
@@ -978,6 +988,7 @@ public class HelloController implements Initializable {
         invisible(apSelectionAdversaire);
         invisible(apLancerToupie);
         invisible(apDuelToupie);
+
     }
     public void clearAllImage(){
         invisibleImage(imgProtection);
@@ -1030,9 +1041,6 @@ public void retourMenu(){
         return;
     }
 
-    @FXML
-    public void btnDetailToupie(MouseEvent event) {
-    }
 
     @FXML
     public void btnRetour2(MouseEvent event) {
@@ -1180,6 +1188,8 @@ public void retourMenu(){
         writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(indiceToupieEnn).getNomToupieEnnemie());
         invisibleImage(imgProtection);
         invisibleImage(imgRotationSteal);
+        invisibleImage(imgModeSixLames);
+        invisibleImage(imgModeTroisLames);
 
         if (choixToupie == 1){
             affichageCombatGenerique("Toupie/fafnir_gpt.png",
@@ -1205,8 +1215,8 @@ public void retourMenu(){
                     ,listToupie.get(2).getVieActuelleToupie()
                     ,listToupie.get(2).getNomToupie()
             );
+            visibleImage(imgModeSixLames);
             invisibleImage(imgProtection);
-            invisibleImage(imgRotationSteal);
 
         }
 
@@ -1324,6 +1334,7 @@ public void retourMenu(){
             barreVieToupiePerso.setProgress(pourcentageJoueur);
             vitaMajAdv();
 
+
             if (toupieAdv.getVieActuelleEnnemie() != 0){
                 attaqueAdverse();
             }
@@ -1386,22 +1397,31 @@ public void retourMenu(){
                 barrevieToupieEnnemie.setProgress(pourcentageAdv);
                 System.out.println("Absorption réussi");
             } else {
-                toupieJoueur.perdrePDV(degats);
-                vitaMajJoueur();
-                float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
-                barrevieToupieEnnemie.setProgress(pourcentageAdv);
-                System.out.println("Absorption échouée");
+                appliquerDegatsSurJoueur(degats);
             }
         } else {
-            toupieJoueur.perdrePDV(degats);
-            vitaMajJoueur();
-            float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
-            barrevieToupieEnnemie.setProgress(pourcentageAdv);
-            toupieJoueur.reduireProtection();
-            majAffichageProtection();
+            appliquerDegatsSurJoueur(degats);
+
+
         }
 
+
         writeRapideInt(lblNombreTour, Tour.suivant());
+    }
+    private void appliquerDegatsSurJoueur(float degats) {
+        if ("kerbeus".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) { // Si on joue Kerbeus
+            if (toupieJoueur.estEnProtection()) { // protection active
+                degats *= 0.4; // exemple : réduire les dégâts
+            }
+            toupieJoueur.reduireProtection();
+            if (toupieJoueur.finProtection()) {
+                visibleImage(imgProtection); // la protection est finie, on ré-affiche
+            }
+        }
+        toupieJoueur.perdrePDV(degats);
+        vitaMajJoueur();
+        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
+        barrevieToupieEnnemie.setProgress(pourcentageAdv);
     }
 
 
@@ -1429,20 +1449,7 @@ public void retourMenu(){
         return degatsSubis;
     }
 
-    public void majAffichageProtection() {
-        if (toupieJoueur.estEnProtection()) {
-            invisibleImage(imgProtection);
-        } else {
-            visibleImage(imgProtection);
-        }
-    }
-    public void majAffichageProtectionEnnemie() {
-        if (toupieAdv.estEnProtectionEnnemie()) {
-            invisibleImage(imgProtection);
-        } else {
-            visibleImage(imgProtection);
-        }
-    }
+
 
     public void reinitialisation(){
         toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
@@ -1477,8 +1484,8 @@ public void retourMenu(){
     }
     @FXML
     public void btnProtection(MouseEvent event) {
-        toupieJoueur.activerProtection(); // active la protection pour 3 tours
-        visibleImage(imgProtection); // affiche l’image
+        toupieJoueur.activerProtection(); // démarre la protection
+        invisibleImage(imgProtection);    // cache l'icône de protection
 
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("Augmentation de défense");
@@ -1486,6 +1493,7 @@ public void retourMenu(){
         a.setContentText(null);
         a.showAndWait();
     }
+
 
 
     @FXML
@@ -1512,6 +1520,16 @@ public void retourMenu(){
             System.out.println("Rotation Steal impossible : ce n'est pas Drain Fafnir !");
         }
     }
+    @FXML
+    public void btnModeTroislames(MouseEvent event) {
+        invisibleImage(imgModeTroisLames);
+    }
+
+    @FXML
+    public void btnModeSixLames(MouseEvent event) {
+        visibleImage(imgModeTroisLames);
+    }
+
 
 
 
@@ -1519,6 +1537,9 @@ public void retourMenu(){
         int alea = (int) (Math.random() * 101);
         return alea;
     }
+
+
+
 
 
 
