@@ -162,7 +162,7 @@ public class ToupiePersonnage {
             }
         }
         if (alea() <= getCoupCritiqueToupie()){
-            degat *= 1.3;
+            degat *= 1.8;
         }
 
         return degat;
@@ -186,9 +186,26 @@ public class ToupiePersonnage {
     public boolean finProtection(){
         return this.toursDeProtectionRestants == 0;
     }
+    private boolean modeSixLames = false;
+
+    public void activerModeSixLames() {
+        this.modeSixLames = true;
+    }
+
+    public void desactiverModeSixLames() {
+        this.modeSixLames = false;
+    }
+
+    public boolean isModeSixLames() {
+        return modeSixLames;
+    }
+    public float barrage(){
+        return (float)(this.attaque * 0.80);
+    }
 
 
-   /* public float reductionAttaque(ToupiePersonnage attaquant) {
+
+    /* public float reductionAttaque(ToupiePersonnage attaquant) {
         // Dégâts initiaux reçus (on suppose que l'attaquant attaque à pleine force)
         float degatsRecus = attaquant.attaqueGlobale(this); // appel à attaqueGlobale avec "this" en tant que cible
 

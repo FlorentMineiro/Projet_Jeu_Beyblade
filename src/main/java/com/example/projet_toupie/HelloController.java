@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import static com.example.projet_toupie.Tour.getNumeroTour;
@@ -192,6 +193,8 @@ public class HelloController implements Initializable {
     private ImageView imgFond;
     @FXML
     private ImageView imgModeTroisLames;
+    @FXML
+    private Label lblCombo;
 
 
     @Override
@@ -200,6 +203,8 @@ public class HelloController implements Initializable {
         visible(apCommencement);
         invisibleImage(imgProtection);
         invisibleImage(imgRotationSteal);
+        Font policeLuckiestGuy = Font.loadFont(getClass().getResourceAsStream("/fonts/LuckiestGuy-Regular.ttf"), 42);
+        lblCombo.setFont(policeLuckiestGuy);
 
 
 
@@ -1330,9 +1335,36 @@ public void retourMenu(){
 
         if(toupieAdv.getVieActuelleEnnemie() > 0 && toupieJoueur.getVieActuelleToupie() > 0){
 
-            toupieAdv.perdrePDV(toupieJoueur.attaqueGlobale());
-            barreVieToupiePerso.setProgress(pourcentageJoueur);
-            vitaMajAdv();
+
+            if (toupieJoueur.isModeSixLames()){
+                int nombreCoups;
+                if (nombre_A < 8) {
+                    nombreCoups = 5;
+                } else if (nombre_A < 25) {
+                    nombreCoups = 4;
+                } else if (nombre_A  < 45) {
+                    nombreCoups = 3;
+                } else if (nombre_A  < 75) {
+                    nombreCoups = 2;
+                } else {
+                    nombreCoups = 1;
+                }
+
+                for (int i = 0; i < nombreCoups; i++) {
+                    float degat = toupieJoueur.barrage();
+                    toupieAdv.perdrePDV(degat);
+                }
+                afficherCombo(nombreCoups);
+                barreVieToupiePerso.setProgress(pourcentageJoueur);
+                vitaMajAdv();
+            }else {
+                toupieAdv.perdrePDV(toupieJoueur.attaqueGlobale());
+                barreVieToupiePerso.setProgress(pourcentageJoueur);
+                vitaMajAdv();
+            }
+
+
+
 
 
             if (toupieAdv.getVieActuelleEnnemie() != 0){
@@ -1384,6 +1416,18 @@ public void retourMenu(){
 
 
     }
+
+    private void afficherCombo(int nombreCoups) {
+        lblCombo.setText(nombreCoups + " Coups !");
+        lblCombo.setVisible(true);
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> lblCombo.setVisible(false))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+
     public void attaqueAdverse() {
 
         float degats = toupieAdv.attaqueGlobale();
@@ -1522,13 +1566,28 @@ public void retourMenu(){
     }
     @FXML
     public void btnModeTroislames(MouseEvent event) {
+        visibleImage(imgModeSixLames);
         invisibleImage(imgModeTroisLames);
+        toupieJoueur.desactiverModeSixLames();
+        toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
     }
 
     @FXML
     public void btnModeSixLames(MouseEvent event) {
-        visibleImage(imgModeTroisLames);
+        if ("Brave Valkyrie".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
+            visibleImage(imgModeTroisLames);
+            invisibleImage(imgModeSixLames);
+            toupieJoueur.activerModeSixLames();
+        } else {
+
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Mode 6 Lames");
+            a.setHeaderText(null);
+            a.setContentText("Le mode 6 lames est uniquement disponible pour Brave Valkyrie !");
+            a.showAndWait();
+        }
     }
+
 
 
 
