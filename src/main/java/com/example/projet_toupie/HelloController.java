@@ -16,9 +16,11 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
@@ -121,7 +123,7 @@ public class HelloController implements Initializable {
     @FXML
     private AnchorPane apLancerToupie;
     EnergyLayer e;
-    private ToupiePersonnage toupieJoueur = new ToupiePersonnage("",null,1000,1000,50,50,50,50,50);
+    private ToupiePersonnage toupieJoueur = new ToupiePersonnage("",null,1000,1000,50,50,50,50,50,1000);
     private ToupieEnnemie toupieAdv = new ToupieEnnemie("",null,1000,1000,50,50,50,50,50);
     @FXML
     private Label lblQTE;
@@ -133,36 +135,6 @@ public class HelloController implements Initializable {
     private ImageView imgToupieDuPerso;
     @FXML
     private ImageView imgToupieDeEnnemi;
-
-
-    int choixToupie = 0;
-    int choixToupieEnn = 0;
-    /*ToupiePersonnage Drain_Fafnir;
-    ToupiePersonnage Brave_Valkyrie;
-    ToupiePersonnage Kerbeus;*/
-
-
-
-    ClasseToupie typeAttaque = new ClasseToupie("Attaque");
-    ClasseToupie typeDefense = new ClasseToupie("Défense");
-    ClasseToupie typeEndurance = new ClasseToupie("Endurance");
-    ClasseToupie equilibre = new ClasseToupie("Equilibre");
-
-    Rotation droite = new Rotation("droite");
-    Rotation gauche = new Rotation("gauche");
-    Rotation doubleRotation = new Rotation("double-rotation");
-
-    ToupieEnnemie KerbeusE;
-    ToupieEnnemie BraveValkyrieE;
-    ToupieEnnemie HellSalamanderE;
-    ToupieEnnemie DrainFafnirE;
-    ToupieEnnemie ZAchillesE;
-    ToupieEnnemie BushinAshuraE;
-
-
-
-
-    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,0,null,"null");
     @FXML
     private ProgressBar barreVieToupiePerso;
     @FXML
@@ -195,6 +167,48 @@ public class HelloController implements Initializable {
     private ImageView imgModeTroisLames;
     @FXML
     private Label lblCombo;
+    @FXML
+    private Label lblInfo;
+    @FXML
+    private AnchorPane apCollection;
+    @FXML
+    private GridPane gridCollection;
+    @FXML
+    private ImageView imgPiece;
+
+
+    int choixToupie = 0;
+    int choixToupieEnn = 0;
+    /*ToupiePersonnage Drain_Fafnir;
+    ToupiePersonnage Brave_Valkyrie;
+    ToupiePersonnage Kerbeus;*/
+    private int nombreAttaquesEvolution = 0;
+    int colonne = 0;
+    int ligne = 0;
+
+
+
+
+    ClasseToupie typeAttaque = new ClasseToupie("Attaque");
+    ClasseToupie typeDefense = new ClasseToupie("Défense");
+    ClasseToupie typeEndurance = new ClasseToupie("Endurance");
+    ClasseToupie typeEquilibre = new ClasseToupie("Equilibre");
+
+    Rotation droite = new Rotation("droite");
+    Rotation gauche = new Rotation("gauche");
+    Rotation doubleRotation = new Rotation("double-rotation");
+
+    ToupieEnnemie KerbeusE;
+    ToupieEnnemie BraveValkyrieE;
+    ToupieEnnemie HellSalamanderE;
+    ToupieEnnemie DrainFafnirE;
+    ToupieEnnemie ZAchillesE;
+    ToupieEnnemie BushinAshuraE;
+
+
+
+
+    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,0,null,"null");
 
 
     @Override
@@ -346,13 +360,13 @@ public class HelloController implements Initializable {
         EnergyLayer LayerBraveValkyrie = new EnergyLayer("Brave Valkyrie", EnergyLayer.SystemeLayer.SPARKING, droite, 90, 30, 30, 62, "Energy_Layer/EnergyLayer_BraveValkyrie.png", spBraveValkyrie);
 
 // Layers GT (Bushin Ashura)
-        EnergyLayer LayerAshuraBushinChip = new EnergyLayer("Ashura", EnergyLayer.SystemeLayer.GT, droite, 15, 20, 10, 2.9f, "Energy_Layer/GatinkoChipAshura.png", gtLayerBushin);
+        /*EnergyLayer LayerAshuraBushinChip = new EnergyLayer("Ashura", EnergyLayer.SystemeLayer.GT, droite, 15, 20, 10, 2.9f, "Energy_Layer/GatinkoChipAshura.png", gtLayerBushin);
         EnergyLayer LayerAshuraBushinWeight = new EnergyLayer("Ten", EnergyLayer.SystemeLayer.GT, droite, 5, 15, 10, 4.6f, "Energy_Layer/LayerWeightTen.png", gtLayerBushin);
-        EnergyLayer LayerAshuraBushinBase = new EnergyLayer("Bushin", EnergyLayer.SystemeLayer.GT, droite, 10, 40, 15, 7.3f, "Energy_Layer/LayerBaseBushin.png", gtLayerBushin);
+        EnergyLayer LayerAshuraBushinBase = new EnergyLayer("Bushin", EnergyLayer.SystemeLayer.GT, droite, 10, 40, 15, 7.3f, "Energy_Layer/LayerBaseBushin.png", gtLayerBushin);*/
         EnergyLayer LayerAshuraBushin = new EnergyLayer("Bushin Ashura", EnergyLayer.SystemeLayer.GT, droite, 30, 70, 35, 20.2f, "", gtLayerBushin);
 
 // Pièces spéciales
-        EnergyLayer LayerEndBlade = new EnergyLayer(" The End "
+        /*EnergyLayer LayerEndBlade = new EnergyLayer(" The End "
                 , EnergyLayer.SystemeLayer.DB
                 , droite
                 , 95
@@ -360,8 +374,8 @@ public class HelloController implements Initializable {
                 , 30
                 , 30
                 , "Energy_Layer/BladeEndCore.png"
-                ,dbLuciferKou);
-        EnergyLayer LayerLuciferARmor= new EnergyLayer("Lucifer"
+                ,dbLuciferKou);*/
+        /*EnergyLayer LayerLuciferARmor= new EnergyLayer("Lucifer"
                 , EnergyLayer.SystemeLayer.DB
                 , gauche
                 , 70
@@ -369,7 +383,7 @@ public class HelloController implements Initializable {
                 , 25
                 , 25
                 , "Energy_Layer/CoreLuciferII.png"
-                ,dbLuciferKou);
+                ,dbLuciferKou);*/
         EnergyLayer superkingChipLucifer = new EnergyLayer(
                 "Lucifer",
                 EnergyLayer.SystemeLayer.SPARKING,
@@ -393,7 +407,7 @@ public class HelloController implements Initializable {
                 spLuciferTheEnd2D
         );
 
-        EnergyLayer LayerBladeRoar = new EnergyLayer("Roar"
+        /*EnergyLayer LayerBladeRoar = new EnergyLayer("Roar"
                 , EnergyLayer.SystemeLayer.DB
                 , droite
                 , 85
@@ -401,8 +415,8 @@ public class HelloController implements Initializable {
                 , 35
                 , 28
                 , "Energy_Layer/BladeRoar.png"
-                ,DbGiga);
-        EnergyLayer LayerArmor10 = new EnergyLayer(" 10"
+                ,DbGiga);*/
+        /*EnergyLayer LayerArmor10 = new EnergyLayer(" 10"
                 , EnergyLayer.SystemeLayer.DB
                 , droite
                 , 10
@@ -410,7 +424,7 @@ public class HelloController implements Initializable {
                 , 45
                 , 18
                 , "Energy_Layer/Armor10.png"
-                ,DbGiga);
+                ,DbGiga);*/
         EnergyLayer LayerLuciferTheEnd = new EnergyLayer(
                 "Lucifer The End",
                 EnergyLayer.SystemeLayer.SPARKING,
@@ -433,7 +447,7 @@ public class HelloController implements Initializable {
                 "Energy_Layer/LayerRoarBahamut.png",
                 DbGiga
         );
-        EnergyLayer LayerLuciferTheEndDB = new EnergyLayer(
+        /*EnergyLayer LayerLuciferTheEndDB = new EnergyLayer(
                 "Lucifer The End",
                 EnergyLayer.SystemeLayer.DB,
                 droite,
@@ -443,21 +457,19 @@ public class HelloController implements Initializable {
                 24.3f, // poids
                 "Energy_Layer/LayerLuciferTheEndDB.png",
                 dbLuciferKou
-        );
+        );*/
         layer.add(LayerKerbeus);
         layer.add(LayerHellSalamander);
         layer.add(LayerDrainFafnir);
         layer.add(LayerZAchilles);
         layer.add(LayerBraveValkyrie);
-        layer.add(LayerAshuraBushinChip);
-        layer.add(LayerAshuraBushinWeight);
-        layer.add(LayerAshuraBushinBase);
-        layer.add(LayerEndBlade);
-        layer.add(LayerArmor10);
-        layer.add(LayerBladeRoar);
+
+
+
+
         layer.add(RingTheEnd);
         layer.add(superkingChipLucifer);
-        layer.add(LayerLuciferARmor);
+
 
 
         ToupiePersonnage Kerbeus = new ToupiePersonnage("Kerbeus Central Defense"
@@ -474,7 +486,7 @@ public class HelloController implements Initializable {
                 65,
                 droite,
                 "Toupie/kerbeus_gpt.png");
-        ToupiePersonnage Bushin_Ashura = new ToupiePersonnage("Bushin Ashura Hurricane Keep"
+        /*ToupiePersonnage Bushin_Ashura = new ToupiePersonnage("Bushin Ashura Hurricane Keep"
                 ,LayerAshuraBushin
                 ,DiskHurricane
                 ,Keep
@@ -487,7 +499,7 @@ public class HelloController implements Initializable {
                 ,25
                 ,75
                 ,droite
-                ,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
+                ,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");*/
         ToupiePersonnage Roar_Bahamut = new ToupiePersonnage("Roar Bahamut"
                 ,LayerRoarBahamut
                 ,DiskGiga
@@ -549,7 +561,7 @@ public class HelloController implements Initializable {
                 ,LayerZAchilles
                 ,Disk11
                 ,Xtend
-                , typeAttaque
+                , typeEquilibre
                 ,1250
                 ,1250
                 ,85
@@ -559,7 +571,7 @@ public class HelloController implements Initializable {
                 ,55
                 ,droite
                 ,"Toupie/ZA_.11.Xt_2.png");
-        ToupiePersonnage Lucifer_The_EndDB = new ToupiePersonnage("Lucifer The End"
+        /*ToupiePersonnage Lucifer_The_EndDB = new ToupiePersonnage("Lucifer The End"
                 ,LayerLuciferTheEndDB
                 ,DiskKou
                 ,Drift
@@ -573,7 +585,7 @@ public class HelloController implements Initializable {
         ,25
         ,60
         ,droite
-        ,"Toupie/BBSK_Lucifer_The_End_Kou_Drift_Beyblade.png");
+        ,"Toupie/BBSK_Lucifer_The_End_Kou_Drift_Beyblade.png");*/
         ToupiePersonnage Lucifer_The_EndSparking = new ToupiePersonnage("Lucifer The End"
                 ,LayerLuciferTheEnd
                 ,Chassis2D
@@ -597,13 +609,13 @@ public class HelloController implements Initializable {
 
 
         listToupie.add(Kerbeus);
-        listToupie.add(Bushin_Ashura);
+
         listToupie.add(Brave_Valkyrie);
         listToupie.add(Hell_Salamander);
         listToupie.add(Drain_Fafnir);
         listToupie.add(Z_Achilles);
         listToupie.add(Roar_Bahamut);
-        listToupie.add(Lucifer_The_EndDB);
+
         listToupie.add(Lucifer_The_EndSparking);
 
 
@@ -688,7 +700,7 @@ public class HelloController implements Initializable {
                 ,LayerZAchilles
                 ,Disk11
                 ,Xtend
-                , typeAttaque
+                , typeEquilibre
                 ,1750
                 ,1750
                 ,85
@@ -821,7 +833,8 @@ public class HelloController implements Initializable {
     @FXML
     public void btnBoutique(MouseEvent event) {
         clearAll();
-        t.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints());
+
+
         changeImageViewImg(imgFond,"Environnement/fond-boutique_2.png");
         visible(apBoutique);
         changeZone("Environnement/fond-boutique_2.png",apBoutique);
@@ -885,9 +898,76 @@ public class HelloController implements Initializable {
     @FXML
     public void btnCollectionToupie(MouseEvent event) {
         clearAll();
+        visible(apCollection);
 
 
     }
+
+
+    /*private void afficherCollection() {
+
+        visible(apCollection);
+
+        gridCollection.getChildren().clear(); // Vide l'ancienne grille
+
+        List<EnergyLayer> layers = toupieJoueur.getCollectionPieces().getEnergyLayers();
+        List<ForgeDisc> discs = toupieJoueur.getCollectionPieces().getForgeDiscs();
+        List<PerformanceTip> tips = toupieJoueur.getCollectionPieces().getPerformanceTips();
+
+        colonne = 0;
+         ligne = 0;
+
+        // Parcourir toutes les EnergyLayer
+        for (EnergyLayer layer : layers) {
+            ajouterPieceCollection(layer.getUrlLayer(), layer.isEstDebloqueeLayer());
+            colonne++;
+            if (colonne == 5) { colonne = 0; ligne++; }
+        }
+
+        // Pareil pour les ForgeDisc
+        for (ForgeDisc disc : discs) {
+            ajouterPieceCollection(disc.getUrlDisc(), disc.isEstDebloqueeDisc());
+            colonne++;
+            if (colonne == 5) { colonne = 0; ligne++; }
+        }
+
+        // Pareil pour les PerformanceTip
+        for (PerformanceTip tip : tips) {
+            ajouterPieceCollection(tip.getUrlTip(), tip.isEstDebloqueeTip());
+            colonne++;
+            if (colonne == 5) { colonne = 0; ligne++; }
+        }
+    }
+
+    private void ajouterPieceCollection(String urlImage, boolean estDebloquee) {
+
+
+        try {
+            if (estDebloquee) {
+                // Charge l'image de la pièce débloquée
+                changeImageViewImg(imgPiece,urlImage);
+            } else {
+                // Charge l'image du cadenas si la pièce est verrouillée
+                changeImageViewImg(imgPiece,"Bouton_Spécial/cadenas.png");
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors du chargement de l'image : " + e.getMessage());
+        }
+
+        imgPiece.setFitWidth(100);
+        imgPiece.setFitHeight(100);
+
+        // Clique pour équiper si débloqué
+        imgPiece.setOnMouseClicked(event -> {
+            if (estDebloquee) {
+                changeImageViewImg(imgPiece, urlImage);
+            }
+        });
+
+        gridCollection.add(imgPiece, colonne, ligne);
+    }*/
+
+
 
     @FXML
     public void btnModeCombat(MouseEvent event) {
@@ -912,15 +992,7 @@ public class HelloController implements Initializable {
 
         if (toupieJoueur.getNombreBeyPoints() >= 700) {
 
-            int chiffreAlea = (int) (Math.random() * 3);
-
-            if (chiffreAlea == 1) {
-                afficheForgeDisc();
-            } else if (chiffreAlea == 2) {
-                affichePerformanceTip();
-            } else {
-                afficheEnergyLayer();
-            }
+            invoquerPiece();
 
             toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() - 700);
             writeRapideInt(lblBeyPoint, toupieJoueur.getNombreBeyPoints());
@@ -946,42 +1018,54 @@ public class HelloController implements Initializable {
     }
 
 
-    public void afficheForgeDisc(){
-        int nombreAleatoire = (int) (Math.random()*9);
-        ForgeDisc selectedDisc = disc.get(nombreAleatoire);
-        changeImageViewImg(imgPieceToupie, selectedDisc.getUrlDisc());
-        writeRapideInt(lblStatAttaque, selectedDisc.getStatAttaqueDisc());
-        writeRapideInt(lblStatDefense, selectedDisc.getStatDefenseDisc());
-        writeRapideInt(lblStatEndurance, selectedDisc.getStatEnduranceDisc());
-        writeRapideInt(lblPoids, (int) selectedDisc.getPoidsDisc());
+    public void invoquerPiece() {
+        Random random = new Random();
+        int pieceType = random.nextInt(3); // 0 = EnergyLayer, 1 = ForgeDisc, 2 = PerformanceTip
+
+        switch (pieceType) {
+            case 0:
+                EnergyLayer newLayer = layer.get(random.nextInt(layer.size())); // Choix aléatoire dans la liste
+                toupieJoueur.getCollectionPieces().ajouterEnergyLayer(newLayer);
+                afficherInfoPiece("Energy Layer", newLayer.getNomLayer());
+                changeImageViewImg(imgPieceToupie, newLayer.getUrlLayer());
+                writeRapideInt(lblStatAttaque, newLayer.getStatAttaqueLayer());
+                writeRapideInt(lblStatDefense, newLayer.getStatDefenseLayer());
+                writeRapideInt(lblStatEndurance, newLayer.getStatEnduranceLayer());
+                writeRapideInt(lblPoids, (int) newLayer.getPoidsLayer());
+                break;
+
+            case 1:
+                ForgeDisc newDisc = disc.get(random.nextInt(disc.size()));
+                toupieJoueur.getCollectionPieces().ajouterForgeDisc(newDisc);
+                afficherInfoPiece("Forge Disc", newDisc.getNomDisc());
+                changeImageViewImg(imgPieceToupie, newDisc.getUrlDisc());
+                writeRapideInt(lblStatAttaque, newDisc.getStatAttaqueDisc());
+                writeRapideInt(lblStatDefense, newDisc.getStatDefenseDisc());
+                writeRapideInt(lblStatEndurance, newDisc.getStatEnduranceDisc());
+                writeRapideInt(lblPoids, (int) newDisc.getPoidsDisc());
+                break;
+
+            case 2:
+                PerformanceTip newTip = tip.get(random.nextInt(tip.size()));
+                toupieJoueur.getCollectionPieces().ajouterPerformanceTip(newTip);
+                afficherInfoPiece("Performance Tip", newTip.getNomTip());
+                changeImageViewImg(imgPieceToupie, newTip.getUrlTip());
+                writeRapideInt(lblStatAttaque, newTip.getStatAttaqueTip());
+                writeRapideInt(lblStatDefense, newTip.getStatDefenseTip());
+                writeRapideInt(lblStatEndurance, newTip.getStatEnduranceTip());
+                writeRapideInt(lblPoids, (int) newTip.getPoidsTip());
+                break;
+        }
+    }
+    public void afficherInfoPiece(String type, String nom) {
 
 
-
-
+       lblInfo.setText(nom + " (" + type + ")");
     }
 
-    public void affichePerformanceTip(){
-        int nombreAleatoire = (int) (Math.random()*8);
-        PerformanceTip selectedTip = tip.get(nombreAleatoire);
-        changeImageViewImg(imgPieceToupie, selectedTip.getUrlTip());
-        writeRapideInt(lblStatAttaque, selectedTip.getStatAttaqueTip());
-        writeRapideInt(lblStatDefense, selectedTip.getStatDefenseTip());
-        writeRapideInt(lblStatEndurance, selectedTip.getStatEnduranceTip());
-        writeRapideInt(lblPoids, (int) selectedTip.getPoidsTip());
 
 
-    }
-    public void afficheEnergyLayer(){
-        int nombreAleatoire = (int) (Math.random()*15);
-        EnergyLayer selectedTip = layer.get(nombreAleatoire);
-        changeImageViewImg(imgPieceToupie, selectedTip.getUrlLayer());
-        writeRapideInt(lblStatAttaque, selectedTip.getStatAttaqueLayer());
-        writeRapideInt(lblStatDefense, selectedTip.getStatDefenseLayer());
-        writeRapideInt(lblStatEndurance, selectedTip.getStatEnduranceLayer());
-        writeRapideInt(lblPoids, (int) selectedTip.getPoidsLayer());
 
-
-    }
 
 
     public void clearAll(){
@@ -993,18 +1077,10 @@ public class HelloController implements Initializable {
         invisible(apSelectionAdversaire);
         invisible(apLancerToupie);
         invisible(apDuelToupie);
+        invisible(apCollection);
 
     }
-    public void clearAllImage(){
-        invisibleImage(imgProtection);
-        invisibleImage(imgPourAttaquer);
-        invisibleImage(imgPourEsquiver);
-    }
-    public void putAllImage(){
-        invisibleImage(imgProtection);
-        invisibleImage(imgPourAttaquer);
-        invisibleImage(imgPourEsquiver);
-    }
+
 
 
     @FXML
@@ -1331,20 +1407,19 @@ public void retourMenu(){
     @FXML
     public void btnClickAttaque(MouseEvent event) {
         int nombre_A = alea();
-        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
 
-        if(toupieAdv.getVieActuelleEnnemie() > 0 && toupieJoueur.getVieActuelleToupie() > 0){
+        if (toupieAdv.getVieActuelleEnnemie() > 0 && toupieJoueur.getVieActuelleToupie() > 0) {
 
-
-            if (toupieJoueur.isModeSixLames()){
+            if (toupieJoueur.isModeSixLames()) {
                 int nombreCoups;
                 if (nombre_A < 8) {
                     nombreCoups = 5;
                 } else if (nombre_A < 25) {
                     nombreCoups = 4;
-                } else if (nombre_A  < 45) {
+                } else if (nombre_A < 45) {
                     nombreCoups = 3;
-                } else if (nombre_A  < 75) {
+                } else if (nombre_A < 75) {
                     nombreCoups = 2;
                 } else {
                     nombreCoups = 1;
@@ -1352,28 +1427,41 @@ public void retourMenu(){
 
                 for (int i = 0; i < nombreCoups; i++) {
                     float degat = toupieJoueur.barrage();
+
+                    // BOOST Evolution
+                    if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
+                        nombreAttaquesEvolution++;
+                        float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                        degat *= bonus;
+                    }
+
                     toupieAdv.perdrePDV(degat);
+
                 }
                 afficherCombo(nombreCoups);
                 barreVieToupiePerso.setProgress(pourcentageJoueur);
                 vitaMajAdv();
-            }else {
-                toupieAdv.perdrePDV(toupieJoueur.attaqueGlobale());
+            } else {
+                float degat = toupieJoueur.attaqueGlobale();
+
+                // BOOST Evolution
+                if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
+                    nombreAttaquesEvolution++;
+                    float bonus = 1.0f + 0.05f * nombreAttaquesEvolution;
+                    degat *= bonus;
+                }
+
+                toupieAdv.perdrePDV(degat);
                 barreVieToupiePerso.setProgress(pourcentageJoueur);
                 vitaMajAdv();
             }
 
-
-
-
-
-            if (toupieAdv.getVieActuelleEnnemie() != 0){
+            if (toupieAdv.getVieActuelleEnnemie() != 0) {
                 attaqueAdverse();
             }
-
-
         }
-        if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0){
+
+        if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Dommage");
             a.setContentText(null);
@@ -1383,13 +1471,14 @@ public void retourMenu(){
             retourMenu();
             reinitialisation();
             reinitialisationBarre();
-            writeRapideInt(lblNombreTour,1);
-
+            writeRapideInt(lblNombreTour, 1);
+            nombreAttaquesEvolution = 0; // Reset Evolution
         }
-        if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0){
+
+        if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Félicitation ");
-            a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + "BeyPoints");
+            a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
             a.setHeaderText("Vous avez Gagné !");
             a.showAndWait();
             toupieJoueur.setVieActuelle(0);
@@ -1397,25 +1486,12 @@ public void retourMenu(){
             reinitialisation();
             reinitialisationBarre();
             toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 1000);
-            writeRapideInt(lblBeyPoint , toupieJoueur.getNombreBeyPoints());
-            writeRapideInt(lblNombreTour,1);
-
-
+            writeRapideInt(lblBeyPoint, toupieJoueur.getNombreBeyPoints());
+            writeRapideInt(lblNombreTour, 1);
+            nombreAttaquesEvolution = 0; // Reset Evolution
         }
-        /*if (nombre_A < 20){
-            if ("Kerbeus Central Defense".equalsIgnoreCase(toupieAdv.getNomToupieEnnemie())){
-                protectionEnnemie();
-                toupieAdv.reduireProtectionEnnemie();
-                majAffichageProtectionEnnemie();
-            }
-        }*/
-
-
-
-
-
-
     }
+
 
     private void afficherCombo(int nombreCoups) {
         lblCombo.setText(nombreCoups + " Coups !");
@@ -1429,6 +1505,7 @@ public void retourMenu(){
     }
 
     public void attaqueAdverse() {
+        int chanceEnn = alea();
 
         float degats = toupieAdv.attaqueGlobale();
 
@@ -1442,9 +1519,11 @@ public void retourMenu(){
                 System.out.println("Absorption réussi");
             } else {
                 appliquerDegatsSurJoueur(degats);
+                System.out.println("Absorption échouée");
             }
-        } else {
+        } else if (toupieAdv.isModeSixLamesEnnemie()) {
             appliquerDegatsSurJoueur(degats);
+
 
 
         }

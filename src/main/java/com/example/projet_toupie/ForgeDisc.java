@@ -9,6 +9,7 @@ private int statDefenseDisc;
 private int statEnduranceDisc;
 private double poidsDisc;
 public String urlDisc;
+public boolean estDebloqueeDisc;
 
     public ForgeDisc(String nomDisc, int statAttaqueDisc, int statDefenseDisc, int statEnduranceDisc, double poidsDisc, String urlDisc) {
         this.nomDisc = nomDisc;
@@ -44,12 +45,16 @@ public String urlDisc;
 
 
 
-        public String getNomTip() { return nomDisc; }
+        public String getNomDisc() { return nomDisc; }
         public int getStatAttaqueDisc() { return statAttaqueDisc; }
         public int getStatDefenseDisc() { return statDefenseDisc; }
         public int getStatEnduranceDisc() { return statEnduranceDisc; }
         public double getPoidsDisc() { return poidsDisc; }
         public String getUrlDisc() { return urlDisc; }
+
+    public boolean isEstDebloqueeDisc() {
+        return estDebloqueeDisc;
     }
+}
 
 

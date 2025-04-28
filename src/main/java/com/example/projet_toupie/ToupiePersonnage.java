@@ -9,6 +9,8 @@ public class ToupiePersonnage {
     private PerformanceTip performanceTip;
     public static  ClasseToupie classeToupie = new ClasseToupie("Neutre");
     private ClasseToupie classeToupie2;
+    private static CollectionPieces collectionPieces = new CollectionPieces();
+
 
     private float vieMax;
     private float vieActuelle;
@@ -47,7 +49,7 @@ public class ToupiePersonnage {
         this.urlToupie = urlToupie;
     }
 
-    public ToupiePersonnage(String nomToupie, ClasseToupie classeToupie, float vieMax, float vieActuelle, float attaque, int defense, int endurance, int coupCritique, int esquive) {
+    public ToupiePersonnage(String nomToupie, ClasseToupie classeToupie, float vieMax, float vieActuelle, float attaque, int defense, int endurance, int coupCritique, int esquive,int nombreBeyPoints) {
         this.nomToupie = nomToupie;
         this.classeToupie = classeToupie;
         this.vieMax = vieMax;
@@ -57,6 +59,7 @@ public class ToupiePersonnage {
         this.endurance = endurance;
         this.coupCritique = coupCritique;
         this.esquive = esquive;
+        this.nombreBeyPoints = nombreBeyPoints;
     }
 
     public ToupiePersonnage(ClasseToupie classeToupie2) {
@@ -200,8 +203,21 @@ public class ToupiePersonnage {
         return modeSixLames;
     }
     public float barrage(){
-        return (float)(this.attaque * 0.80);
+       float degats =  (float)(this.attaque * 0.80);
+       int chance = alea();
+       setCoupCritique(getCoupCritiqueToupie() - 5);
+       if (chance < getCoupCritiqueToupie()){
+           degats *= 1.5;
+       }
+
+
+       return degats;
+
     }
+    public CollectionPieces getCollectionPieces() {
+        return collectionPieces;
+    }
+
 
 
 

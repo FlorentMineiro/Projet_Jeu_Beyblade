@@ -20,6 +20,7 @@ public class EnergyLayer {
     private int statEnduranceLayer;
     private double poidsLayer;
     private String urlLayer;
+    public boolean estDebloqueeLayer;
 
     // Constructeur principal avec toutes les stats
     public EnergyLayer(String nomLayer, SystemeLayer systemeLayer,Rotation rotationLayer, int statAttaqueLayer, int statDefenseLayer, int statEnduranceLayer, double poidsLayer, String urlLayer) {
@@ -82,4 +83,8 @@ public class EnergyLayer {
     public int getStatEnduranceLayer() { return statEnduranceLayer; }
     public double getPoidsLayer() { return poidsLayer; }
     public String getUrlLayer() { return urlLayer; }
+
+    public boolean isEstDebloqueeLayer() {
+        return estDebloqueeLayer;
+    }
 }

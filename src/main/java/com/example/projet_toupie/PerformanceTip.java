@@ -9,6 +9,7 @@ public class PerformanceTip {
     private int statEnduranceTip;
     private double poidsTip;
     public String urlTip;
+    public boolean estDebloqueeTip;
 
     public PerformanceTip(String nomTip, int statAttaqueTip, int statDefenseTip, int statEnduranceTip, double poidsTip, String urlTip) {
         this.nomTip = nomTip;
@@ -38,7 +39,11 @@ public class PerformanceTip {
             return Objects.equals(nomTip, that.nomTip); // Compare par le nom uniquement
         }
 
-        @Override
+    public boolean isEstDebloqueeTip() {
+        return estDebloqueeTip;
+    }
+
+    @Override
         public int hashCode() {
             return Objects.hash(nomTip); // Cohérent avec equals()
         }

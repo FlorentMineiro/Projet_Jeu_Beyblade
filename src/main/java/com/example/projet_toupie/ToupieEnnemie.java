@@ -312,6 +312,30 @@ public class ToupieEnnemie  {
             toursDeProtectionRestants--;
         }
     }
+    private boolean modeSixLames = false;
+    public void activerModeSixLamesEnnemie() {
+        this.modeSixLames = true;
+    }
+
+    public void desactiverModeSixLamesEnnemie() {
+        this.modeSixLames = false;
+    }
+
+    public boolean isModeSixLamesEnnemie() {
+        return modeSixLames;
+    }
+    public float barrageEnnemie(){
+        float degats =  (float)(this.attaqueEnnemie * 0.6);
+        int chance = alea();
+        setCoupCritiqueEnnemie(getCoupCritiqueEnnemie() - 5);
+        if (chance < getCoupCritiqueEnnemie()){
+            degats *= 1.4;
+        }
+
+
+        return degats;
+
+    }
 
 
 
