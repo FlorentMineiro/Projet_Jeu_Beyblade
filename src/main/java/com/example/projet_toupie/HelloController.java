@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -123,7 +124,7 @@ public class HelloController implements Initializable {
     @FXML
     private AnchorPane apLancerToupie;
     EnergyLayer e;
-    private ToupiePersonnage toupieJoueur = new ToupiePersonnage("",null,1000,1000,50,50,50,50,50,1000);
+    private  ToupiePersonnage toupieJoueur = new ToupiePersonnage("",null,1000,1000,50,50,50,50,50,1000);
     private ToupieEnnemie toupieAdv = new ToupieEnnemie("",null,1000,1000,50,50,50,50,50);
     @FXML
     private Label lblQTE;
@@ -1311,24 +1312,45 @@ public void retourMenu(){
         changeZone("Environnement/Stadium_Beyblade.png",apLancerToupie);
     }
 
+
+
+
+
     public void demarrerCompteARebours(String nomJoueur, String nomAdversaire) {
         List<String> etapes = List.of("3", "2", "1", "Hypervitesse !");
         Timeline timeline = new Timeline();
 
-        this.qteLancer = new QTELancer(3);
+        // --- Initialisation du QTE directement ici ---
+        sequenceLettres.clear();
+        List<String> lettres = List.of("A","B","C","D","E","F","G","H","I","J",
+                "K","L","M","N","O","P","Q","R","S","T",
+                "U","V","W","X","Y","Z");
+        Random random = new Random();
+        for (int i = 0; i < 3; i++) {
+            sequenceLettres.add(lettres.get(random.nextInt(lettres.size())));
+        }
+
+        currentLetterIndex = 0;
+        qteEnCours = true;
+        qteLancer = new QTELancer(3);  // Tu peux garder ton objet comme tu veux
+
+        afficherLettreActuelle();
+        demarrerTimer();
 
         for (int i = 0; i < etapes.size(); i++) {
             final int index = i;
-
             KeyFrame keyFrame = new KeyFrame(Duration.seconds(i + 1), e -> {
                 lblLancer.setText(etapes.get(index));
 
                 if (index == etapes.size() - 1) {
+                    // Fin du compte à rebours : fin du QTE
+                    qteEnCours = false;
 
+                    // Vérifie la réussite du QTE
+                    qteLancer.appliquerEffetQTE(listToupie.get(choixToupie - 1), qteLancer.isReussi());
 
-
+                    // Lancer la suite du combat
                     initialiserToupies(nomJoueur, nomAdversaire);
-
 
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev -> {
@@ -1338,12 +1360,56 @@ public void retourMenu(){
                     pause.play();
                 }
             });
-
             timeline.getKeyFrames().add(keyFrame);
         }
 
         timeline.play();
     }
+
+    @FXML
+    public void keyQTE(KeyEvent event) {
+        if (!qteEnCours || currentLetterIndex >= sequenceLettres.size()) return;
+
+        String toucheAppuyee = event.getText().toUpperCase();
+        if (toucheAppuyee.equals(sequenceLettres.get(currentLetterIndex))) {
+            currentLetterIndex++;
+            if (currentLetterIndex >= sequenceLettres.size()) {
+                qteEnCours = false;
+                lblQTE.setText("Succès !");
+                qteLancer.setReussi(true);
+            } else {
+                afficherLettreActuelle();
+                demarrerTimer();
+            }
+        } else {
+            qteEnCours = false;
+            lblQTE.setText("Raté !");
+            qteLancer.setReussi(false);
+        }
+    }
+
+    private void afficherLettreActuelle() {
+        if (currentLetterIndex < sequenceLettres.size()) {
+            lblQTE.setText(sequenceLettres.get(currentLetterIndex));
+        }
+    }
+
+    private void demarrerTimer() {
+        if (timer != null) timer.stop();
+
+        timer = new PauseTransition(Duration.seconds(1.5));
+        timer.setOnFinished(e -> {
+            if (qteEnCours) {
+                qteEnCours = false;
+                lblQTE.setText("Trop tard !");
+                qteLancer.setReussi(false);
+            }
+        });
+        timer.play();
+    }
+
+
+
 
     public void fight(){
         clearAll();
@@ -1408,9 +1474,9 @@ public void retourMenu(){
     public void btnClickAttaque(MouseEvent event) {
         int nombre_A = alea();
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
-
+        float pourcentageAdv= toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
         if (toupieAdv.getVieActuelleEnnemie() > 0 && toupieJoueur.getVieActuelleToupie() > 0) {
-
+            float degat = toupieAdv.attaqueGlobale();
             if (toupieJoueur.isModeSixLames()) {
                 int nombreCoups;
                 if (nombre_A < 8) {
@@ -1426,7 +1492,7 @@ public void retourMenu(){
                 }
 
                 for (int i = 0; i < nombreCoups; i++) {
-                    float degat = toupieJoueur.barrage();
+                     degat = toupieJoueur.barrage();
 
                     // BOOST Evolution
                     if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
@@ -1442,7 +1508,7 @@ public void retourMenu(){
                 barreVieToupiePerso.setProgress(pourcentageJoueur);
                 vitaMajAdv();
             } else {
-                float degat = toupieJoueur.attaqueGlobale();
+                 degat = toupieJoueur.attaqueGlobale();
 
                 // BOOST Evolution
                 if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
@@ -1455,9 +1521,14 @@ public void retourMenu(){
                 barreVieToupiePerso.setProgress(pourcentageJoueur);
                 vitaMajAdv();
             }
+            toupieAdv.perdrePDV(degat);
+            barreVieToupiePerso.setProgress(pourcentageJoueur);
+            vitaMajAdv();
 
             if (toupieAdv.getVieActuelleEnnemie() != 0) {
                 attaqueAdverse();
+                barrevieToupieEnnemie.setProgress(pourcentageAdv);
+                vitaMajJoueur();
             }
         }
 
@@ -1683,71 +1754,7 @@ public void retourMenu(){
 
 
 
-    /*@FXML
-    public void keyQTE(KeyEvent event) {
-        if (!qteEnCours || currentLetterIndex >= sequenceLettres.size()) return;
 
-        String toucheAppuyee = event.getText().toUpperCase();
-
-        // Vérifier si la touche correspond à la lettre actuelle
-        if (toucheAppuyee.equals(sequenceLettres.get(currentLetterIndex))) {
-            currentLetterIndex++;
-
-            if (currentLetterIndex >= sequenceLettres.size()) {
-                // Toutes les lettres sont réussies
-                qteEnCours = false;
-                lblQTE.setText("Succès !");
-                qteLancer.setReussi(true);
-            } else {
-                // Passer à la lettre suivante
-                afficherLettreActuelle();
-                demarrerTimer();
-            }
-        } else {
-            // Échec si mauvaise touche
-            qteEnCours = false;
-            lblQTE.setText("Raté !");
-            qteLancer.setReussi(false);
-        }
-    }
-
-    public void lancerQTEClavier() {
-        List<String> lettres = List.of("A","B","C","D","E","F","G","H","I","J",
-                "K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
-
-        // Générer 3 lettres aléatoires pour la séquence
-        sequenceLettres.clear();
-        Random random = new Random();
-        for (int i = 0; i < 3; i++) {
-            sequenceLettres.add(lettres.get(random.nextInt(lettres.size())));
-        }
-
-        currentLetterIndex = 0;
-        qteEnCours = true;
-
-        // Afficher la première lettre et démarrer le timer
-        afficherLettreActuelle();
-        demarrerTimer();
-    }
-    private void afficherLettreActuelle() {
-        if (currentLetterIndex < sequenceLettres.size()) {
-            lettreActuelle = sequenceLettres.get(currentLetterIndex);
-            lblQTE.setText(lettreActuelle);
-        }
-    }
-    private void demarrerTimer() {
-        if (timer != null) timer.stop();
-
-        timer = new PauseTransition(Duration.seconds(1.5));
-        timer.setOnFinished(e -> {
-            if (qteEnCours) {
-                qteEnCours = false;
-                lblQTE.setText("Trop tard !");
-                qteLancer.setReussi(false);
-            }
-        });
-        timer.play();
-    }*/
 
 
 

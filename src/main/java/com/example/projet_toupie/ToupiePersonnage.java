@@ -309,6 +309,50 @@ public class ToupiePersonnage {
             this.vieActuelle = this.vieMax; // pour ne pas dépasser la vie max
         }
     }
+    public void regenererVieParEndurance() {
+        if (this.vieActuelle > 0) { // Pas de régénération si K.O.
+            float regen = this.endurance * 0.8f;
+            gagnerVie(regen);
+        }
+    }
+    // Augmente l'attaque de la toupie
+    public void augmenterAttaque(int valeur) {
+        this.attaque = Math.min(this.attaque + valeur, 100); // limite à 100 si tu veux
+    }
+
+    // Réduit l'attaque de la toupie
+    public void reduireAttaque(int valeur) {
+        this.attaque = Math.max(this.attaque - valeur, 0); // minimum 0
+    }
+
+    // Augmente l'endurance de la toupie
+    public void augmenterEndurance(int valeur) {
+        this.endurance = Math.min(this.endurance + valeur, 100);
+    }
+    // Augmente l'endurance de la toupie
+    public void augmenterDefense(int valeur) {
+        this.defense = Math.min(this.defense + valeur, 100);
+    }
+
+    // Réduit l'endurance de la toupie
+    public void reduireEndurance(int valeur) {
+        this.endurance = Math.max(this.endurance - valeur, 0);
+    }
+
+    // Vérifie si la toupie possède une pièce particulière
+    public boolean possedePiece(String nomPiece) {
+        return energyLayer.getNomLayer().contains(nomPiece)
+                || forgeDiscs.getNomDisc().contains(nomPiece)
+                || performanceTip.getNomTip().contains(nomPiece);
+    }
+
+    // Applique une contre-attaque (ex. inflige un peu de dégâts à l'ennemi)
+    public void contreAttaque(ToupieEnnemie adversaire) {
+        float degats =  attaqueGlobale()/5;
+        adversaire.perdrePDV(degats);
+        System.out.println(this.nomToupie + " contre-attaque et inflige " + degats + " points !");
+    }
+
 
 
     /*public float retourneDefense(ToupiePersonnage attaquant) {

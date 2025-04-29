@@ -266,6 +266,12 @@ public class ToupieEnnemie  {
             this.vieActuelleEnnemie = this.vieMaxEnnemie; // pour ne pas dépasser la vie max
         }
     }
+    public void regenererVieParEnduranceEnnemie() {
+        if (this.vieActuelleEnnemie > 0) { // Pas de régénération si K.O.
+            float regen = this.enduranceEnnemie * 0.8f;
+            gagnerVieEnnemie(regen);
+        }
+    }
 
    /* public float retourneDefense(ToupieEnnemie attaquant) {
         float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
