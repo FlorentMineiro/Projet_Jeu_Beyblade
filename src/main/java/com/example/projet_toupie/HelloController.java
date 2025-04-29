@@ -172,8 +172,8 @@ public class HelloController implements Initializable {
     private Label lblInfo;
     @FXML
     private AnchorPane apCollection;
-    @FXML
-    private GridPane gridCollection;
+
+
     @FXML
     private ImageView imgPiece;
 
@@ -210,6 +210,16 @@ public class HelloController implements Initializable {
 
 
     ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,0,null,"null");
+    @FXML
+    private GridPane gridCollectionDisc;
+    @FXML
+    private GridPane gridCollectionLayer;
+    @FXML
+    private AnchorPane apCollectionSuite;
+    @FXML
+    private GridPane gridCollectionTip;
+    @FXML
+    private ImageView imgFondCollectionSuite;
 
 
     @Override
@@ -275,12 +285,12 @@ public class HelloController implements Initializable {
 
         tip.add(Defense);
         tip.add(Keep);
-        tip.add( Nothing);
+        tip.add(Nothing);
         tip.add(Xtend);
         tip.add(Operate);
         tip.add(Evolution);
         tip.add(Drift);
-        tip.add(Moment);
+
 
         ForgeDisc Disk8 = new ForgeDisc("8"
                 ,10
@@ -344,8 +354,7 @@ public class HelloController implements Initializable {
         disc.add(DiskHurricane);
         disc.add(Disk2A);
         disc.add(Chassis2D);
-        disc.add(DiskKou);
-        disc.add(DiskGiga);
+
 
         GTSystem gtLayerBushin = new GTSystem("Ashura","Ten","Bushin");
         SparkingSystem spBraveValkyrie = new SparkingSystem("Brave","2A","Valkyrie");
@@ -1079,6 +1088,7 @@ public class HelloController implements Initializable {
         invisible(apLancerToupie);
         invisible(apDuelToupie);
         invisible(apCollection);
+        invisible(apCollectionSuite);
 
     }
 
@@ -1106,6 +1116,28 @@ public void retourMenu(){
         changeImageViewImg(imgCoffre,"Bouton_Spécial/toupie-invocation.png");
         changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
 
+    }
+    @FXML
+    public void btnSuivant2(MouseEvent event) {
+        clearAll();
+        visible(apCollectionSuite);
+    }
+    @FXML
+    public void btnPrecedent(MouseEvent event) {
+        clearAll();
+        visible(apCollection);
+    }
+
+    @FXML
+    public void btnRetour3(MouseEvent event) {
+        clearAll();
+        visible(apFichePerso);
+    }
+
+    @FXML
+    public void btnRetour4(MouseEvent event) {
+        clearAll();
+        visible(apFichePerso);
     }
     public void writeRapideInt(Label lblTexte, int intTexte)
     {
@@ -1366,7 +1398,7 @@ public void retourMenu(){
         timeline.play();
     }
 
-    @FXML
+    @Deprecated
     public void keyQTE(KeyEvent event) {
         if (!qteEnCours || currentLetterIndex >= sequenceLettres.size()) return;
 
@@ -1746,15 +1778,6 @@ public void retourMenu(){
         int alea = (int) (Math.random() * 101);
         return alea;
     }
-
-
-
-
-
-
-
-
-
 
 
 

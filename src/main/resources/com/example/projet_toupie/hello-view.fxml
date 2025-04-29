@@ -349,7 +349,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apCollection" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="apCollection" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="400.0" fitWidth="601.0">
                <image>
@@ -357,7 +357,7 @@
                </image>
             </ImageView>
             <ImageView fx:id="imgPiece" fitHeight="109.0" fitWidth="198.0" pickOnBounds="true" preserveRatio="true" />
-            <GridPane fx:id="gridCollection" layoutX="42.0" layoutY="55.0" prefHeight="90.0" prefWidth="517.0">
+            <GridPane fx:id="gridCollectionLayer" layoutX="42.0" layoutY="55.0" prefHeight="90.0" prefWidth="517.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -413,7 +413,139 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <GridPane fx:id="gridCollectionDisc" layoutX="10.0" layoutY="200.0" prefHeight="91.0" prefWidth="564.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="85.0" fitWidth="67.0">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="4">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="3">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="6">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="5">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <Label layoutX="221.0" layoutY="161.0" text="Forge Discs" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="533.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#btnSuivant2" style="-fx-background-color: white;" text="-&gt;" />
+            <ImageView fitHeight="49.0" fitWidth="56.0" onMouseClicked="#btnRetour3">
+               <image>
+                  <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="apCollectionSuite" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="imgFondCollectionSuite" fitHeight="400.0" fitWidth="601.0">
+               <image>
+                  <Image url="@../../../Environnement/Fond-EcranFichePerso.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="119.0" layoutY="304.0" mnemonicParsing="false" onMouseClicked="#btnPrecedent" style="-fx-background-color: white;" text="&lt;-" />
+            <ImageView fitHeight="49.0" fitWidth="56.0" layoutX="14.0" layoutY="330.0" onMouseClicked="#btnRetour4">
+               <image>
+                  <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="208.0" layoutY="25.0" text="Performance Tip" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <GridPane fx:id="gridCollectionTip" layoutX="26.0" layoutY="91.0" prefHeight="62.0" prefWidth="533.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="65.0" fitWidth="73.0">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="6">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="5">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="4">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="3">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+         </children></AnchorPane>
    </children>
 </StackPane>
