@@ -22,8 +22,11 @@ public class ToupieEnnemie  {
         private String urlToupieEnnemie;
         private Tour tourEnnemie;
         private int toursDeProtectionRestants = 0;
+        boolean enModeAttaque = true;
+        int compteurTour = 0;
 
-        public ToupieEnnemie(String nomToupieEnnemie ,EnergyLayer energyLayerEnnemie, ForgeDisc forgeDiscsEnnemie, PerformanceTip performanceTipEnnemie, ClasseToupie classeToupieEnnemie, int vieMaxEnnemie,float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie , int esquiveEnnemie, Rotation rotationEnnemie,String urlToupieEnnemiee) {
+
+    public ToupieEnnemie(String nomToupieEnnemie ,EnergyLayer energyLayerEnnemie, ForgeDisc forgeDiscsEnnemie, PerformanceTip performanceTipEnnemie, ClasseToupie classeToupieEnnemie, int vieMaxEnnemie,float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie , int esquiveEnnemie, Rotation rotationEnnemie,String urlToupieEnnemiee) {
             this.nomToupieEnnemie = nomToupieEnnemie;
             this.energyLayerEnnemie = energyLayerEnnemie;
 
@@ -208,24 +211,23 @@ public class ToupieEnnemie  {
         }
     }
     public void regenererVieParEnduranceEnnemie() {
-        if (this.vieActuelleEnnemie > 0) { // Pas de régénération si K.O.
-            float regen = this.enduranceEnnemie * 0.8f;
+        float regen = this.enduranceEnnemie;
+        gagnerVieEnnemie(regen);
+        if ("endurance".equalsIgnoreCase(getClasseToupieEnnemie().getTypeToupie())){
+            if ("défense".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())){
+                regen = this.enduranceEnnemie * 1.15f;
+                gagnerVieEnnemie(regen);
+            }
+            if ("attaque".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())){
+                regen = this.enduranceEnnemie * 0.85f;
+                gagnerVieEnnemie(regen);
+            }
+            regen *= 1.1;
             gagnerVieEnnemie(regen);
         }
     }
 
-   /* public float retourneDefense(ToupieEnnemie attaquant) {
-        float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
 
-        if (degatSubi > 0) {
-            float contreDegat = degatSubi * 0.5f; // Par exemple, elle renvoie 50% des dégâts subis
-            attaquant.vieActuelleEnnemie -= contreDegat;
-
-
-        }
-
-        return degatSubi; // On retourne quand même les dégâts que cette toupie a subis
-    }*/
    public float attaqueGlobale() {
 
        float degat = (float) (this.attaqueEnnemie * 1.5);
@@ -283,6 +285,43 @@ public class ToupieEnnemie  {
         return degats;
 
     }
+    public void activerBalanceBreakerSalamanderEnn() {
+        compteurTour++;
+        if (compteurTour % 3 == 0) {
+            if (enModeAttaque) {
+                // Switch vers mode défense
+                this.attaqueEnnemie = (int)(this.attaqueEnnemie / 1.4); // réinitialiser l’attaque boostée
+                this.defenseEnnemie = (int)(this.defenseEnnemie * 1.4);
+                enModeAttaque = false;
+                System.out.println("Z Achilles passe en Mode Défense !");
+            } else {
+                // Switch vers mode attaque
+                this.defenseEnnemie = (int)(this.defenseEnnemie / 1.4); // réinitialiser la défense boostée
+                this.attaqueEnnemie = (int)(this.attaqueEnnemie * 1.4);
+                enModeAttaque = true;
+                System.out.println("Z Achilles passe en Mode Attaque !");
+            }
+        }
+    }
+    public void changerModeXtend() {
+        compteurTour++;
+        if (compteurTour % 3 == 0){
+            if (enModeAttaque) {
+                this.attaqueEnnemie -= 10;
+                this.enduranceEnnemie += 10;
+                System.out.println("Z Achilles passe en mode Endurance !");
+            } else {
+                this.attaqueEnnemie += 10;
+                this.enduranceEnnemie -= 10;
+                System.out.println("Z Achilles passe en mode Attaque !");
+            }
+            enModeAttaque = !enModeAttaque;
+        }
+
+    }
+
+
+
 
 
 

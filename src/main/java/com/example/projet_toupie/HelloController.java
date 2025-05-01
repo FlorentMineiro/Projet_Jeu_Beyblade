@@ -673,7 +673,7 @@ public class HelloController implements Initializable {
         HellSalamanderE = new ToupieEnnemie("HellSalamander 12 Operate"
                 ,LayerHellSalamander
                 ,Disk12,Operate
-                , typeEndurance
+                , typeEquilibre
                 ,
                 1750
                 ,1750
@@ -1625,6 +1625,10 @@ public void retourMenu(){
             writeRapideInt(lblNombreTour, 1);
             nombreAttaquesEvolution = 0; // Reset Evolution
         }
+        toupieJoueur.regenererVieParEndurance();
+        barreVieToupiePerso.setProgress(pourcentageJoueur);
+        vitaMajJoueur();
+        System.out.println("Votre adversaire a gagné des pv");
     }
 
 
@@ -1675,6 +1679,10 @@ public void retourMenu(){
             vitaMajJoueur();
 
         }
+        toupieAdv.regenererVieParEnduranceEnnemie();
+        barrevieToupieEnnemie.setProgress(pourcentageAdv);
+        vitaMajAdv();
+        System.out.println("Vous avez gagne des pv");
 
 
         writeRapideInt(lblNombreTour, Tour.suivant());
@@ -1709,11 +1717,14 @@ public void retourMenu(){
         float degatsSubis = (float) (toupieAdv.getVieMaxEnnemie() * 0.2);
 
         toupieAdv.gagnerVieEnnemie(degatsSubis);
+        toupieAdv.regenererVieParEnduranceEnnemie();
         vitaMajAdv();
 
 
         float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
         barrevieToupieEnnemie.setProgress(pourcentageAdv);
+
+
 
 
 
@@ -1753,23 +1764,36 @@ public void retourMenu(){
             vitaMajAdv();
         }
 
+        toupieJoueur.regenererVieParEndurance();
+        barreVieToupiePerso.setProgress(pourcentageJoueur);
+        vitaMajJoueur();
+
     }
     @FXML
     public void btnProtection(MouseEvent event) {
-        toupieJoueur.activerProtection(); // démarre la protection
-        invisibleImage(imgProtection);    // cache l'icône de protection
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
+        toupieJoueur.activerProtection();
+        invisibleImage(imgProtection);
+
+
 
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("Augmentation de défense");
         a.setHeaderText("Pendant 3 tours les dégâts adverses seront réduits");
         a.setContentText(null);
         a.showAndWait();
+
+        toupieJoueur.regenererVieParEndurance();
+        barreVieToupiePerso.setProgress(pourcentageJoueur);
+        vitaMajJoueur();
     }
 
 
 
     @FXML
     public void btnRotationSteal(MouseEvent event) {
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
+
         if ("Drain Fafnir".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
 
             float degatsSubis = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
@@ -1777,8 +1801,7 @@ public void retourMenu(){
             vitaMajJoueur();
 
 
-            float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
-            barreVieToupiePerso.setProgress(pourcentageJoueur);
+
 
 
             if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()){
@@ -1788,24 +1811,33 @@ public void retourMenu(){
 
 
             System.out.println("Drain Fafnir a absorbé " + (degatsSubis * 0.2f) + " PV après avoir subi " + degatsSubis + " dégâts !");
-        } else {
-            System.out.println("Rotation Steal impossible : ce n'est pas Drain Fafnir !");
         }
+        toupieJoueur.regenererVieParEndurance();
+        barreVieToupiePerso.setProgress(pourcentageJoueur);
+        vitaMajJoueur();
     }
     @FXML
     public void btnModeTroislames(MouseEvent event) {
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         visibleImage(imgModeSixLames);
         invisibleImage(imgModeTroisLames);
         toupieJoueur.desactiverModeSixLames();
         toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
+        toupieJoueur.regenererVieParEndurance();
+        barreVieToupiePerso.setProgress(pourcentageJoueur);
+        vitaMajJoueur();
     }
 
     @FXML
     public void btnModeSixLames(MouseEvent event) {
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         if ("Brave Valkyrie".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
             visibleImage(imgModeTroisLames);
             invisibleImage(imgModeSixLames);
             toupieJoueur.activerModeSixLames();
+            toupieJoueur.regenererVieParEndurance();
+            barreVieToupiePerso.setProgress(pourcentageJoueur);
+            vitaMajJoueur();
         } else {
 
             Alert a = new Alert(Alert.AlertType.WARNING);

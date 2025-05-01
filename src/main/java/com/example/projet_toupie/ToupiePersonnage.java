@@ -136,25 +136,7 @@ public class ToupiePersonnage {
     public int getEsquive() {
         return esquive;
     }
-    /*public float attaqueGlobale(ToupiePersonnage cible) {
-        String typePerso = this.classeToupie.getTypeToupie();
-        String typeEnnemi = cible.getClasseToupie().getTypeToupie();
-        float degat = (float) (this.attaque * 1.5);
 
-        if ("Attaque".equalsIgnoreCase(typePerso)) {
-            if ("Endurance".equalsIgnoreCase(typeEnnemi)) {
-                degat *= 1.3;
-            } else if ("Défense".equalsIgnoreCase(typeEnnemi)) {
-                degat *= 0.8;
-            }
-        }
-        if (alea() <= getCoupCritiqueToupie()){
-            degat *= 2;
-        }
-
-
-        return degat;
-    }*/
     public float attaqueGlobale() {
 
         float degat = (float) (this.attaque * 1.5);
@@ -246,46 +228,7 @@ public class ToupiePersonnage {
         this.reussi = reussi;
     }
 
-    /* public float reductionAttaque(ToupiePersonnage attaquant) {
-            // Dégâts initiaux reçus (on suppose que l'attaquant attaque à pleine force)
-            float degatsRecus = attaquant.attaqueGlobale(this); // appel à attaqueGlobale avec "this" en tant que cible
 
-            // Réduction selon la défense de la toupie actuelle (la cible)
-            float facteurDefense = 1 - (this.defense * 0.03f); // chaque point de défense réduit de 2%
-            if (facteurDefense < 0.1f) {
-                facteurDefense = 0.1f; // limite minimale (ne jamais annuler totalement les dégâts)
-            }
-
-            degatsRecus *= facteurDefense;
-
-            // Gestion des types (défense contre autres)
-            String typeDefenseur = this.classeToupie.getTypeToupie(); // type de la toupie actuelle (défenseur)
-            String typeAttaquant = attaquant.getClasseToupie().getTypeToupie(); // type de l'adversaire (attaquant)
-
-            if ("Défense".equalsIgnoreCase(typeDefenseur)) {
-                if ("Endurance".equalsIgnoreCase(typeAttaquant)) {
-                    degatsRecus *= 0.8f; // Bonus de défense contre endurance
-                } else if ("Attaque".equalsIgnoreCase(typeAttaquant)) {
-                    degatsRecus *= 1.2f; // Malus de défense contre attaque
-                }
-            }
-            if (degatsRecus < 0){
-                degatsRecus = 0;
-            }
-
-            return degatsRecus;
-        }
-        public float perdPV(ToupiePersonnage attaquant){
-                float degatBase = (float) (this.attaque * 1.2);
-                float degatTotal = (float) (0.5 * degatBase)+reductionAttaque(attaquant);
-                this.vieActuelle -= degatTotal;
-                if(jetEsquive()){
-                    degatTotal = 0;
-                }
-
-                return degatTotal;
-
-        }*/
    public float reduitAttaque(float degat)
    {
         /* FACILE +0.5
@@ -335,8 +278,18 @@ public class ToupiePersonnage {
         }
     }
     public void regenererVieParEndurance() {
-        if (this.vieActuelle > 0) { // Pas de régénération si K.O.
-            float regen = this.endurance * 0.8f;
+        float regen = this.endurance;
+        gagnerVie(regen);
+        if ("endurance".equalsIgnoreCase(getClasseToupie().getTypeToupie())){
+            if ("défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
+                regen = this.endurance * 1.15f;
+                gagnerVie(regen);
+            }
+            if ("attaque".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
+                regen = this.endurance * 0.85f;
+                gagnerVie(regen);
+            }
+            regen *= 1.1;
             gagnerVie(regen);
         }
     }
