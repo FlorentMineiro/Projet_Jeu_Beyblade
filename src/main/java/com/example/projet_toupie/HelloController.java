@@ -22,6 +22,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -171,13 +172,7 @@ public class HelloController implements Initializable {
     private Label lblCombo;
     @FXML
     private Label lblInfo;
-    @FXML
-    private AnchorPane apCollection;
     String imageName;
-
-
-    @FXML
-    private ImageView imgPiece;
 
 
     int choixToupie = 0;
@@ -213,23 +208,62 @@ public class HelloController implements Initializable {
 
     ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,0,null,"null");
     @FXML
-    private GridPane gridCollectionDisc;
+    private BorderPane BpCollection;
     @FXML
-    private GridPane gridCollectionLayer;
+    private AnchorPane apTop;
     @FXML
-    private AnchorPane apCollectionSuite;
+    private ImageView imgEnergyLayer1;
     @FXML
-    private GridPane gridCollectionTip;
+    private ImageView imgEnergyLayer3;
     @FXML
-    private ImageView imgFondCollectionSuite;
+    private ImageView imgEnergyLayer2;
+    @FXML
+    private ImageView imgEnergyLayer5;
+    @FXML
+    private ImageView imgEnergyLayer4;
+    @FXML
+    private ImageView imgForgeDisc7;
+    @FXML
+    private ImageView imgForgeDisc6;
+    @FXML
+    private ImageView imgForgeDisc5;
+    @FXML
+    private ImageView imgForgeDisc4;
+    @FXML
+    private ImageView imgForgeDisc3;
+    @FXML
+    private ImageView imgForgeDisc2;
+    @FXML
+    private ImageView imgForgeDisc1;
+    @FXML
+    private ImageView imgPerformanceTip1;
+    @FXML
+    private ImageView imgPerformanceTip5;
+    @FXML
+    private ImageView imgPerformanceTip4;
+    @FXML
+    private ImageView imgPerformanceTip3;
+    @FXML
+    private ImageView imgPerformanceTip2;
+    @FXML
+    private ImageView imgEnergyLayer7;
+    @FXML
+    private ImageView imgEnergyLayer6;
+    @FXML
+    private ImageView imgPerformanceTip7;
+    @FXML
+    private ImageView imgPerformanceTip6;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clearAll();
+        clearAllBorder();
+
         visible(apCommencement);
         invisibleImage(imgProtection);
         invisibleImage(imgRotationSteal);
+
         Font policeLuckiestGuy = Font.loadFont(getClass().getResourceAsStream("/fonts/LuckiestGuy-Regular.ttf"), 42);
         lblCombo.setFont(policeLuckiestGuy);
 
@@ -825,6 +859,12 @@ public class HelloController implements Initializable {
        label.setVisible(false);
 
     }
+    public void visibleBorder(BorderPane bpCourant ){
+        bpCourant.setVisible(true);
+    }
+    public void invisibleBorder(BorderPane bpCourant ){
+        bpCourant.setVisible(false);
+    }
     public void changeImageViewImg(ImageView imgView, String linkImage){
         imgView.setImage(
                 new Image(
@@ -865,6 +905,9 @@ public class HelloController implements Initializable {
     @FXML
     public void btnFichePerso(MouseEvent event) {
         clearAll();
+        visible(apFichePerso);
+
+
         if (choixToupie == 1){
             writeRapideString(lblNomToupie, listToupie.get(3).getNomToupie());
             changeImageViewImg(imgToupiePerso,"Toupie/fafnir_gpt.png");
@@ -914,26 +957,32 @@ public class HelloController implements Initializable {
     @FXML
     public void btnCollectionToupie(MouseEvent event) {
         clearAll();
-        visible(apCollection);
+        clearAllBorder();
 
+        visibleBorder(BpCollection);
+        visible(apTop);
         if (choixToupie == 1){
-            remplacerCadenasParImage(gridCollectionDisc,0,0,"Forge_Discs/Disk8.png");
-
+            changeImageViewImg(imgEnergyLayer1,"Energy_Layer/LayerDrainFafnir.png");
+            changeImageViewImg(imgForgeDisc1,"Forge_Discs/Disk8.png");
+            changeImageViewImg(imgPerformanceTip1,"Performance_Tip/DriverNothing.png");
         }
         if (choixToupie == 2){
-            String imagePath = "Forge_Discs/DiskCentral.png";
-            Image newImage = new Image(getClass().getResourceAsStream(imagePath));
-            ImageView newImageView = new ImageView(newImage);
-            gridCollectionDisc.add(newImageView,0,0);
-
+            changeImageViewImg(imgEnergyLayer1,"Energy_Layer/LayerKerbeus.png");
+            changeImageViewImg(imgForgeDisc1,"Forge_Discs/DiskCentral.png");
+            changeImageViewImg(imgPerformanceTip1,"Performance_Tip/DriverDefense.png");
         }
+
         if (choixToupie == 3){
-            String imagePath = "Forge_Discs/ForgeDisc_2A.png";
-            Image newImage = new Image(getClass().getResourceAsStream(imagePath));
-            ImageView newImageView = new ImageView(newImage);
-            gridCollectionDisc.add(newImageView,0,0);
-
+            changeImageViewImg(imgEnergyLayer1,"Energy_Layer/EnergyLayer_BraveValkyrie.png");
+            changeImageViewImg(imgForgeDisc1,"Forge_Discs/ForgeDisc_2A.png");
+            changeImageViewImg(imgPerformanceTip1,"Performance_Tip/PerformanceTip_Evolution.png");
         }
+
+
+
+
+
+
 
 
     }
@@ -1068,9 +1117,15 @@ public class HelloController implements Initializable {
         invisible(apSelectionAdversaire);
         invisible(apLancerToupie);
         invisible(apDuelToupie);
-        invisible(apCollection);
-        invisible(apCollectionSuite);
 
+        invisible(apTop);
+
+
+
+
+    }
+    public void clearAllBorder(){
+        invisibleBorder(BpCollection);
     }
 
 
@@ -1098,28 +1153,21 @@ public void retourMenu(){
         changeImageViewImg(imgRetour,"Bouton_Spécial/Toupie_Retour.png");
 
     }
-    @FXML
+    @Deprecated
     public void btnSuivant2(MouseEvent event) {
         clearAll();
-        visible(apCollectionSuite);
+
     }
-    @FXML
-    public void btnPrecedent(MouseEvent event) {
-        clearAll();
-        visible(apCollection);
-    }
+
 
     @FXML
     public void btnRetour3(MouseEvent event) {
         clearAll();
+        clearAllBorder();
         visible(apFichePerso);
     }
 
-    @FXML
-    public void btnRetour4(MouseEvent event) {
-        clearAll();
-        visible(apFichePerso);
-    }
+
     public void writeRapideInt(Label lblTexte, int intTexte)
     {
         lblTexte.setText(Integer.toString(intTexte));

@@ -3,13 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
@@ -349,203 +350,182 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apCollection" prefHeight="200.0" prefWidth="200.0" visible="false">
-         <children>
-            <ImageView fitHeight="400.0" fitWidth="601.0">
-               <image>
-                  <Image url="@../../../Environnement/Fond-EcranFichePerso.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="imgPiece" fitHeight="109.0" fitWidth="198.0" pickOnBounds="true" preserveRatio="true" />
-            <GridPane fx:id="gridCollectionLayer" layoutX="42.0" layoutY="55.0" prefHeight="90.0" prefWidth="517.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fitHeight="85.0" fitWidth="67.0">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="4">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="3">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="2">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="6">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="5">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <Label layoutX="244.0" layoutY="14.0" text="Energy Layer " textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <GridPane fx:id="gridCollectionDisc" layoutX="10.0" layoutY="200.0" prefHeight="91.0" prefWidth="564.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <ImageView fitHeight="85.0" fitWidth="67.0">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="4">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="3">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="2">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="6">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="5">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="85.0" fitWidth="67.0" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <Label layoutX="221.0" layoutY="161.0" text="Forge Discs" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Button layoutX="533.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#btnSuivant2" style="-fx-background-color: white;" text="-&gt;" />
-            <ImageView fitHeight="49.0" fitWidth="56.0" onMouseClicked="#btnRetour3">
-               <image>
-                  <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="apCollectionSuite" prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <ImageView fx:id="imgFondCollectionSuite" fitHeight="400.0" fitWidth="601.0">
-               <image>
-                  <Image url="@../../../Environnement/Fond-EcranFichePerso.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="119.0" layoutY="304.0" mnemonicParsing="false" onMouseClicked="#btnPrecedent" style="-fx-background-color: white;" text="&lt;-" />
-            <ImageView fitHeight="49.0" fitWidth="56.0" layoutX="14.0" layoutY="330.0" onMouseClicked="#btnRetour4">
-               <image>
-                  <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="208.0" layoutY="25.0" text="Performance Tip" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Label>
-            <GridPane fx:id="gridCollectionTip" layoutX="26.0" layoutY="91.0" prefHeight="62.0" prefWidth="533.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fitHeight="65.0" fitWidth="73.0">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="6">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="5">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="4">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="3">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="2">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="65.0" fitWidth="73.0" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-         </children></AnchorPane>
+
+      <BorderPane fx:id="BpCollection" prefHeight="1613.0" prefWidth="1338.0">
+         <top>
+            <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="1200.0" prefWidth="1200.0" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane fx:id="apTop" prefHeight="1525.0" prefWidth="1339.0">
+                     <children>
+                        <ImageView fitHeight="1525.0" fitWidth="1339.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@../../../Environnement/Fond-EcranFichePerso.png" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER" layoutX="150.0" layoutY="198.0" spacing="20.0" AnchorPane.bottomAnchor="102.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="-150.0" AnchorPane.topAnchor="198.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" spacing="8.0">
+                                 <children>
+                                    <Label text="Energy layer" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                       <children>
+                                          <ImageView fx:id="imgEnergyLayer1" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgEnergyLayer2" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgEnergyLayer3" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgEnergyLayer4" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgEnergyLayer5" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgEnergyLayer6" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgEnergyLayer7" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" spacing="8.0">
+                                 <children>
+                                    <Label text="Forge Discs" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                       <children>
+                                          <ImageView fx:id="imgForgeDisc1" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgForgeDisc2" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgForgeDisc3" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgForgeDisc4" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgForgeDisc5" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgForgeDisc6" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgForgeDisc7" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" spacing="8.0">
+                                 <children>
+                                    <Label text="Performance Tips" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                       <children>
+                                          <ImageView fx:id="imgPerformanceTip1" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgPerformanceTip2" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgPerformanceTip3" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgPerformanceTip4" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgPerformanceTip5" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgPerformanceTip6" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fx:id="imgPerformanceTip7" fitHeight="60.0" fitWidth="60.0">
+                                             <image>
+                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <ImageView fitHeight="91.0" fitWidth="99.0" layoutX="14.0" layoutY="415.0" onMouseClicked="#btnRetour3" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="415.0">
+                           <image>
+                              <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="113.0" layoutY="34.0" text="Collections" textFill="WHITE" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="30.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </top>
+      </BorderPane>
+      
    </children>
 </StackPane>
