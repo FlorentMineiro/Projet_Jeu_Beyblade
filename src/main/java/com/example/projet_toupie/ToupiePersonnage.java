@@ -278,19 +278,18 @@ public class ToupiePersonnage {
         }
     }
     public void regenererVieParEndurance() {
-        float regen = this.endurance;
+        float regen = 0.2f * this.endurance;
         gagnerVie(regen);
         if ("endurance".equalsIgnoreCase(getClasseToupie().getTypeToupie())){
             if ("défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
-                regen = this.endurance * 1.15f;
+                regen *= 1.3f;
                 gagnerVie(regen);
             }
             if ("attaque".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
-                regen = this.endurance * 0.85f;
+                regen *= 0.7f;
                 gagnerVie(regen);
             }
-            regen *= 1.1;
-            gagnerVie(regen);
+
         }
     }
     // Augmente l'attaque de la toupie

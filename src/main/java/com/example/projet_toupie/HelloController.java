@@ -16,10 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -986,28 +983,7 @@ public class HelloController implements Initializable {
 
 
     }
-    public void remplacerCadenasParImage(GridPane gridCible, int targetRow, int targetColumn, String nomImage) {
-        // Chemin vers le dossier contenant les images
-        String cheminBase = "/fr/menu/collection/"; // Adaptez selon votre structure
-        Image nouvelleImage = new Image(getClass().getResourceAsStream(cheminBase + nomImage));
-        ImageView nouvelleImageView = new ImageView(nouvelleImage);
 
-        // Configuration de la taille si nécessaire
-        nouvelleImageView.setFitWidth(100);
-        nouvelleImageView.setFitHeight(100);
-        nouvelleImageView.setPreserveRatio(true);
-
-        // Suppression des éléments existants dans la cellule cible
-        gridCible.getChildren().removeIf(node ->
-                GridPane.getRowIndex(node) != null &&
-                        GridPane.getColumnIndex(node) != null &&
-                        GridPane.getRowIndex(node) == targetRow &&
-                        GridPane.getColumnIndex(node) == targetColumn
-        );
-
-        // Ajout de la nouvelle image
-        gridCible.add(nouvelleImageView, targetColumn, targetRow);
-    }
 
     @FXML
     public void btnModeCombat(MouseEvent event) {
@@ -1036,6 +1012,7 @@ public class HelloController implements Initializable {
 
             toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() - 700);
             writeRapideInt(lblBeyPoint, toupieJoueur.getNombreBeyPoints());
+
 
         } else {
 
@@ -1072,6 +1049,12 @@ public class HelloController implements Initializable {
                 writeRapideInt(lblStatDefense, newLayer.getStatDefenseLayer());
                 writeRapideInt(lblStatEndurance, newLayer.getStatEnduranceLayer());
                 writeRapideInt(lblPoids, (int) newLayer.getPoidsLayer());
+                List<ImageView> energyLayerSlots = Arrays.asList(
+                        imgEnergyLayer2, imgEnergyLayer3, imgEnergyLayer4,
+                        imgEnergyLayer5, imgEnergyLayer6, imgEnergyLayer7
+                );
+                afficherImageDansCaseDisponible(energyLayerSlots, newLayer.getUrlLayer());
+
                 break;
 
             case 1:
@@ -1083,6 +1066,12 @@ public class HelloController implements Initializable {
                 writeRapideInt(lblStatDefense, newDisc.getStatDefenseDisc());
                 writeRapideInt(lblStatEndurance, newDisc.getStatEnduranceDisc());
                 writeRapideInt(lblPoids, (int) newDisc.getPoidsDisc());
+                List<ImageView> ForgeDiscsSlots = Arrays.asList(
+                        imgForgeDisc2, imgForgeDisc3, imgForgeDisc4,
+                        imgForgeDisc5, imgForgeDisc6, imgForgeDisc7
+                );
+                afficherImageDansCaseDisponible(ForgeDiscsSlots, newDisc.getUrlDisc());
+
                 break;
 
             case 2:
@@ -1094,14 +1083,40 @@ public class HelloController implements Initializable {
                 writeRapideInt(lblStatDefense, newTip.getStatDefenseTip());
                 writeRapideInt(lblStatEndurance, newTip.getStatEnduranceTip());
                 writeRapideInt(lblPoids, (int) newTip.getPoidsTip());
+                List<ImageView> performanceTipSlots = Arrays.asList(
+                        imgPerformanceTip2, imgPerformanceTip3, imgPerformanceTip4,
+                        imgPerformanceTip5, imgPerformanceTip6, imgPerformanceTip7
+                );
+                afficherImageDansCaseDisponible(performanceTipSlots, newTip.getUrlTip());
+
+
+
                 break;
         }
     }
+    private void afficherImageDansCaseDisponible(List<ImageView> listeImages, String urlImagePiece) {
+        for (ImageView imageView : listeImages) {
+            Image imageActuelle = imageView.getImage();
+            if (imageActuelle != null && imageActuelle.getUrl() != null &&
+                    imageActuelle.getUrl().contains("Bouton_Spécial/cadenas.png")) {
+                changeImageViewImg(imageView, urlImagePiece);
+                break;
+            }
+        }
+    }
+
     public void afficherInfoPiece(String type, String nom) {
 
 
        lblInfo.setText(nom + " (" + type + ")");
     }
+    /*public void transmission(int indice){
+            indice = (int) (Math.random()*7);
+            if ("Bouton_Spécial/cadenas.png".equals(imgPerformanceTip2)){
+                changeImageViewImg();
+            }
+
+    }*/
 
 
 
@@ -1692,14 +1707,15 @@ public void retourMenu(){
     }
 
     public void attaqueAdverse() {
-        int chanceEnn = alea();
+        int chance = alea();
+
 
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         float pourcentageAdv = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         float degats = toupieAdv.attaqueGlobale();
 
         if ("Drain Fafnir".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            int chance = alea();
+
             if (chance < 40) {
                 volRotationEnnemie();
 
@@ -1713,11 +1729,46 @@ public void retourMenu(){
                 vitaMajJoueur();
                 System.out.println("Absorption échouée");
             }
-        } else if (toupieAdv.isModeSixLamesEnnemie()) {
+        }else if (toupieAdv.isModeSixLamesEnnemie() & toupieAdv.getVieActuelleEnnemie() <= 50) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Changement de mode");
+            alert.setHeaderText("La vie de l'adversaire est à moins de 50%");
+            alert.setContentText("Passage au mode de 6 lames ");
+            alert.showAndWait();
 
 
-            barreVieToupiePerso.setProgress(pourcentageJoueur);
-            vitaMajJoueur();
+
+                int nombre_A = alea();
+                int nombreCoups;
+                if (nombre_A < 8) {
+                    nombreCoups = 5;
+                } else if (nombre_A < 25) {
+                    nombreCoups = 4;
+                } else if (nombre_A < 45) {
+                    nombreCoups = 3;
+                } else if (nombre_A < 75) {
+                    nombreCoups = 2;
+                } else {
+                    nombreCoups = 1;
+                }
+
+                for (int i = 0; i < nombreCoups; i++) {
+                    float degat = toupieAdv.barrageEnnemie();
+
+                    // BOOST Evolution
+                    if ("Evolution".equalsIgnoreCase(toupieAdv.getPerformanceTipEnnemie().getNomTip())) {
+                        nombreAttaquesEvolution++;
+                        float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                        degat *= bonus;
+                    }
+
+                    toupieAdv.perdrePDV(degat);
+
+                }
+                afficherCombo(nombreCoups);
+                barreVieToupiePerso.setProgress(pourcentageJoueur);
+                vitaMajAdv();
+
 
 
 
@@ -1731,6 +1782,9 @@ public void retourMenu(){
         barrevieToupieEnnemie.setProgress(pourcentageAdv);
         vitaMajAdv();
         System.out.println("Vous avez gagne des pv");
+        if ("Z Achilles".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer()) | "Hell Salamander".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())){
+            gererChangementModeEnnemi();
+        }
 
 
         writeRapideInt(lblNombreTour, Tour.suivant());
@@ -1895,6 +1949,17 @@ public void retourMenu(){
             a.showAndWait();
         }
     }
+    // Appelé à chaque tour de l'ennemi
+    private void gererChangementModeEnnemi() {
+        String nomToupie = toupieAdv.getEnergyLayerEnnemie().getNomLayer();
+
+        if (nomToupie.contains("Hell Salamander")) {
+            toupieAdv.activerBalanceBreakerSalamanderEnn();
+        } else if (nomToupie.contains("Z Achilles")) {
+            toupieAdv.changerModeXtend();
+        }
+    }
+
 
 
 

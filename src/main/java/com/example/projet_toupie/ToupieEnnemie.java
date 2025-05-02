@@ -211,19 +211,18 @@ public class ToupieEnnemie  {
         }
     }
     public void regenererVieParEnduranceEnnemie() {
-        float regen = this.enduranceEnnemie;
+        float regen = 0.2f * this.enduranceEnnemie;
         gagnerVieEnnemie(regen);
         if ("endurance".equalsIgnoreCase(getClasseToupieEnnemie().getTypeToupie())){
             if ("défense".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())){
-                regen = this.enduranceEnnemie * 1.15f;
+                regen *= 1.3f;
                 gagnerVieEnnemie(regen);
             }
             if ("attaque".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())){
-                regen = this.enduranceEnnemie * 0.85f;
+                regen *= 0.7f;
                 gagnerVieEnnemie(regen);
             }
-            regen *= 1.1;
-            gagnerVieEnnemie(regen);
+
         }
     }
 
