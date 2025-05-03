@@ -8,7 +8,8 @@ public class ToupieEnnemie  {
         private ForgeDisc forgeDiscsEnnemie;
         private PerformanceTip performanceTipEnnemie;
         public static  ClasseToupie classeToupieEnnemie = new ClasseToupie("Neutre");
-        private int vieMaxEnnemie;
+        public ClasseToupie classeToupieEnnemie2 = new ClasseToupie("Neutre");
+    private int vieMaxEnnemie;
         private float vieActuelleEnnemie;
         private int attaqueEnnemie;
         private int defenseEnnemie;
@@ -56,6 +57,10 @@ public class ToupieEnnemie  {
         this.coupCritiqueEnnemie = coupCritiqueEnnemie;
         this.esquiveEnnemie = esquiveEnnemie;
         this.classeToupieEnnemie = classeToupieEnnemie;
+    }
+
+    public ToupieEnnemie(ClasseToupie classeToupieEnnemie2) {
+        this.classeToupieEnnemie2 = classeToupieEnnemie2;
     }
 
     public Tour getTourEnnemie() {
@@ -261,17 +266,19 @@ public class ToupieEnnemie  {
         }
     }
     private boolean modeSixLames = false;
-    public void activerModeSixLamesEnnemie() {
-        this.modeSixLames = true;
+    public void changerModeSixLames() {
+        modeSixLames = !modeSixLames;
+        if (modeSixLames) {
+            System.out.println("Brave Valkyrie passe en MODE 6 LAMES !");
+        } else {
+            System.out.println("Brave Valkyrie revient en MODE 3 LAMES !");
+        }
+
+        // Lancer une attaque de barrage automatiquement
+        float degat = barrageEnnemie();
+        // Appliquer les dégâts directement ici ou retourne-les vers le contrôleur si besoin
     }
 
-    public void desactiverModeSixLamesEnnemie() {
-        this.modeSixLames = false;
-    }
-
-    public boolean isModeSixLamesEnnemie() {
-        return modeSixLames;
-    }
     public float barrageEnnemie(){
         float degats =  (float)(this.attaqueEnnemie * 0.6);
         int chance = alea();

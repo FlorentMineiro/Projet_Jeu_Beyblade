@@ -1110,17 +1110,6 @@ public class HelloController implements Initializable {
 
        lblInfo.setText(nom + " (" + type + ")");
     }
-    /*public void transmission(int indice){
-            indice = (int) (Math.random()*7);
-            if ("Bouton_Spécial/cadenas.png".equals(imgPerformanceTip2)){
-                changeImageViewImg();
-            }
-
-    }*/
-
-
-
-
 
 
     public void clearAll(){
@@ -1716,20 +1705,25 @@ public void retourMenu(){
 
         if ("Drain Fafnir".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
 
-            if (chance < 40) {
-                volRotationEnnemie();
+            if (chance < 34) {
+                float absorb = volRotationEnnemie();
 
+                if (absorb > 0) {
+                    barrevieToupieEnnemie.setProgress(pourcentageAdv);
+                    System.out.println("Absorption réussie");
+                } else {
+                    System.out.println("Absorption impossible à cause de la rotation");
+                }
 
-                barrevieToupieEnnemie.setProgress(pourcentageAdv);
-                System.out.println("Absorption réussi");
             } else {
                 appliquerDegatsSurJoueur(degats);
-
                 barreVieToupiePerso.setProgress(pourcentageJoueur);
                 vitaMajJoueur();
                 System.out.println("Absorption échouée");
             }
-        }else if (toupieAdv.isModeSixLamesEnnemie() & toupieAdv.getVieActuelleEnnemie() <= 50) {
+        }
+        else if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+            toupieAdv.incrementerCompteurValkyrie();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Changement de mode");
             alert.setHeaderText("La vie de l'adversaire est à moins de 50%");
@@ -1818,6 +1812,14 @@ public void retourMenu(){
     public float volRotationEnnemie() {
         float degatsSubis = (float) (toupieAdv.getVieMaxEnnemie() * 0.2);
 
+        if (toupieAdv.getRotationEnnemie().getTypeRotation().equalsIgnoreCase(toupieJoueur.getRotation().getTypeRotation())) {
+
+            toupieAdv.regenererVieParEnduranceEnnemie();
+            System.out.println("Impossible d'absorber les toupies de même rotation");
+            return 0;
+
+        }
+
         toupieAdv.gagnerVieEnnemie(degatsSubis);
         toupieAdv.regenererVieParEnduranceEnnemie();
         vitaMajAdv();
@@ -1825,6 +1827,7 @@ public void retourMenu(){
 
         float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
         barrevieToupieEnnemie.setProgress(pourcentageAdv);
+
 
 
 
@@ -1898,26 +1901,34 @@ public void retourMenu(){
 
         if ("Drain Fafnir".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
 
+            if (toupieJoueur.getRotation().getTypeRotation().equalsIgnoreCase(toupieAdv.getRotationEnnemie().getTypeRotation())) {
+                invisibleImage(imgRotationSteal);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Rotation identique");
+                alert.setHeaderText("Absorption impossible !");
+                alert.setContentText("Fafnir ne peut voler l'endurance qu'à une toupie de rotation opposée.");
+                alert.showAndWait();
+                return; // on arrête ici l’effet
+            }
+
+            // ✅ Rotation différente → effet OK
             float degatsSubis = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
             toupieJoueur.gagnerVie(degatsSubis);
             vitaMajJoueur();
 
-
-
-
-
-            if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()){
+            if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()) {
                 toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
                 writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
             }
 
-
-            System.out.println("Drain Fafnir a absorbé " + (degatsSubis * 0.2f) + " PV après avoir subi " + degatsSubis + " dégâts !");
+            System.out.println("Drain Fafnir a absorbé " + (degatsSubis * 0.2f) + " PV !");
         }
+
         toupieJoueur.regenererVieParEndurance();
         barreVieToupiePerso.setProgress(pourcentageJoueur);
         vitaMajJoueur();
     }
+
     @FXML
     public void btnModeTroislames(MouseEvent event) {
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();

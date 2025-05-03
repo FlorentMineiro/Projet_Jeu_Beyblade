@@ -25,7 +25,8 @@ public class ToupiePersonnage {
     private String urlToupie;
     private Tour tourAllie;
 
-    ToupieEnnemie toupieEnnemie;
+    ToupieEnnemie toupieEnnemie = new ToupieEnnemie(new ClasseToupie("Neutre"));
+    public static ToupieEnnemie toupieAdv = new ToupieEnnemie("",new ClasseToupie("neutre"),1000,1000,50,50,50,50,50);
     private int toursDeProtectionRestants = 0;
     private boolean reussi;
 
