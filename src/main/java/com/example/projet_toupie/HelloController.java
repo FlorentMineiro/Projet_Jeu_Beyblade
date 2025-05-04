@@ -250,6 +250,12 @@ public class HelloController implements Initializable {
     private ImageView imgPerformanceTip7;
     @FXML
     private ImageView imgPerformanceTip6;
+    @FXML
+    private Label lblComboEnnemie;
+    @FXML
+    private AnchorPane apBurst;
+    @FXML
+    private ImageView imgGifBurst;
 
 
     @Override
@@ -263,6 +269,7 @@ public class HelloController implements Initializable {
 
         Font policeLuckiestGuy = Font.loadFont(getClass().getResourceAsStream("/fonts/LuckiestGuy-Regular.ttf"), 42);
         lblCombo.setFont(policeLuckiestGuy);
+        lblComboEnnemie.setFont(policeLuckiestGuy);
 
 
 
@@ -897,6 +904,7 @@ public class HelloController implements Initializable {
         writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
 
 
+
     }
 
     @FXML
@@ -1123,6 +1131,7 @@ public class HelloController implements Initializable {
         invisible(apDuelToupie);
 
         invisible(apTop);
+        invisible(apBurst);
 
 
 
@@ -1406,10 +1415,14 @@ public void retourMenu(){
 
                 if (index == etapes.size() - 1) {
                     PauseTransition attenteAvantQTE = new PauseTransition(Duration.seconds(1));
+
+
                     attenteAvantQTE.setOnFinished(ev -> {
                         qteEnCours = true;
                         afficherLettreActuelle();
                         demarrerTimer();
+                        lblQTE.setFocusTraversable(true);
+                        lblQTE.requestFocus();
                     });
                     attenteAvantQTE.play();
                 }
@@ -1419,7 +1432,7 @@ public void retourMenu(){
 
         timeline.setOnFinished(e -> {
             // Le QTE peut durer jusqu'à 2s x 4 lettres = 8s, donc délai suffisant ici
-            PauseTransition suite = new PauseTransition(Duration.seconds(9));
+            PauseTransition suite = new PauseTransition(Duration.seconds(7));
             suite.setOnFinished(ev -> {
                 qteEnCours = false;
 
@@ -1469,7 +1482,8 @@ public void retourMenu(){
 
 
 
-    @Deprecated
+
+    @FXML
     public void keyQTE(KeyEvent event) {
         if (!qteEnCours || currentLetterIndex >= sequenceLettres.size()) return;
 
@@ -1504,7 +1518,7 @@ public void retourMenu(){
     private void demarrerTimer() {
         if (timer != null) timer.stop();
 
-        timer = new PauseTransition(Duration.seconds(2));
+        timer = new PauseTransition(Duration.seconds(1.5));
         timer.setOnFinished(e -> {
             currentLetterIndex++;
             if (currentLetterIndex < sequenceLettres.size()) {
@@ -1648,34 +1662,59 @@ public void retourMenu(){
             }
         }
 
+
+
+
         if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setTitle("Dommage");
-            a.setContentText(null);
-            a.setHeaderText("Vous avez Perdu !");
-            a.showAndWait();
-            toupieJoueur.setVieActuelle(0);
-            retourMenu();
-            reinitialisation();
-            reinitialisationBarre();
-            writeRapideInt(lblNombreTour, 1);
-            nombreAttaquesEvolution = 0; // Reset Evolution
+            int apparition = alea();
+            Runnable finDeJeu = () -> {
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Dommage");
+                a.setHeaderText("Vous avez Perdu !");
+                a.setContentText(null);
+                a.showAndWait();
+
+            };
+
+            // 20% de chance (1 sur 5)
+            if(apparition < 20) {
+                affBurst(finDeJeu); // Avec animation
+
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Dommage");
+                a.setHeaderText("Vous avez Perdu ! \n en vous prenant un burst ");
+                a.setContentText("Perte de beyPoints : -"+500 + "beyPoint");
+                a.showAndWait();
+
+            } else {
+                finDeJeu.run(); // Sans animation
+            }
         }
 
         if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setTitle("Félicitation ");
-            a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
-            a.setHeaderText("Vous avez Gagné !");
-            a.showAndWait();
-            toupieJoueur.setVieActuelle(0);
-            retourMenu();
-            reinitialisation();
-            reinitialisationBarre();
-            toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 1000);
-            writeRapideInt(lblBeyPoint, toupieJoueur.getNombreBeyPoints());
-            writeRapideInt(lblNombreTour, 1);
-            nombreAttaquesEvolution = 0; // Reset Evolution
+            int apparition = alea();
+            Runnable finDeJeu = () -> {
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Félicitation ");
+                a.setHeaderText("Vous avez Gagné !");
+                a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
+                a.showAndWait();
+
+            };
+
+            if(apparition < 20) {
+                affBurst(finDeJeu);
+                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 500);
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Wouah !! Burst ");
+                a.setHeaderText("Vous avez Gagné \n en éclatant la toupie adverse \n Vous recevez un bonus  !");
+
+                a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
+                a.showAndWait();
+
+            } else {
+                finDeJeu.run();
+            }
         }
         toupieJoueur.regenererVieParEndurance();
         barreVieToupiePerso.setProgress(pourcentageJoueur);
@@ -1690,6 +1729,27 @@ public void retourMenu(){
 
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> lblCombo.setVisible(false))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+    public void affBurst(Runnable onAnimationFinished) {
+        clearAll();
+        clearAllBorder();
+        visible(apBurst);
+
+        // Durée estimée de l'animation d'explosion (ajuster selon le besoin)
+        PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+        pause.setOnFinished(e -> onAnimationFinished.run());
+        pause.play();
+
+    }
+    private void afficherComboEnnemie(int nombreCoups) {
+        lblComboEnnemie.setText(nombreCoups + " Coups !");
+        lblComboEnnemie.setVisible(true);
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> lblComboEnnemie.setVisible(false))
         );
         timeline.setCycleCount(1);
         timeline.play();
@@ -1723,6 +1783,7 @@ public void retourMenu(){
             }
         }
         else if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+
             toupieAdv.incrementerCompteurValkyrie();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Changement de mode");
@@ -1731,40 +1792,12 @@ public void retourMenu(){
             alert.showAndWait();
 
 
+            appliquerDegatsSurJoueur(degats);
 
-                int nombre_A = alea();
-                int nombreCoups;
-                if (nombre_A < 8) {
-                    nombreCoups = 5;
-                } else if (nombre_A < 25) {
-                    nombreCoups = 4;
-                } else if (nombre_A < 45) {
-                    nombreCoups = 3;
-                } else if (nombre_A < 75) {
-                    nombreCoups = 2;
-                } else {
-                    nombreCoups = 1;
-                }
 
-                for (int i = 0; i < nombreCoups; i++) {
-                    float degat = toupieAdv.barrageEnnemie();
-
-                    // BOOST Evolution
-                    if ("Evolution".equalsIgnoreCase(toupieAdv.getPerformanceTipEnnemie().getNomTip())) {
-                        nombreAttaquesEvolution++;
-                        float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
-                        degat *= bonus;
-                    }
-
-                    toupieAdv.perdrePDV(degat);
-
-                }
-                afficherCombo(nombreCoups);
+                afficherComboEnnemie(toupieAdv.nombreCoup());
                 barreVieToupiePerso.setProgress(pourcentageJoueur);
                 vitaMajAdv();
-
-
-
 
         }else {
             appliquerDegatsSurJoueur(degats);

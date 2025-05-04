@@ -1,5 +1,7 @@
 package com.example.projet_toupie;
 
+import static com.example.projet_toupie.ToupiePersonnage.toupieAdv;
+
 public class ToupieEnnemie  {
 
 
@@ -25,6 +27,7 @@ public class ToupieEnnemie  {
         private int toursDeProtectionRestants = 0;
         boolean enModeAttaque = true;
         int compteurTour = 0;
+    int nombreAttaquesEvolution;
 
 
     public ToupieEnnemie(String nomToupieEnnemie ,EnergyLayer energyLayerEnnemie, ForgeDisc forgeDiscsEnnemie, PerformanceTip performanceTipEnnemie, ClasseToupie classeToupieEnnemie, int vieMaxEnnemie,float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie , int esquiveEnnemie, Rotation rotationEnnemie,String urlToupieEnnemiee) {
@@ -265,19 +268,64 @@ public class ToupieEnnemie  {
             toursDeProtectionRestants--;
         }
     }
+    private int compteurCoupsValkyrie = 0;
     private boolean modeSixLames = false;
-    public void changerModeSixLames() {
+
+    public void incrementerCompteurValkyrie() {
+        compteurCoupsValkyrie++;
+        if (compteurCoupsValkyrie % 3 == 0) { // tous les 4 coups, par exemple
+            changerModeSixLames();
+            compteurCoupsValkyrie = 0;
+        }
+    }
+
+    public float changerModeSixLames() {
+        float degat = 0;
         modeSixLames = !modeSixLames;
         if (modeSixLames) {
             System.out.println("Brave Valkyrie passe en MODE 6 LAMES !");
-        } else {
-            System.out.println("Brave Valkyrie revient en MODE 3 LAMES !");
-        }
+            int coups = nombreCoup();
 
-        // Lancer une attaque de barrage automatiquement
-        float degat = barrageEnnemie();
-        // Appliquer les dégâts directement ici ou retourne-les vers le contrôleur si besoin
+            for (int i = 0; i <coups; i++) {
+                 degat = toupieAdv.barrageEnnemie();
+                if ("Evolution".equalsIgnoreCase(toupieAdv.getPerformanceTipEnnemie().getNomTip())) {
+
+                    nombreAttaquesEvolution++;
+                    float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                    degat *= bonus;
+                }
+
+            }
+
+        }else {
+            System.out.println("Brave Valkyrie revient en MODE 3 LAMES !");
+            degat = toupieAdv.attaqueGlobale();
+            if ("Evolution".equalsIgnoreCase(toupieAdv.getPerformanceTipEnnemie().getNomTip())) {
+
+                nombreAttaquesEvolution++;
+                float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                degat *= bonus;
+            }
+
+        }
+        return degat;
     }
+    public int nombreCoup(){
+        int nombre_A = alea();
+        int nombreCoups = 0;
+
+        if (nombre_A < 20) {
+            nombreCoups = 5;
+        } else if (nombre_A < 50) {
+            nombreCoups = 4;
+        } else if (nombre_A < 70) {
+            nombreCoups = 3;
+        } else {
+            nombreCoups = 2;
+        }
+        return nombreCoups;
+    }
+
 
     public float barrageEnnemie(){
         float degats =  (float)(this.attaqueEnnemie * 0.6);

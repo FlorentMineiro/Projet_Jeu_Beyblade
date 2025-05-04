@@ -265,7 +265,7 @@
                   <Font name="System Bold" size="48.0" />
                </font>
             </Label>
-            <Label fx:id="lblQTE" alignment="CENTER" layoutX="70.0" layoutY="238.0" prefHeight="49.0" prefWidth="72.0" text="..." textFill="GOLD">
+            <Label fx:id="lblQTE" alignment="CENTER" layoutX="70.0" layoutY="238.0" onKeyPressed="#keyQTE" prefHeight="49.0" prefWidth="72.0" text="..." textFill="GOLD">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
@@ -274,6 +274,11 @@
       </AnchorPane>
       <AnchorPane fx:id="apDuelToupie" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
+            <Label fx:id="lblCombo" layoutX="196.0" layoutY="101.0" prefHeight="42.0" prefWidth="251.0" textFill="GOLD">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
             <ImageView fx:id="imgStadium2" fitHeight="402.0" fitWidth="605.0">
                <image>
                   <Image url="@../../../Environnement/Stadium_Beyblade.png" />
@@ -313,7 +318,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblToupiePersoModeCombat" layoutX="58.0" layoutY="258.0" text="...">
+            <Label fx:id="lblToupiePersoModeCombat" layoutX="58.0" layoutY="258.0" text="..." visible="false">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -343,7 +348,7 @@
                   <Image url="@../../../Bouton-Combat/Mode-3-lames.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblCombo" layoutX="196.0" layoutY="101.0" prefHeight="42.0" prefWidth="251.0" textFill="GOLD">
+            <Label fx:id="lblComboEnnemie" layoutX="196.0" layoutY="180.0" prefHeight="42.0" prefWidth="251.0" textFill="#c7bb81">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
@@ -351,7 +356,7 @@
          </children>
       </AnchorPane>
 
-      <BorderPane fx:id="BpCollection" prefHeight="1613.0" prefWidth="1338.0">
+      <BorderPane fx:id="BpCollection" prefHeight="1613.0" prefWidth="1338.0" visible="false">
          <top>
             <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="1200.0" prefWidth="1200.0" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER">
                <content>
@@ -526,6 +531,15 @@
             </ScrollPane>
          </top>
       </BorderPane>
+      <AnchorPane fx:id="apBurst" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="imgGifBurst" fitHeight="400.0" fitWidth="600.0">
+               <image>
+                  <Image url="@../../../Toupie/beyblade-explosion.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
       
    </children>
 </StackPane>
