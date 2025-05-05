@@ -207,6 +207,9 @@ public class ToupieEnnemie  {
         */
         degat = (int)(0.5 * degat + reduitAttaque(degat));
         this.vieActuelleEnnemie -= degat;
+        if (vieActuelleEnnemie <= 0){
+            vieActuelleEnnemie = 0;
+        }
         if (jetEsquive()){
             degat = 0;
         }
@@ -270,60 +273,16 @@ public class ToupieEnnemie  {
     }
     private int compteurCoupsValkyrie = 0;
     private boolean modeSixLames = false;
-
-    public void incrementerCompteurValkyrie() {
-        compteurCoupsValkyrie++;
-        if (compteurCoupsValkyrie % 3 == 0) { // tous les 4 coups, par exemple
-            changerModeSixLames();
-            compteurCoupsValkyrie = 0;
-        }
+    public void activerModeSixLamesEnnemi() {
+        this.modeSixLames = true;
     }
 
-    public float changerModeSixLames() {
-        float degat = 0;
-        modeSixLames = !modeSixLames;
-        if (modeSixLames) {
-            System.out.println("Brave Valkyrie passe en MODE 6 LAMES !");
-            int coups = nombreCoup();
-
-            for (int i = 0; i <coups; i++) {
-                 degat = toupieAdv.barrageEnnemie();
-                if ("Evolution".equalsIgnoreCase(toupieAdv.getPerformanceTipEnnemie().getNomTip())) {
-
-                    nombreAttaquesEvolution++;
-                    float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
-                    degat *= bonus;
-                }
-
-            }
-
-        }else {
-            System.out.println("Brave Valkyrie revient en MODE 3 LAMES !");
-            degat = toupieAdv.attaqueGlobale();
-            if ("Evolution".equalsIgnoreCase(toupieAdv.getPerformanceTipEnnemie().getNomTip())) {
-
-                nombreAttaquesEvolution++;
-                float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
-                degat *= bonus;
-            }
-
-        }
-        return degat;
+    public void desactiverModeSixLamesEnnemi() {
+        this.modeSixLames = false;
     }
-    public int nombreCoup(){
-        int nombre_A = alea();
-        int nombreCoups = 0;
 
-        if (nombre_A < 20) {
-            nombreCoups = 5;
-        } else if (nombre_A < 50) {
-            nombreCoups = 4;
-        } else if (nombre_A < 70) {
-            nombreCoups = 3;
-        } else {
-            nombreCoups = 2;
-        }
-        return nombreCoups;
+    public boolean isModeSixLamesEnnemi() {
+        return modeSixLames;
     }
 
 
@@ -347,13 +306,13 @@ public class ToupieEnnemie  {
                 this.attaqueEnnemie = (int)(this.attaqueEnnemie / 1.4); // réinitialiser l’attaque boostée
                 this.defenseEnnemie = (int)(this.defenseEnnemie * 1.4);
                 enModeAttaque = false;
-                System.out.println("Z Achilles passe en Mode Défense !");
+                System.out.println("Salmander passe en Mode Défense !");
             } else {
                 // Switch vers mode attaque
                 this.defenseEnnemie = (int)(this.defenseEnnemie / 1.4); // réinitialiser la défense boostée
                 this.attaqueEnnemie = (int)(this.attaqueEnnemie * 1.4);
                 enModeAttaque = true;
-                System.out.println("Z Achilles passe en Mode Attaque !");
+                System.out.println("Salamander passe en Mode Attaque !");
             }
         }
     }

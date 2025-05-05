@@ -62,6 +62,9 @@ public class HelloController implements Initializable {
     private ArrayList<PerformanceTip> tip = new ArrayList<>();
     private ArrayList<ForgeDisc> disc = new ArrayList<>();
     private ArrayList<EnergyLayer> layer = new ArrayList<>();
+    private ArrayList<PerformanceTip> mesTip = new ArrayList<>();
+    private ArrayList<ForgeDisc> mesDisc = new ArrayList<>();
+    private ArrayList<EnergyLayer> mesLayer = new ArrayList<>();
     private ArrayList<ToupiePersonnage> listToupie = new ArrayList<>();
     private ArrayList<ToupieEnnemie> listToupieEnnemie = new ArrayList<>();
     private ArrayList<String> lettre = new ArrayList<>();
@@ -102,8 +105,6 @@ public class HelloController implements Initializable {
     private ImageView imgRetour2;
     @FXML
     private Label lblAdversaireValkyrie;
-    @FXML
-    private Label lblAdversaireAshura;
     @FXML
     private AnchorPane apSelectionAdversaire;
     @FXML
@@ -256,6 +257,10 @@ public class HelloController implements Initializable {
     private AnchorPane apBurst;
     @FXML
     private ImageView imgGifBurst;
+    @FXML
+    private ImageView imgRetourDuCombat;
+    @FXML
+    private ImageView imgSelectionRetour;
 
 
     @Override
@@ -780,12 +785,20 @@ public class HelloController implements Initializable {
         apLancerToupie.requestFocus();*/
         System.out.println("Hell Salamander"+listToupieEnnemie.indexOf(HellSalamanderE));
         System.out.println("Kerbeus   "+listToupieEnnemie.indexOf(KerbeusE));
-        System.out.println("Brave Valkyrie"+listToupieEnnemie.indexOf(BraveValkyrieE));
+        System.out.println("Brave Valkyrie E"+listToupieEnnemie.indexOf(BraveValkyrieE));
         System.out.println("Drain Fafnir  "+listToupieEnnemie.indexOf(DrainFafnirE));
         System.out.println("Bushin Ashura   "+listToupieEnnemie.indexOf(BushinAshuraE));
         System.out.println("Z achilles   "+listToupieEnnemie.indexOf(ZAchillesE));
 
-
+        for (EnergyLayer e : layer){
+            mesLayer.add(e);
+        }
+       for (ForgeDisc f : disc){
+            mesDisc.add(f);
+            }
+        for (PerformanceTip p : tip){
+            mesTip.add(p);
+        }
 
 
 
@@ -1002,7 +1015,7 @@ public class HelloController implements Initializable {
         writeRapideString(lblAdversaireValkyrie,"Brave Valkyrie");
         writeRapideString(lblAdversaireKerbeus,"Kerbeus");
         writeRapideString(lblAdversaireFafnir,"Fafnir");
-        writeRapideString(lblAdversaireAshura,"Bushin Ashura");
+
         writeRapideString(lblAdversaireSalamander,"Hell Salamander");
         writeRapideString(lblAdversaireZachilles,"Z Achilles");
     }
@@ -1152,10 +1165,19 @@ public class HelloController implements Initializable {
     }
 public void retourMenu(){
     clearAll();
-    changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
+
     visible(apMenuPrincipal);
-    changeZone("Environnement/Ecran_d'accueil_3.png",apMenuPrincipal);
+
 }
+    @FXML
+    public void btnRetourDuCombat(MouseEvent event) {
+        retourMenu();
+    }
+
+    @FXML
+    public void btnSelectionRetour(MouseEvent event) {
+        retourMenu();
+    }
     @FXML
     public void btnSuivant(MouseEvent event) {
         clearAll();
@@ -1215,7 +1237,7 @@ public void retourMenu(){
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(3).getNomToupie(),listToupieEnnemie.get(3).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(1).getNomToupie(),listToupieEnnemie.get(3).getNomToupieEnnemie());
 
         }
         toupieAdv = listToupieEnnemie.get(3);
@@ -1250,15 +1272,15 @@ public void retourMenu(){
     public void btnAdvValkyrie(MouseEvent event) {
         momentLancer();
         if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(3).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(3).getNomToupie(),listToupieEnnemie.get(1).getNomToupieEnnemie());
 
         }
         if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(1).getNomToupieEnnemie());
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(1).getNomToupie(),listToupieEnnemie.get(2).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(1).getNomToupie(),listToupieEnnemie.get(1).getNomToupieEnnemie());
 
         }
 
@@ -1270,26 +1292,7 @@ public void retourMenu(){
 
     }
 
-    @FXML
-    public void btnAdvAshura(MouseEvent event) {
-        momentLancer();
-        if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(3).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
 
-        }
-        if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
-
-        }
-        if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(1).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
-
-        }
-        toupieAdv = listToupieEnnemie.get(4);
-        initialiserCombat("Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png",4);
-        //choixToupieEnn = 4;
-
-    }
 
     @FXML
     public void btnAdvSalamander(MouseEvent event) {
@@ -1608,7 +1611,7 @@ public void retourMenu(){
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         float pourcentageAdv= toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
         if (toupieAdv.getVieActuelleEnnemie() > 0 && toupieJoueur.getVieActuelleToupie() > 0) {
-            float degat = toupieAdv.attaqueGlobale();
+            float degat = 0;
             if (toupieJoueur.isModeSixLames()) {
                 int nombreCoups;
                 if (nombre_A < 8) {
@@ -1673,6 +1676,10 @@ public void retourMenu(){
                 a.setHeaderText("Vous avez Perdu !");
                 a.setContentText(null);
                 a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
 
             };
 
@@ -1685,6 +1692,12 @@ public void retourMenu(){
                 a.setHeaderText("Vous avez Perdu ! \n en vous prenant un burst ");
                 a.setContentText("Perte de beyPoints : -"+500 + "beyPoint");
                 a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
+                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()-500);
+                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
 
             } else {
                 finDeJeu.run(); // Sans animation
@@ -1699,18 +1712,31 @@ public void retourMenu(){
                 a.setHeaderText("Vous avez Gagné !");
                 a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
                 a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
+                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()+1000);
+                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
 
             };
 
             if(apparition < 20) {
                 affBurst(finDeJeu);
-                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 500);
+
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setTitle("Wouah !! Burst ");
                 a.setHeaderText("Vous avez Gagné \n en éclatant la toupie adverse \n Vous recevez un bonus  !");
 
-                a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
+                a.setContentText("Votre Récompense :" + 1500  + " BeyPoints");
                 a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
+                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 1500);
+                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
+
 
             } else {
                 finDeJeu.run();
@@ -1719,19 +1745,23 @@ public void retourMenu(){
         toupieJoueur.regenererVieParEndurance();
         barreVieToupiePerso.setProgress(pourcentageJoueur);
         vitaMajJoueur();
-        System.out.println("Votre adversaire a gagné des pv");
+        System.out.println("Vous avez gagné des pv");
     }
 
 
     private void afficherCombo(int nombreCoups) {
-        lblCombo.setText(nombreCoups + " Coups !");
-        lblCombo.setVisible(true);
+        Platform.runLater(() -> {
+            lblCombo.setText(nombreCoups + " Coups !");
+            lblCombo.setVisible(true);
+            lblCombo.toFront();
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), e -> lblCombo.setVisible(false))
-        );
-        timeline.setCycleCount(1);
-        timeline.play();
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), e -> lblCombo.setVisible(false))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
+
     }
     public void affBurst(Runnable onAnimationFinished) {
         clearAll();
@@ -1739,87 +1769,132 @@ public void retourMenu(){
         visible(apBurst);
 
         // Durée estimée de l'animation d'explosion (ajuster selon le besoin)
-        PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+        PauseTransition pause = new PauseTransition(Duration.seconds(2.5));
         pause.setOnFinished(e -> onAnimationFinished.run());
         pause.play();
 
     }
     private void afficherComboEnnemie(int nombreCoups) {
-        lblComboEnnemie.setText(nombreCoups + " Coups !");
-        lblComboEnnemie.setVisible(true);
+        Platform.runLater(() ->{
+            lblComboEnnemie.setText(nombreCoups + " Coups !");
+            lblComboEnnemie.setVisible(true);
+            lblComboEnnemie.toFront();
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), e -> lblComboEnnemie.setVisible(false))
-        );
-        timeline.setCycleCount(1);
-        timeline.play();
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), e -> lblComboEnnemie.setVisible(false))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
+       
     }
 
     public void attaqueAdverse() {
         int chance = alea();
 
-
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
-        float pourcentageAdv = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
+        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
         float degats = toupieAdv.attaqueGlobale();
 
         if ("Drain Fafnir".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-
             if (chance < 34) {
                 float absorb = volRotationEnnemie();
-
                 if (absorb > 0) {
                     barrevieToupieEnnemie.setProgress(pourcentageAdv);
                     System.out.println("Absorption réussie");
                 } else {
                     System.out.println("Absorption impossible à cause de la rotation");
                 }
-
             } else {
                 appliquerDegatsSurJoueur(degats);
-                barreVieToupiePerso.setProgress(pourcentageJoueur);
-                vitaMajJoueur();
+                majVieJoueur();
                 System.out.println("Absorption échouée");
             }
+            return; // on termine ici pour éviter que d'autres attaques se déclenchent
         }
-        else if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
 
-            toupieAdv.incrementerCompteurValkyrie();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Changement de mode");
-            alert.setHeaderText("La vie de l'adversaire est à moins de 50%");
-            alert.setContentText("Passage au mode de 6 lames ");
-            alert.showAndWait();
+        if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+            if (Tour.getNumeroTour() % 3 == 0) {
+                toupieAdv.activerModeSixLamesEnnemi();
+                if (toupieAdv.isModeSixLamesEnnemi()) {
+                    int nombreCoups;
+                    if (chance < 15) nombreCoups = 5;
+                    else if (chance < 45) nombreCoups = 4;
+                    else if (chance < 75) nombreCoups = 3;
+                    else nombreCoups = 2;
+
+                    for (int i = 0; i < nombreCoups; i++) {
+                        float degat = toupieJoueur.barrage();
+                        if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
+                            nombreAttaquesEvolution++;
+                            float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                            degat *= bonus;
+                        }
+                        toupieAdv.perdrePDV(degat);
+                        if (toupieAdv.getVieActuelleEnnemie() <= 0 || toupieJoueur.getVieActuelleToupie() <= 0) {
+                            checkFinCombat();
+                            return;
+                        }
+                    }
+
+                    Alert a = new Alert(Alert.AlertType.WARNING);
+                    a.setTitle("Changement de mode");
+                    a.setHeaderText("Brave Valkyrie passe en mode 6 lames");
+                    a.setContentText("Plusieurs coups vont être lancés !");
+                    a.showAndWait();
+                    afficherComboEnnemie(nombreCoups);
+                }
+            } else {
+                toupieAdv.desactiverModeSixLamesEnnemi();
+                if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
+                    nombreAttaquesEvolution++;
+                    float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                    degats *= bonus;
+                }
+                appliquerDegatsSurJoueur(degats);
+                majVieJoueur();
+            }
+            return;
+        }
 
 
+        /*if ("Z Achilles".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+            gererChangementModeEnnemiZAchilles();
             appliquerDegatsSurJoueur(degats);
+            majVieJoueur();
+            return;
+        }
 
 
-                afficherComboEnnemie(toupieAdv.nombreCoup());
-                barreVieToupiePerso.setProgress(pourcentageJoueur);
-                vitaMajAdv();
-
-        }else {
+        if ("Hell Salmander".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+            gererChangementModeEnnemiHellSalamander();
             appliquerDegatsSurJoueur(degats);
-            barreVieToupiePerso.setProgress(pourcentageJoueur);
-            vitaMajJoueur();
+            majVieJoueur();
+            return;
+        }*/
 
-        }
-        toupieAdv.regenererVieParEnduranceEnnemie();
-        barrevieToupieEnnemie.setProgress(pourcentageAdv);
-        vitaMajAdv();
-        System.out.println("Vous avez gagne des pv");
-        if ("Z Achilles".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer()) | "Hell Salamander".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())){
-            gererChangementModeEnnemi();
-        }
+
+        appliquerDegatsSurJoueur(degats);
+        majVieJoueur();
 
 
         writeRapideInt(lblNombreTour, Tour.suivant());
     }
+
+    private void majVieJoueur() {
+        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
+        toupieAdv.regenererVieParEnduranceEnnemie();
+        barreVieToupiePerso.setProgress(pourcentageJoueur);
+        vitaMajJoueur();
+    }
+
     private void appliquerDegatsSurJoueur(float degats) {
         if ("kerbeus".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) { // Si on joue Kerbeus
             if (toupieJoueur.estEnProtection()) { // protection active
                 degats *= 0.4; // exemple : réduire les dégâts
+                if ( degats < 0){
+                    degats = 0;
+                }
             }
             toupieJoueur.reduireProtection();
             if (toupieJoueur.finProtection()) {
@@ -1829,8 +1904,86 @@ public void retourMenu(){
         toupieJoueur.perdrePDV(degats);
 
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
-        barreVieToupiePerso  .setProgress(pourcentageJoueur);
+        barreVieToupiePerso.setProgress(pourcentageJoueur);
         vitaMajJoueur();
+        checkFinCombat();
+    }
+    public void checkFinCombat(){
+        if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
+            int apparition = alea();
+            Runnable finDeJeu = () -> {
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Dommage");
+                a.setHeaderText("Vous avez Perdu !");
+                a.setContentText(null);
+                a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
+
+            };
+
+            // 20% de chance (1 sur 5)
+            if(apparition < 20) {
+                affBurst(finDeJeu); // Avec animation
+
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Dommage");
+                a.setHeaderText("Vous avez Perdu ! \n en vous prenant un burst ");
+                a.setContentText("Perte de beyPoints : -"+500 + "beyPoint");
+                a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
+                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()-500);
+                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
+
+            } else {
+                finDeJeu.run(); // Sans animation
+            }
+        }
+
+        if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
+            int apparition = alea();
+            Runnable finDeJeu = () -> {
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Félicitation ");
+                a.setHeaderText("Vous avez Gagné !");
+                a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
+                a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
+                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()+1000);
+                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
+
+            };
+
+            if(apparition < 20) {
+                affBurst(finDeJeu);
+
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Wouah !! Burst ");
+                a.setHeaderText("Vous avez Gagné \n en éclatant la toupie adverse \n Vous recevez un bonus  !");
+
+                a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
+                a.showAndWait();
+                clearAll();
+                visible(apMenuPrincipal);
+                reinitialisationBarre();
+                reinitialisation();
+                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()+1500);
+                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
+
+
+            } else {
+                finDeJeu.run();
+            }
+        }
+
     }
 
 
@@ -1947,6 +2100,7 @@ public void retourMenu(){
             // ✅ Rotation différente → effet OK
             float degatsSubis = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
             toupieJoueur.gagnerVie(degatsSubis);
+            barreVieToupiePerso.setProgress(pourcentageJoueur);
             vitaMajJoueur();
 
             if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()) {
@@ -1960,6 +2114,8 @@ public void retourMenu(){
         toupieJoueur.regenererVieParEndurance();
         barreVieToupiePerso.setProgress(pourcentageJoueur);
         vitaMajJoueur();
+
+
     }
 
     @FXML
@@ -1994,12 +2150,21 @@ public void retourMenu(){
         }
     }
     // Appelé à chaque tour de l'ennemi
-    private void gererChangementModeEnnemi() {
+    private void gererChangementModeEnnemiHellSalamander() {
+
         String nomToupie = toupieAdv.getEnergyLayerEnnemie().getNomLayer();
 
         if (nomToupie.contains("Hell Salamander")) {
             toupieAdv.activerBalanceBreakerSalamanderEnn();
-        } else if (nomToupie.contains("Z Achilles")) {
+
+        }
+        toupieAdv.regenererVieParEnduranceEnnemie();
+
+    }
+    private void gererChangementModeEnnemiZAchilles() {
+        String nomToupie = toupieAdv.getEnergyLayerEnnemie().getNomLayer();
+
+    if (nomToupie.contains("Z Achilles")) {
             toupieAdv.changerModeXtend();
         }
     }

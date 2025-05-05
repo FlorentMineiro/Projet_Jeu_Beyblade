@@ -26,7 +26,7 @@ public class ToupiePersonnage {
     private Tour tourAllie;
 
     ToupieEnnemie toupieEnnemie = new ToupieEnnemie(new ClasseToupie("Neutre"));
-    public static ToupieEnnemie toupieAdv = new ToupieEnnemie("",new ClasseToupie("neutre"),1000,1000,50,50,50,50,50);
+    public static ToupieEnnemie toupieAdv = new ToupieEnnemie("",new EnergyLayer(""),new ForgeDisc(""),new PerformanceTip(""),new ClasseToupie("neutre"),1000,1000,50,50,50,50,50,new Rotation("neutre"),"");
     private int toursDeProtectionRestants = 0;
     private boolean reussi;
 
@@ -268,7 +268,12 @@ public class ToupiePersonnage {
         */
         degat = (float) (0.5 * degat + reduitAttaque(degat));
         this.vieActuelle-= degat;
-
+        if (vieActuelle <= 0){
+            vieActuelle = 0;
+        }
+        if (jetEsquive()){
+            degat = 0;
+        }
 
         return degat;
     }

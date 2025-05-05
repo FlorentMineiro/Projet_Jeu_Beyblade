@@ -179,7 +179,7 @@
             <Label layoutX="58.0" layoutY="260.0" text="Endurance" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apSelectionAdversaire" prefHeight="462.0" prefWidth="600.0" visible="false">
+      <AnchorPane fx:id="apSelectionAdversaire" prefHeight="462.0" prefWidth="600.0">
          <children>
             <ImageView fx:id="imgMenuCombat" fitHeight="503.0" fitWidth="600.0" layoutY="-103.0">
                <image>
@@ -191,52 +191,47 @@
                   <Font name="Arial Black" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="14.0" layoutY="56.0" onMouseClicked="#btnAdvValkyrie">
+            <ImageView fitHeight="91.0" fitWidth="109.0" layoutX="14.0" layoutY="47.0" onMouseClicked="#btnAdvValkyrie">
                <image>
                   <Image url="@../../../Toupie/valkyrie_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="72.0" layoutX="128.0" layoutY="62.0" onMouseClicked="#btnAdvFafnir">
+            <ImageView fitHeight="91.0" fitWidth="89.0" layoutX="240.0" layoutY="47.0" onMouseClicked="#btnAdvFafnir">
                <image>
                   <Image url="@../../../Toupie/fafnir_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="72.0" layoutX="243.0" layoutY="55.0" onMouseClicked="#btnAdvKerbeus">
+            <ImageView fitHeight="91.0" fitWidth="99.0" layoutX="417.0" layoutY="47.0" onMouseClicked="#btnAdvKerbeus">
                <image>
                   <Image url="@../../../Toupie/kerbeus_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="362.0" layoutY="49.0" onMouseClicked="#btnAdvSalamander">
+            <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="362.0" layoutY="49.0" onMouseClicked="#btnAdvSalamander" visible="false">
                <image>
                   <Image url="@../../../Toupie/Beyblade_Salamander.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="91.0" fitWidth="89.0" layoutX="473.0" layoutY="44.0" onMouseClicked="#btnAdvZachilles">
+            <ImageView fitHeight="91.0" fitWidth="89.0" layoutX="473.0" layoutY="44.0" onMouseClicked="#btnAdvZachilles" visible="false">
                <image>
                   <Image url="@../../../Toupie/ZA_.11.Xt_2.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="82.0" fitWidth="89.0" layoutX="24.0" layoutY="210.0" onMouseClicked="#btnAdvAshura">
-               <image>
-                  <Image url="@../../../Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="lblAdversaireZachilles" layoutX="486.0" layoutY="129.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireZachilles" layoutX="486.0" layoutY="129.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE" visible="false">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireSalamander" layoutX="371.0" layoutY="128.0" prefHeight="42.0" prefWidth="82.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireSalamander" layoutX="371.0" layoutY="128.0" prefHeight="42.0" prefWidth="82.0" text="..." textFill="WHITE" visible="false">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireKerbeus" layoutX="251.0" layoutY="137.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireKerbeus" layoutX="441.0" layoutY="142.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireFafnir" layoutX="136.0" layoutY="142.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireFafnir" layoutX="257.0" layoutY="150.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
@@ -246,11 +241,11 @@
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireAshura" layoutX="37.0" layoutY="298.0" prefHeight="42.0" prefWidth="99.0" text="..." textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
+            <ImageView fx:id="imgSelectionRetour" fitHeight="49.0" fitWidth="72.0" layoutY="338.0" onMouseClicked="#btnSelectionRetour">
+               <image>
+                  <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="apLancerToupie" prefHeight="200.0" prefWidth="200.0" visible="false">
@@ -286,8 +281,8 @@
             </ImageView>
             <ImageView fx:id="imgToupieDuPerso" fitHeight="82.0" fitWidth="129.0" layoutX="63.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="imgToupieDeEnnemi" fitHeight="91.0" fitWidth="122.0" layoutX="412.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" />
-            <ProgressBar fx:id="barreVieToupiePerso" layoutX="45.0" layoutY="54.0" prefHeight="17.0" prefWidth="200.0" progress="0.0" />
-            <ProgressBar fx:id="barrevieToupieEnnemie" layoutX="363.0" layoutY="54.0" prefWidth="200.0" progress="0.0" />
+            <ProgressBar fx:id="barreVieToupiePerso" layoutX="92.0" layoutY="55.0" prefHeight="17.0" prefWidth="200.0" progress="0.0" />
+            <ProgressBar fx:id="barrevieToupieEnnemie" layoutX="404.0" layoutY="55.0" prefWidth="200.0" progress="0.0" />
             <ImageView fx:id="imgPourAttaquer" fitHeight="70.0" fitWidth="89.0" layoutX="14.0" layoutY="318.0" onMouseClicked="#btnClickAttaque">
                <image>
                   <Image url="@../../../../../../../../Downloads/Bouton-attaque.png" />
@@ -353,6 +348,11 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
+            <ImageView fx:id="imgRetourDuCombat" fitHeight="55.0" fitWidth="63.0" layoutY="9.0" onMouseClicked="#btnRetourDuCombat">
+               <image>
+                  <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
 
@@ -531,7 +531,7 @@
             </ScrollPane>
          </top>
       </BorderPane>
-      <AnchorPane fx:id="apBurst" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="apBurst" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fx:id="imgGifBurst" fitHeight="400.0" fitWidth="600.0">
                <image>
