@@ -191,47 +191,47 @@
                   <Font name="Arial Black" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="91.0" fitWidth="109.0" layoutX="14.0" layoutY="47.0" onMouseClicked="#btnAdvValkyrie">
+            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="14.0" layoutY="69.0" onMouseClicked="#btnAdvValkyrie">
                <image>
                   <Image url="@../../../Toupie/valkyrie_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="91.0" fitWidth="89.0" layoutX="240.0" layoutY="47.0" onMouseClicked="#btnAdvFafnir">
+            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="123.0" layoutY="69.0" onMouseClicked="#btnAdvFafnir">
                <image>
                   <Image url="@../../../Toupie/fafnir_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="91.0" fitWidth="99.0" layoutX="417.0" layoutY="47.0" onMouseClicked="#btnAdvKerbeus">
+            <ImageView fitHeight="69.0" fitWidth="74.0" layoutX="251.0" layoutY="63.0" onMouseClicked="#btnAdvKerbeus">
                <image>
                   <Image url="@../../../Toupie/kerbeus_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="362.0" layoutY="49.0" onMouseClicked="#btnAdvSalamander" visible="false">
+            <ImageView fitHeight="70.0" fitWidth="63.0" layoutX="387.0" layoutY="62.0" onMouseClicked="#btnAdvSalamander">
                <image>
                   <Image url="@../../../Toupie/Beyblade_Salamander.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="91.0" fitWidth="89.0" layoutX="473.0" layoutY="44.0" onMouseClicked="#btnAdvZachilles" visible="false">
+            <ImageView fitHeight="82.0" fitWidth="74.0" layoutX="504.0" layoutY="54.0" onMouseClicked="#btnAdvZachilles">
                <image>
                   <Image url="@../../../Toupie/ZA_.11.Xt_2.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblAdversaireZachilles" layoutX="486.0" layoutY="129.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE" visible="false">
+            <Label fx:id="lblAdversaireZachilles" layoutX="504.0" layoutY="128.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireSalamander" layoutX="371.0" layoutY="128.0" prefHeight="42.0" prefWidth="82.0" text="..." textFill="WHITE" visible="false">
+            <Label fx:id="lblAdversaireSalamander" layoutX="386.0" layoutY="129.0" prefHeight="42.0" prefWidth="99.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireKerbeus" layoutX="441.0" layoutY="142.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireKerbeus" layoutX="243.0" layoutY="150.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireFafnir" layoutX="257.0" layoutY="150.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireFafnir" layoutX="149.0" layoutY="149.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>

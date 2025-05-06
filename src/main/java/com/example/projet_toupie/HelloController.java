@@ -1680,6 +1680,7 @@ public void retourMenu(){
                 visible(apMenuPrincipal);
                 reinitialisationBarre();
                 reinitialisation();
+                writeRapideInt(lblNombreTour, Tour.reset());
 
             };
 
@@ -1696,6 +1697,7 @@ public void retourMenu(){
                 visible(apMenuPrincipal);
                 reinitialisationBarre();
                 reinitialisation();
+                writeRapideInt(lblNombreTour, Tour.reset());
                 toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()-500);
                 writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
 
@@ -1716,6 +1718,7 @@ public void retourMenu(){
                 visible(apMenuPrincipal);
                 reinitialisationBarre();
                 reinitialisation();
+                writeRapideInt(lblNombreTour, Tour.reset());
                 toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()+1000);
                 writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
 
@@ -1734,6 +1737,7 @@ public void retourMenu(){
                 visible(apMenuPrincipal);
                 reinitialisationBarre();
                 reinitialisation();
+                writeRapideInt(lblNombreTour, Tour.reset());
                 toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 1500);
                 writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
 
@@ -2205,16 +2209,14 @@ public void retourMenu(){
 
     }
     private void gererChangementModeEnnemiZAchilles() {
-        String nomToupie = toupieAdv.getEnergyLayerEnnemie().getNomLayer();
+        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
 
-    if (nomToupie.contains("Z Achilles")) {
-            toupieAdv.changerModeXtend();
+        if (nomToupieTip.contains("Xtend")) {
+
         }
+
+
     }
-
-
-
-
 
 
     public int alea(){

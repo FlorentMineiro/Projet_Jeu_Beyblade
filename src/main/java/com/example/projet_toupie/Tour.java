@@ -13,8 +13,10 @@ public class Tour {
         return numeroTour;
     }
 
-    public static void reset() {
+    public static int reset() {
+
         numeroTour = 1;
+        return numeroTour;
     }
 
 }

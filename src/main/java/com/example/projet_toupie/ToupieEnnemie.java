@@ -299,7 +299,17 @@ public class ToupieEnnemie  {
     public boolean isModeSixLamesEnnemi() {
         return modeSixLames;
     }
+    private boolean modeXTend = false;
+    public void activerModeXtend(){
+        this.modeXTend = true;
+    }
+    public void desactiverModeXtend(){
+        this.modeXTend = false;
+    }
 
+    public boolean isModeXTend() {
+        return modeXTend;
+    }
 
     public float barrageEnnemie(){
         float degats =  (float)(this.attaqueEnnemie * 0.6);
