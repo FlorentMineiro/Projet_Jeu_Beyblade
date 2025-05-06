@@ -1924,18 +1924,19 @@ public void retourMenu(){
         if (nomToupieTip.contains("Xtend")) {
             float defense =toupieJoueur.attaqueGlobale();
             float attaque =toupieAdv.attaqueGlobale();
-            toupieAdv.activerModeDefenseZ();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Mode Défense");
-            alert.setHeaderText("Grâce à sa performance tip \n Z achilles peut utiliser différents mode");
-            alert.setContentText("On commence par le mode défense");
-            alert.showAndWait();
-            if (toupieAdv.isModeDéfenseZ()){
+            if (!toupieAdv.isModeDéfenseZ()) {
+                toupieAdv.activerModeDefenseZ();
                 toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
                 toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
 
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Mode Défense");
+                alert.setHeaderText("Grâce à sa performance tip\nZ Achilles peut utiliser différents modes");
+                alert.setContentText("On commence par le mode défense");
+                alert.showAndWait();
 
             }
+
             if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()){
                 toupieAdv.resetStat();
                 toupieAdv.desactiverModeDefenseZ();
@@ -2172,10 +2173,9 @@ public void retourMenu(){
 
     @FXML
     public void btnRotationSteal(MouseEvent event) {
-        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
-
         if ("Drain Fafnir".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
 
+            // Rotation identique : on bloque
             if (toupieJoueur.getRotation().getTypeRotation().equalsIgnoreCase(toupieAdv.getRotationEnnemie().getTypeRotation())) {
                 invisibleImage(imgRotationSteal);
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -2183,29 +2183,31 @@ public void retourMenu(){
                 alert.setHeaderText("Absorption impossible !");
                 alert.setContentText("Fafnir ne peut voler l'endurance qu'à une toupie de rotation opposée.");
                 alert.showAndWait();
-                return; // on arrête ici l’effet
+                return;
             }
 
-            // ✅ Rotation différente → effet OK
-            float degatsSubis = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
-            toupieJoueur.gagnerVie(degatsSubis);
-            barreVieToupiePerso.setProgress(pourcentageJoueur);
-            vitaMajJoueur();
+            // ✅ Rotation opposée → absorption
+            float pvAbsorbes = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
+            toupieJoueur.gagnerVie(pvAbsorbes);
 
+            // On limite la vie si elle dépasse le max
             if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()) {
                 toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
-                writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
             }
 
-            System.out.println("Drain Fafnir a absorbé " + (degatsSubis * 0.2f) + " PV !");
+            System.out.println("Drain Fafnir a absorbé " + pvAbsorbes + " PV !");
         }
 
+        // Régénération d’endurance (effet passif)
         toupieJoueur.regenererVieParEndurance();
-        barreVieToupiePerso.setProgress(pourcentageJoueur);
+
+        // 🔁 Mise à jour synchronisée
+        float nouveauPourcentage = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
+        barreVieToupiePerso.setProgress(nouveauPourcentage);
         vitaMajJoueur();
-
-
+        writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
     }
+
 
     @FXML
     public void btnModeTroislames(MouseEvent event) {
