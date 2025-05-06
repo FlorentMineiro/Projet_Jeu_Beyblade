@@ -2206,6 +2206,8 @@ public void retourMenu(){
         barreVieToupiePerso.setProgress(nouveauPourcentage);
         vitaMajJoueur();
         writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
+        writeRapideInt(lblNombreTour, Tour.suivant());
+
     }
 
 
