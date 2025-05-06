@@ -1788,6 +1788,24 @@ public void retourMenu(){
         });
        
     }
+    private void afficherComboEnnemie() {
+        Platform.runLater(() ->{
+            lblComboEnnemie.setText("Kerbeus Contre-Attaque !");
+            lblComboEnnemie.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+
+            lblComboEnnemie.setVisible(true);
+
+            lblComboEnnemie.toFront();
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1.5), e -> lblComboEnnemie.setVisible(false))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
+
+    }
 
     public void attaqueAdverse() {
         int chance = alea();
@@ -1795,9 +1813,10 @@ public void retourMenu(){
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
         float degats = toupieAdv.attaqueGlobale();
+        float degatsJoueur = toupieJoueur.attaqueGlobale();
 
         if ("Drain Fafnir".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            if (chance < 34) {
+            if (chance < 40) {
                 float absorb = volRotationEnnemie();
                 if (absorb > 0) {
                     barrevieToupieEnnemie.setProgress(pourcentageAdv);
@@ -1810,6 +1829,7 @@ public void retourMenu(){
                 majVieJoueur();
                 System.out.println("Absorption échouée");
             }
+            writeRapideInt(lblNombreTour, Tour.suivant());
             return; // on termine ici pour éviter que d'autres attaques se déclenchent
         }
 
@@ -1854,8 +1874,39 @@ public void retourMenu(){
                 appliquerDegatsSurJoueur(degats);
                 majVieJoueur();
             }
+            writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
+        if ("Kerbeus".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+
+            if (Tour.getNumeroTour() % 4 == 0) {
+                toupieAdv.activerProtectionEnnemie();
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setTitle("Changement de mode pour Kerbeus");
+                a.setHeaderText("Kerbeus reçoit une augmentation de défense \n Pendant 3 tours");
+                a.setContentText("Réduction de dégâts de 60 % ");
+                a.showAndWait();
+            }
+
+            if (toupieAdv.estEnProtectionEnnemie()) {
+                degatsJoueur *= 0.40f;
+
+                if (chance < 50) {
+                    toupieJoueur.perdrePDV(0.2f * toupieJoueur.getVieActuelleToupie());
+                    degatsJoueur *= 0.9f;
+                    afficherComboEnnemie();
+                    System.out.println("Kerbeus active sa propulsion enchaînée !");
+                }
+
+                toupieAdv.reduireProtectionEnnemie();
+            }
+
+            appliquerDegatsSurJoueur(degats);
+            majVieJoueur();
+            writeRapideInt(lblNombreTour, Tour.suivant());
+            return;
+        }
+
 
 
         /*if ("Z Achilles".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
@@ -1874,8 +1925,7 @@ public void retourMenu(){
         }*/
 
 
-        appliquerDegatsSurJoueur(degats);
-        majVieJoueur();
+
 
 
         writeRapideInt(lblNombreTour, Tour.suivant());
@@ -1987,14 +2037,7 @@ public void retourMenu(){
     }
 
 
-    public void protectionEnnemie(){
-        toupieAdv.activerProtectionEnnemie();
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle("Augmentation de défense");
-        a.setHeaderText("Pendant 3 tours les dégâts adverses seront réduits");
-        a.setContentText(null);
-        a.showAndWait();
-    }
+
     public float volRotationEnnemie() {
         float degatsSubis = (float) (toupieAdv.getVieMaxEnnemie() * 0.2);
 

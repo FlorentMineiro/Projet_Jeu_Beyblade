@@ -25,9 +25,10 @@ public class ToupieEnnemie  {
         private String urlToupieEnnemie;
         private Tour tourEnnemie;
         private int toursDeProtectionRestants = 0;
+        private boolean protectionEnnemie;
         boolean enModeAttaque = true;
         int compteurTour = 0;
-    int nombreAttaquesEvolution;
+        int nombreAttaquesEvolution;
 
 
     public ToupieEnnemie(String nomToupieEnnemie ,EnergyLayer energyLayerEnnemie, ForgeDisc forgeDiscsEnnemie, PerformanceTip performanceTipEnnemie, ClasseToupie classeToupieEnnemie, int vieMaxEnnemie,float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie , int esquiveEnnemie, Rotation rotationEnnemie,String urlToupieEnnemiee) {
@@ -271,6 +272,20 @@ public class ToupieEnnemie  {
             toursDeProtectionRestants--;
         }
     }
+
+    public boolean isProtectionEnnemie() {
+        return protectionEnnemie;
+    }
+
+    public void setProtectionEnnemie(boolean protectionEnnemie) {
+        this.protectionEnnemie = protectionEnnemie;
+    }
+
+    public boolean finProtectionEnnemie(){
+        return this.toursDeProtectionRestants == 0;
+    }
+
+
     private int compteurCoupsValkyrie = 0;
     private boolean modeSixLames = false;
     public void activerModeSixLamesEnnemi() {
