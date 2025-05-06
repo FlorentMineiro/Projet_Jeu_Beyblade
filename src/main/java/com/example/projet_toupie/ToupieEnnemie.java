@@ -13,9 +13,9 @@ public class ToupieEnnemie  {
         public ClasseToupie classeToupieEnnemie2 = new ClasseToupie("Neutre");
     private int vieMaxEnnemie;
         private float vieActuelleEnnemie;
-        private int attaqueEnnemie;
-        private int defenseEnnemie;
-        private int enduranceEnnemie;
+        private float attaqueEnnemie;
+        private float defenseEnnemie;
+        private float enduranceEnnemie;
         public static ToupiePersonnage toupiePersonnage = new ToupiePersonnage(new ClasseToupie("neutre"));
 
         private int coupCritiqueEnnemie;
@@ -29,6 +29,10 @@ public class ToupieEnnemie  {
         boolean enModeAttaque = true;
         int compteurTour = 0;
         int nombreAttaquesEvolution;
+    private float baseAttaque;
+    private float baseDefense;
+    private float baseEndurance;
+
 
 
     public ToupieEnnemie(String nomToupieEnnemie ,EnergyLayer energyLayerEnnemie, ForgeDisc forgeDiscsEnnemie, PerformanceTip performanceTipEnnemie, ClasseToupie classeToupieEnnemie, int vieMaxEnnemie,float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie , int esquiveEnnemie, Rotation rotationEnnemie,String urlToupieEnnemiee) {
@@ -67,6 +71,16 @@ public class ToupieEnnemie  {
         this.classeToupieEnnemie2 = classeToupieEnnemie2;
     }
 
+    public ToupieEnnemie() {
+        this.attaqueEnnemie = 85;
+        this.defenseEnnemie = 50;
+        this.enduranceEnnemie = 60;
+
+        this.baseAttaque = this.attaqueEnnemie;
+        this.baseDefense = this.defenseEnnemie;
+        this.baseEndurance = this.enduranceEnnemie;
+    }
+
     public Tour getTourEnnemie() {
         return tourEnnemie;
     }
@@ -99,15 +113,15 @@ public class ToupieEnnemie  {
         return vieActuelleEnnemie;
     }
 
-    public int getAttaqueEnnemie() {
+    public float getAttaqueEnnemie() {
         return attaqueEnnemie;
     }
 
-    public int getDefenseEnnemie() {
+    public float getDefenseEnnemie() {
         return defenseEnnemie;
     }
 
-    public int getEnduranceEnnemie() {
+    public float getEnduranceEnnemie() {
         return enduranceEnnemie;
     }
 
@@ -140,15 +154,15 @@ public class ToupieEnnemie  {
         this.vieMaxEnnemie = vieMaxEnnemie;
     }
 
-    public void setAttaqueEnnemie(int attaqueEnnemie) {
+    public void setAttaqueEnnemie(float attaqueEnnemie) {
         this.attaqueEnnemie = attaqueEnnemie;
     }
 
-    public void setDefenseEnnemie(int defenseEnnemie) {
+    public void setDefenseEnnemie(float defenseEnnemie) {
         this.defenseEnnemie = defenseEnnemie;
     }
 
-    public void setEnduranceEnnemie(int enduranceEnnemie) {
+    public void setEnduranceEnnemie(float enduranceEnnemie) {
         this.enduranceEnnemie = enduranceEnnemie;
     }
 
@@ -299,16 +313,45 @@ public class ToupieEnnemie  {
     public boolean isModeSixLamesEnnemi() {
         return modeSixLames;
     }
-    private boolean modeXTend = false;
-    public void activerModeXtend(){
-        this.modeXTend = true;
+    private boolean modeAttaqueZ = false;
+    private boolean modeDéfenseZ = false;
+    private boolean modeEnduranceZ = false;
+
+    public void activerModeAttaqueZ(){
+        this.modeAttaqueZ = true;
     }
-    public void desactiverModeXtend(){
-        this.modeXTend = false;
+    public void activerModeDefenseZ(){
+        this.modeDéfenseZ = true;
+    }
+    public void activerModeEnduranceZ(){
+        this.modeEnduranceZ = true;
     }
 
-    public boolean isModeXTend() {
-        return modeXTend;
+    public void desactiverModeAttaqueZ(){
+        this.modeAttaqueZ = false;
+    }
+    public void desactiverModeDefenseZ(){
+        this.modeDéfenseZ = false;
+    }
+    public void desactiverModeEnduranceZ(){
+        this.modeEnduranceZ = false;
+    }
+
+    public boolean isModeAttaqueZ() {
+        return modeAttaqueZ;
+    }
+
+    public boolean isModeDéfenseZ() {
+        return modeDéfenseZ;
+    }
+
+    public boolean isModeEnduranceZ() {
+        return modeEnduranceZ;
+    }
+    public void resetStat(){
+        this.attaqueEnnemie = baseAttaque;
+        this.defenseEnnemie = baseDefense;
+        this.enduranceEnnemie = baseEndurance;
     }
 
     public float barrageEnnemie(){

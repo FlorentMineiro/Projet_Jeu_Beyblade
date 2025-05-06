@@ -1910,29 +1910,71 @@ public void retourMenu(){
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
-
-
-
-        /*if ("Z Achilles".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            gererChangementModeEnnemiZAchilles();
-            appliquerDegatsSurJoueur(degats);
-            majVieJoueur();
-            return;
-        }
-
-
-        if ("Hell Salmander".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            gererChangementModeEnnemiHellSalamander();
-            appliquerDegatsSurJoueur(degats);
-            majVieJoueur();
-            return;
-        }*/
-
+        gererChangementModeEnnemiZAchilles();
 
 
 
 
         writeRapideInt(lblNombreTour, Tour.suivant());
+    }
+    private void gererChangementModeEnnemiZAchilles() {
+        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
+        int chance = alea();
+
+        if (nomToupieTip.contains("Xtend")) {
+            float defense =toupieJoueur.attaqueGlobale();
+            float attaque =toupieAdv.attaqueGlobale();
+            toupieAdv.activerModeDefenseZ();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Mode Défense");
+            alert.setHeaderText("Grâce à sa performance tip \n Z achilles peut utiliser différents mode");
+            alert.setContentText("On commence par le mode défense");
+            alert.showAndWait();
+            if (toupieAdv.isModeDéfenseZ()){
+                toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
+                toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
+
+
+            }
+            if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()){
+                toupieAdv.resetStat();
+                toupieAdv.desactiverModeDefenseZ();
+                toupieAdv.activerModeAttaqueZ();
+                if (toupieAdv.isModeAttaqueZ()){
+                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 12);
+                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 12);
+
+
+                }
+            }
+            if(toupieAdv.getVieActuelleEnnemie() <= 0.2f * toupieAdv.getVieMaxEnnemie()){
+                toupieAdv.resetStat();
+                toupieAdv.desactiverModeAttaqueZ();
+                toupieAdv.activerModeEnduranceZ();
+                if (toupieAdv.isModeEnduranceZ()){
+                    if (toupieAdv.getVieActuelleEnnemie() <= 0){
+
+                            Alert a = new Alert(Alert.AlertType.WARNING);
+                            a.setTitle("Life After Death Activé");
+                            a.setHeaderText("La performance tip Xtend permet de combattre encore 1 tour");
+                            a.setContentText(null);
+                            a.showAndWait();
+                            toupieAdv.setVieActuelleEnnemie(1);
+                            attaque *= 0.9f;
+
+                    return;
+                    }
+                }
+            }
+            appliquerDegatsSurJoueur(attaque);
+            majVieJoueur();
+            checkFinCombat();
+            writeRapideInt(lblNombreTour, Tour.suivant());
+            return;
+
+        }
+
+
     }
 
     private void majVieJoueur() {
@@ -2208,15 +2250,7 @@ public void retourMenu(){
         toupieAdv.regenererVieParEnduranceEnnemie();
 
     }
-    private void gererChangementModeEnnemiZAchilles() {
-        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
 
-        if (nomToupieTip.contains("Xtend")) {
-
-        }
-
-
-    }
 
 
     public int alea(){
