@@ -29,6 +29,7 @@ public class ToupiePersonnage {
     public static ToupieEnnemie toupieAdv = new ToupieEnnemie("",new EnergyLayer(""),new ForgeDisc(""),new PerformanceTip(""),new ClasseToupie("neutre"),1000,1000,50,50,50,50,50,new Rotation("neutre"),"");
     private int toursDeProtectionRestants = 0;
     private boolean reussi;
+    private int nombreAttaquesEvolution;
 
 
     public ToupiePersonnage(String nomToupie ,EnergyLayer energyLayer, ForgeDisc forgeDiscs, PerformanceTip performanceTip, ClasseToupie classeToupie, int vieMax,int vieActuelle, int attaque, int defense, int endurance,int coupCritique,int esquive, Rotation rotation,String urlToupie) {
@@ -248,7 +249,7 @@ public class ToupiePersonnage {
 
        }
        if (estEnProtection()) {
-           degat *= 0.5f;
+           degat *= 0.6f;
            System.out.println("Protection active : dégâts réduits !");
        }
 
@@ -284,7 +285,7 @@ public class ToupiePersonnage {
         }
     }
     public void regenererVieParEndurance() {
-        float regen = 0.2f * this.endurance;
+        float regen = 0.1f * this.endurance;
         gagnerVie(regen);
         if ("endurance".equalsIgnoreCase(getClasseToupie().getTypeToupie())){
             if ("défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
@@ -395,6 +396,14 @@ public class ToupiePersonnage {
     public void setVieMax(float vieMax) {
         this.vieMax = vieMax;
     }
+    public void resetStats() {
+        this.vieActuelle = this.vieMax;
+        this.toursDeProtectionRestants = 0;
+        this.modeSixLames = false;
+
+
+    }
+
 
     public int alea(){
         return (int) (Math.random() * 101);

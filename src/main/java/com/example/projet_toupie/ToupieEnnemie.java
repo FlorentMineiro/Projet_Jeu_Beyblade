@@ -399,6 +399,31 @@ public class ToupieEnnemie  {
             }
         }
     }
+    public void resetStats() {
+        this.vieActuelleEnnemie = this.vieMaxEnnemie;
+
+
+
+
+        // Remise du taux critique seulement pour Z Achilles
+        if ("z achilles".equalsIgnoreCase(this.getEnergyLayerEnnemie().getNomLayer())) {
+            this.setCoupCritiqueEnnemie(75);
+            this.modeDéfenseZ = false;
+            this.modeAttaqueZ = false;
+
+            this.modeEnduranceZ = false;
+            this.tourRestantCritique = 0;
+        }
+        if ("Brave Valkyrie".equalsIgnoreCase(this.getEnergyLayerEnnemie().getNomLayer())){
+            this.modeSixLames = false;
+
+        }
+        if ("Kerbeus".equalsIgnoreCase(this.getEnergyLayerEnnemie().getNomLayer())){
+            this.toursDeProtectionRestants = 0;
+
+        }
+    }
+
 
 
 

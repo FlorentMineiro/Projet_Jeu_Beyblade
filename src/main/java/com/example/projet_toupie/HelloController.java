@@ -1338,47 +1338,46 @@ public void retourMenu(){
         //choixToupieEnn = 6;
 
     }
-    public void initialiserCombat(String imgToupie,int indiceToupieEnn){
+    public void initialiserCombat(String imgToupie, int indiceToupieEnn) {
 
-        changeImageViewImg(imgToupieDeEnnemi,imgToupie);
-        writeRapideFloat(lblNombrePVToupieEnnemie,listToupieEnnemie.get(indiceToupieEnn).getVieActuelleEnnemie());
-        writeRapideString(lblToupieEnnModeCombat,listToupieEnnemie.get(indiceToupieEnn).getNomToupieEnnemie());
+
+        toupieJoueur.resetStats();
+        listToupieEnnemie.get(indiceToupieEnn).resetStats();
+
+        toupieAdv = listToupieEnnemie.get(indiceToupieEnn);
+
+        changeImageViewImg(imgToupieDeEnnemi, imgToupie);
+        writeRapideFloat(lblNombrePVToupieEnnemie, toupieAdv.getVieMaxEnnemie());
+        writeRapideString(lblToupieEnnModeCombat, toupieAdv.getNomToupieEnnemie());
+
         invisibleImage(imgProtection);
         invisibleImage(imgRotationSteal);
         invisibleImage(imgModeSixLames);
         invisibleImage(imgModeTroisLames);
 
-        if (choixToupie == 1){
-            affichageCombatGenerique("Toupie/fafnir_gpt.png",
-                    listToupie.get(3).getVieActuelleToupie(),
-                    listToupie.get(3).getNomToupie()
-                    );
+        // Réafficher l'image de la toupie du joueur selon le choix
+        if (choixToupie == 1) {
+            toupieJoueur = listToupie.get(3);
+            affichageCombatGenerique("Toupie/fafnir_gpt.png", toupieJoueur.getVieMaxToupie(), toupieJoueur.getNomToupie());
             visibleImage(imgRotationSteal);
-
         }
-        if (choixToupie == 2){
-
-            affichageCombatGenerique("Toupie/kerbeus_gpt.png",
-                    listToupie.get(0).getVieActuelleToupie(),
-                    listToupie.get(0).getNomToupie()
-                    );
+        if (choixToupie == 2) {
+            toupieJoueur = listToupie.get(0);
+            affichageCombatGenerique("Toupie/kerbeus_gpt.png", toupieJoueur.getVieMaxToupie(), toupieJoueur.getNomToupie());
             visibleImage(imgProtection);
-
-
-
         }
-        if (choixToupie == 3){
-            affichageCombatGenerique("Toupie/valkyrie_gpt.png"
-                    ,listToupie.get(1).getVieActuelleToupie()
-                    ,listToupie.get(1).getNomToupie()
-            );
+        if (choixToupie == 3) {
+            toupieJoueur = listToupie.get(1);
+            affichageCombatGenerique("Toupie/valkyrie_gpt.png", toupieJoueur.getVieMaxToupie(), toupieJoueur.getNomToupie());
             visibleImage(imgModeSixLames);
-            invisibleImage(imgProtection);
-
         }
 
-
+        // Mise à jour des barres de vie
+        barreVieToupiePerso.setProgress(1.0);
+        barrevieToupieEnnemie.setProgress(1.0);
+        writeRapideInt(lblNombreTour, Tour.reset());
     }
+
 
 
     public void momentLancer(){
@@ -1907,71 +1906,80 @@ public void retourMenu(){
     }
     private void gererChangementModeEnnemiZAchilles() {
         String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
-        int chance = alea();
 
-        if (nomToupieTip.contains("Xtend")) {
+        if (nomToupieTip.contains("Xtend")){
             float attaque = toupieAdv.attaqueGlobale();
 
-            toupieAdv.resetStat();
-
-            // 🔴 Mode Attaque : si la vie est < 60 %
-            if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()) {
-                if (!toupieAdv.isModeAttaqueZ()) {
+            // 🔴 Mode Endurance : priorité si vie très basse
+            if (toupieAdv.getVieActuelleEnnemie() <= 0.2f * toupieAdv.getVieMaxEnnemie()) {
+                if (!toupieAdv.isModeEnduranceZ()) {
+                    toupieAdv.resetStat(); // remet stats de base
+                    toupieAdv.desactiverModeAttaqueZ();
                     toupieAdv.desactiverModeDefenseZ();
+                    toupieAdv.activerModeEnduranceZ();
+
+                    Alert a = new Alert(Alert.AlertType.WARNING);
+                    a.setTitle("Life After Death Activé");
+                    a.setHeaderText("La performance tip Xtend permet à Z Achilles de continuer malgré tout");
+                    a.setContentText("Mode Endurance activé !");
+                    a.showAndWait();
+
+                    if (toupieAdv.getVieActuelleEnnemie() <= 0) {
+                        toupieAdv.setVieActuelleEnnemie(1);
+                    }
+
+                    attaque *= 0.9f;
+                }
+            }
+
+            // 🔴 Mode Attaque si vie < 60% et pas déjà en attaque
+            else if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()) {
+                if (!toupieAdv.isModeAttaqueZ()) {
+                    toupieAdv.resetStat();
+                    toupieAdv.desactiverModeDefenseZ();
+                    toupieAdv.desactiverModeEnduranceZ();
                     toupieAdv.activerModeAttaqueZ();
                     toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
                     toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Passage au Mode Attaque");
-                    alert.setHeaderText("Grâce à sa performance tip\nZ Achilles peut utiliser différents modes");
-                    alert.setContentText("Pendant les 3 prochains tours \n Z Achilles fera que des coups critiques");
+                    alert.setTitle("Mode Attaque");
+                    alert.setHeaderText("Z Achilles passe en mode attaque !");
+                    alert.setContentText("Pendant 3 tours, tous ses coups sont critiques !");
                     alert.showAndWait();
 
                     toupieAdv.activerModeCritiqueTemporaire(3);
                     attaque = toupieAdv.attaqueGlobale();
                 }
             }
-            // 🔴 Sinon, activer le mode Défense uniquement si pas déjà activé
-            else if (!toupieAdv.isModeDéfenseZ()) {
-                toupieAdv.activerModeDefenseZ();
-                toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
-                toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Mode Défense");
-                alert.setHeaderText("Grâce à sa performance tip\nZ Achilles peut utiliser différents modes");
-                alert.setContentText("On commence par le mode défense");
-                alert.showAndWait();
-            }
+            // 🔴 Mode Défense si aucune autre condition (cas de départ)
+            else {
+                if (!toupieAdv.isModeDéfenseZ()) {
+                    toupieAdv.resetStat();
+                    toupieAdv.desactiverModeAttaqueZ();
+                    toupieAdv.desactiverModeEnduranceZ();
+                    toupieAdv.activerModeDefenseZ();
+                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
+                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
 
-            // 🔴 Mode Endurance : si la vie < 20 %
-            if (toupieAdv.getVieActuelleEnnemie() <= 0.2f * toupieAdv.getVieMaxEnnemie()) {
-                toupieAdv.resetStat();
-                toupieAdv.desactiverModeAttaqueZ();
-                toupieAdv.activerModeEnduranceZ();
-                if (toupieAdv.getVieActuelleEnnemie() <= 0) {
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setTitle("Life After Death Activé");
-                    a.setHeaderText("La performance tip Xtend permet de combattre encore 1 tour");
-                    a.setContentText(null);
-                    a.showAndWait();
-                    toupieAdv.setVieActuelleEnnemie(1);
-                    attaque *= 0.9f;
-                    return;
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mode Défense");
+                    alert.setHeaderText("Z Achilles entre en mode Défense");
+                    alert.setContentText("Il encaissera mieux les coups !");
+                    alert.showAndWait();
                 }
             }
-
             appliquerDegatsSurJoueur(attaque);
             majVieJoueur();
             checkFinCombat();
             toupieAdv.decrementerCritique();
             writeRapideInt(lblNombreTour, Tour.suivant());
+            return;
         }
 
-
-
     }
+
     private void gererChangementValkyrie2(){
         int chance = alea();
 
@@ -2058,62 +2066,78 @@ public void retourMenu(){
     }
     private void gererChangementModeEnnemiZAchilles2() {
         String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
-        int chance = alea();
 
-        if (nomToupieTip.contains("Xtend")) {
-            float defense =toupieJoueur.attaqueGlobale();
-            float attaque =toupieAdv.attaqueGlobale();
-            if (!toupieAdv.isModeDéfenseZ()) {
-                toupieAdv.activerModeDefenseZ();
-                toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
-                toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
+        if (nomToupieTip.contains("Xtend")){
+            float attaque = toupieAdv.attaqueGlobale();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Mode Défense");
-                alert.setHeaderText("Grâce à sa performance tip\nZ Achilles peut utiliser différents modes");
-                alert.setContentText("On commence par le mode défense");
-                alert.showAndWait();
+            // 🔴 Mode Endurance : priorité si vie très basse
+            if (toupieAdv.getVieActuelleEnnemie() <= 0.2f * toupieAdv.getVieMaxEnnemie()) {
+                if (!toupieAdv.isModeEnduranceZ()) {
+                    toupieAdv.resetStat(); // remet stats de base
+                    toupieAdv.desactiverModeAttaqueZ();
+                    toupieAdv.desactiverModeDefenseZ();
+                    toupieAdv.activerModeEnduranceZ();
 
-            }
+                    Alert a = new Alert(Alert.AlertType.WARNING);
+                    a.setTitle("Life After Death Activé");
+                    a.setHeaderText("La performance tip Xtend permet à Z Achilles de continuer malgré tout");
+                    a.setContentText("Mode Endurance activé !");
+                    a.showAndWait();
 
-            if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()){
-                toupieAdv.resetStat();
-                toupieAdv.desactiverModeDefenseZ();
-                toupieAdv.activerModeAttaqueZ();
-                if (toupieAdv.isModeAttaqueZ()){
-                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 12);
-                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 12);
-
-
-                }
-            }
-            if(toupieAdv.getVieActuelleEnnemie() <= 0.2f * toupieAdv.getVieMaxEnnemie()){
-                toupieAdv.resetStat();
-                toupieAdv.desactiverModeAttaqueZ();
-                toupieAdv.activerModeEnduranceZ();
-                if (toupieAdv.isModeEnduranceZ()){
-                    if (toupieAdv.getVieActuelleEnnemie() <= 0){
-
-                        Alert a = new Alert(Alert.AlertType.WARNING);
-                        a.setTitle("Life After Death Activé");
-                        a.setHeaderText("La performance tip Xtend permet de combattre encore 1 tour");
-                        a.setContentText(null);
-                        a.showAndWait();
+                    if (toupieAdv.getVieActuelleEnnemie() <= 0) {
                         toupieAdv.setVieActuelleEnnemie(1);
-                        attaque *= 0.9f;
-
-                        return;
                     }
+
+                    attaque *= 0.9f;
                 }
             }
+
+            // 🔴 Mode Attaque si vie < 60% et pas déjà en attaque
+            else if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()) {
+                if (!toupieAdv.isModeAttaqueZ()) {
+                    toupieAdv.resetStat();
+                    toupieAdv.desactiverModeDefenseZ();
+                    toupieAdv.desactiverModeEnduranceZ();
+                    toupieAdv.activerModeAttaqueZ();
+                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
+                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mode Attaque");
+                    alert.setHeaderText("Z Achilles passe en mode attaque !");
+                    alert.setContentText("Pendant 3 tours, tous ses coups sont critiques !");
+                    alert.showAndWait();
+
+                    toupieAdv.activerModeCritiqueTemporaire(3);
+                    attaque = toupieAdv.attaqueGlobale();
+                }
+            }
+
+            // 🔴 Mode Défense si aucune autre condition (cas de départ)
+            else {
+                if (!toupieAdv.isModeDéfenseZ()) {
+                    toupieAdv.resetStat();
+                    toupieAdv.desactiverModeAttaqueZ();
+                    toupieAdv.desactiverModeEnduranceZ();
+                    toupieAdv.activerModeDefenseZ();
+                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
+                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mode Défense");
+                    alert.setHeaderText("Z Achilles entre en mode Défense");
+                    alert.setContentText("Il encaissera mieux les coups !");
+                    alert.showAndWait();
+                }
+            }
+
             appliquerDegatsSurJoueur(attaque);
             majVieJoueur();
             checkFinCombat();
+            toupieAdv.decrementerCritique();
 
             return;
-
         }
-
 
     }
 
@@ -2140,6 +2164,7 @@ public void retourMenu(){
         toupieJoueur.perdrePDV(degats);
         toupieAdv.regenererVieParEnduranceEnnemie();
 
+
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         barreVieToupiePerso.setProgress(pourcentageJoueur);
         vitaMajJoueur();
@@ -2147,70 +2172,63 @@ public void retourMenu(){
     }
     public void checkFinCombat(){
         if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
-            int apparition = alea();
-            Runnable finDeJeu = () -> {
+            int apparitionD = alea();
+
+            // 20% de chance (1 sur 5)
+            if (apparitionD < 20) {
+                affBurst(() -> {
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setTitle("Dommage");
+                    a.setHeaderText("Vous avez Perdu !");
+                    a.setContentText(null);
+                    a.showAndWait();
+
+                    clearAll();
+                    visible(apMenuPrincipal);
+                    return;
+                });
+            } else {
+                // cas normal sans animation
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setTitle("Dommage");
                 a.setHeaderText("Vous avez Perdu !");
                 a.setContentText(null);
                 a.showAndWait();
-                clearAll();
-                visible(apMenuPrincipal);
-                reinitialisationBarre();
-                reinitialisation();
-
-            };
-
-            // 20% de chance (1 sur 5)
-            if(apparition < 20) {
-                affBurst(finDeJeu); // Avec animation
-
 
                 clearAll();
                 visible(apMenuPrincipal);
-                reinitialisationBarre();
-                reinitialisation();
-                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()-500);
-                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
-
-            } else {
-                finDeJeu.run(); // Sans animation
             }
         }
 
-        if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
-            int apparition = alea();
-            Runnable finDeJeu = () -> {
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setTitle("Félicitation ");
-                a.setHeaderText("Vous avez Gagné !");
-                a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
-                a.showAndWait();
-                clearAll();
-                visible(apMenuPrincipal);
-                reinitialisationBarre();
-                reinitialisation();
-                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()+1000);
-                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
-
-            };
-
-            if(apparition < 20) {
-                affBurst(finDeJeu);
+            if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
+            int apparitionV = alea();
 
 
-                clearAll();
-                visible(apMenuPrincipal);
-                reinitialisationBarre();
-                reinitialisation();
-                toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints()+1500);
-                writeRapideInt(lblBeyPoint,toupieJoueur.getNombreBeyPoints());
+                if (apparitionV < 20) {
+                    affBurst(() -> {
+                        Alert a = new Alert(Alert.AlertType.INFORMATION);
+                        a.setTitle("Félicitation");
+                        a.setHeaderText("Vous avez Gagné!");
+                        a.setContentText(null);
+                        a.showAndWait();
 
+                        clearAll();
+                        visible(apMenuPrincipal);
+                        return;
+                    });
+                } else {
+                    // cas normal sans animation
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setTitle("Félicitations ");
+                    a.setHeaderText("Vous avez Gagné !");
+                    a.setContentText(null);
+                    a.showAndWait();
 
-            } else {
-                finDeJeu.run();
+                    clearAll();
+                    visible(apMenuPrincipal);
+                    return;
+                }
             }
-        }
 
     }
 
