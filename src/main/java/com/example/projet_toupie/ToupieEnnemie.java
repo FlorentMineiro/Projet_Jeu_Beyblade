@@ -220,7 +220,7 @@ public class ToupieEnnemie  {
         La formule est : 0.5 * degat + reduitAttaque(degat)
                                          \__ reduitAttaque correspondant à la fonction ci-dessus
         */
-        degat = (int)(0.5 * degat + reduitAttaque(degat));
+        degat = (int)(0.5 * degat + reduitAttaque(degat)) - toupiePersonnage.regenererVieParEndurance();
         this.vieActuelleEnnemie -= degat;
         if (vieActuelleEnnemie <= 0){
             vieActuelleEnnemie = 0;
@@ -230,13 +230,14 @@ public class ToupieEnnemie  {
         }
         return degat;
     }
-    public void gagnerVieEnnemie(float quantite) {
+    public float gagnerVieEnnemie(float quantite) {
         this.vieActuelleEnnemie += quantite;
         if (this.vieActuelleEnnemie > this.vieMaxEnnemie) {
             this.vieActuelleEnnemie = this.vieMaxEnnemie; // pour ne pas dépasser la vie max
         }
+        return  this.vieActuelleEnnemie;
     }
-    public void regenererVieParEnduranceEnnemie() {
+    public float regenererVieParEnduranceEnnemie() {
         float regen = 0.2f * this.enduranceEnnemie;
         gagnerVieEnnemie(regen);
         if ("endurance".equalsIgnoreCase(getClasseToupieEnnemie().getTypeToupie())){
@@ -250,6 +251,7 @@ public class ToupieEnnemie  {
             }
 
         }
+        return gagnerVieEnnemie(regen);
     }
 
 

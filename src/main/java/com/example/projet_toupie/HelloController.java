@@ -1655,22 +1655,19 @@ public void retourMenu(){
             // 🔥 Infliger les dégâts à l'ennemi et déclencher les effets
             infligerDegatsEtGererModeEnnemi(degat);
 
-            // ATTAQUE ADVERSAIRE
-            if (toupieAdv.getVieActuelleEnnemie() != 0) {
-                float pvAvant = toupieJoueur.getVieActuelleToupie();
-                attaqueAdverse();
-                float pvApres = toupieJoueur.getVieActuelleToupie();
 
-                if (pvApres < pvAvant) {
-                    toupieJoueur.regenererVieParEndurance();
-                    System.out.println("Vous avez gagné des PV grâce à l'endurance.");
-                }
+
+
+                attaqueAdverse();
+
+
+
 
                 // Mise à jour UI
                 barreVieToupiePerso.setProgress(toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie());
                 barrevieToupieEnnemie.setProgress(toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie());
                 vitaMajJoueur();
-            }
+
         }
 
         checkFinCombat();
@@ -2150,8 +2147,10 @@ public void retourMenu(){
 
     private void appliquerDegatsSurJoueur(float degats) {
         if ("kerbeus".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) { // Si on joue Kerbeus
+
             if (toupieJoueur.estEnProtection()) { // protection active
-                degats *= 0.4; // exemple : réduire les dégâts
+
+                degats = 0.6f * degats ; // exemple : réduire les dégâts
                 if ( degats < 0){
                     degats = 0;
                 }
@@ -2161,8 +2160,8 @@ public void retourMenu(){
                 visibleImage(imgProtection); // la protection est finie, on ré-affiche
             }
         }
-        toupieJoueur.perdrePDV(degats);
-        toupieAdv.regenererVieParEnduranceEnnemie();
+        toupieJoueur.perdrePDV(degats );
+
 
 
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
@@ -2345,7 +2344,7 @@ public void retourMenu(){
             System.out.println("Drain Fafnir a absorbé " + pvAbsorbes + " PV !");
         }
 
-        toupieJoueur.regenererVieParEndurance();
+
 
         // Enchaînements ennemis
         gererChangementValkyrie2();
@@ -2395,20 +2394,6 @@ public void retourMenu(){
             a.showAndWait();
         }
     }
-    // Appelé à chaque tour de l'ennemi
-    private void gererChangementModeEnnemiHellSalamander() {
-
-        String nomToupie = toupieAdv.getEnergyLayerEnnemie().getNomLayer();
-
-        if (nomToupie.contains("Hell Salamander")) {
-            toupieAdv.activerBalanceBreakerSalamanderEnn();
-
-        }
-        toupieAdv.regenererVieParEnduranceEnnemie();
-
-    }
-
-
 
     public int alea(){
         int alea = (int) (Math.random() * 101);
