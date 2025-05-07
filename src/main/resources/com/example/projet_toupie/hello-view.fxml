@@ -179,7 +179,7 @@
             <Label layoutX="58.0" layoutY="260.0" text="Endurance" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apSelectionAdversaire" prefHeight="462.0" prefWidth="600.0" visible="false">
+      <AnchorPane fx:id="apSelectionAdversaire" prefHeight="462.0" prefWidth="600.0">
          <children>
             <ImageView fx:id="imgMenuCombat" fitHeight="503.0" fitWidth="600.0" layoutY="-103.0">
                <image>
@@ -196,19 +196,14 @@
                   <Image url="@../../../Toupie/valkyrie_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="123.0" layoutY="69.0" onMouseClicked="#btnAdvFafnir">
+            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="171.0" layoutY="60.0" onMouseClicked="#btnAdvFafnir">
                <image>
                   <Image url="@../../../Toupie/fafnir_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="74.0" layoutX="251.0" layoutY="63.0" onMouseClicked="#btnAdvKerbeus">
+            <ImageView fitHeight="69.0" fitWidth="74.0" layoutX="310.0" layoutY="60.0" onMouseClicked="#btnAdvKerbeus">
                <image>
                   <Image url="@../../../Toupie/kerbeus_gpt.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="70.0" fitWidth="63.0" layoutX="387.0" layoutY="62.0" onMouseClicked="#btnAdvSalamander">
-               <image>
-                  <Image url="@../../../Toupie/Beyblade_Salamander.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="82.0" fitWidth="74.0" layoutX="504.0" layoutY="54.0" onMouseClicked="#btnAdvZachilles">
@@ -221,17 +216,12 @@
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireSalamander" layoutX="386.0" layoutY="129.0" prefHeight="42.0" prefWidth="99.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireKerbeus" layoutX="324.0" layoutY="142.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireKerbeus" layoutX="243.0" layoutY="150.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblAdversaireFafnir" layoutX="149.0" layoutY="149.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireFafnir" layoutX="167.0" layoutY="149.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
@@ -531,13 +521,14 @@
             </ScrollPane>
          </top>
       </BorderPane>
-      <AnchorPane fx:id="apBurst" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="apBurst" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fx:id="imgGifBurst" fitHeight="401.0" fitWidth="601.0">
                <image>
                   <Image url="@../../../Toupie/beyblade-burst.gif" />
                </image>
             </ImageView>
+            <Button layoutX="237.0" layoutY="321.0" mnemonicParsing="false" onMouseClicked="#btnGif" opacity="0.7" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: gold;" text="Continuer" />
          </children>
       </AnchorPane>
       

@@ -384,22 +384,22 @@ public class ToupieEnnemie  {
             }
         }
     }
-    public void changerModeXtend() {
-        compteurTour++;
-        if (compteurTour % 3 == 0){
-            if (enModeAttaque) {
-                this.attaqueEnnemie -= 10;
-                this.enduranceEnnemie += 10;
-                System.out.println("Z Achilles passe en mode Endurance !");
-            } else {
-                this.attaqueEnnemie += 10;
-                this.enduranceEnnemie -= 10;
-                System.out.println("Z Achilles passe en mode Attaque !");
-            }
-            enModeAttaque = !enModeAttaque;
-        }
+    private int tourRestantCritique = 0;
 
+    public void activerModeCritiqueTemporaire(int tours) {
+        this.tourRestantCritique = tours;
+        setCoupCritiqueEnnemie(100);
     }
+
+    public void decrementerCritique() {
+        if (tourRestantCritique > 0) {
+            tourRestantCritique--;
+            if (tourRestantCritique == 0) {
+                setCoupCritiqueEnnemie(75);
+            }
+        }
+    }
+
 
 
 
