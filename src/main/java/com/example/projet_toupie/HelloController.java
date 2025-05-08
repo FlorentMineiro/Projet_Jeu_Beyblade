@@ -1810,7 +1810,7 @@ public void retourMenu(){
         float pourcentageAdv = toupieAdv.getVieActuelleEnnemie()/toupieAdv.getVieMaxEnnemie();
 
         if ("Drain Fafnir".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            if (chance < 40) {
+            if (chance < 30) {
                 float absorb = volRotationEnnemie();
                 if (absorb > 0) {
                     majVieEnnemi();
@@ -2198,9 +2198,7 @@ public void retourMenu(){
 
 
 
-        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
-        barreVieToupiePerso.setProgress(pourcentageJoueur);
-        vitaMajJoueur();
+        majVieJoueur();
         checkFinCombat();
     }
     public void finCombat(boolean victoire, boolean burst) {

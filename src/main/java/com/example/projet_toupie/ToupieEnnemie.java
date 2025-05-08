@@ -214,23 +214,24 @@ public class ToupieEnnemie  {
     }
 
     public float perdrePDV( float degat) {
-        /* FACILE +0.5
-        Cette fonction aura pour mission de faire perdre des points de vie actuels au monstre par rapport au paramètre degat.
-        Cette fonction retournera en plus le nombre de dêgats que le monstre a subit au total.
-        La formule est : 0.5 * degat + reduitAttaque(degat)
-                                         \__ reduitAttaque correspondant à la fonction ci-dessus
-        */
-        degat = (int)(0.5 * degat + reduitAttaque(degat));
+
+
+        degat = (float) (0.5 * degat + reduitAttaque(degat));
+        if (jetEsquive()){
+            degat = 0;
+        }
+
+        if (degat < 0){
+            degat = 0;
+        }
+
+
         this.vieActuelleEnnemie -= degat;
         if (vieActuelleEnnemie <= 0){
             vieActuelleEnnemie = 0;
         }
-        if (jetEsquive()){
-            degat = 0;
-        }
-        if (degat < 0){
-            degat = 0;
-        }
+
+
         return degat;
     }
     public float gagnerVieEnnemie(float quantite) {
@@ -261,6 +262,9 @@ public class ToupieEnnemie  {
    public float attaqueGlobale() {
 
        float degat = (float) (this.attaqueEnnemie * 1.5);
+       if (degat < 0 ){
+           degat = 0;
+       }
 
        if ("Attaque".equalsIgnoreCase(this.classeToupieEnnemie.getTypeToupie())) {
            if ("Endurance".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())) {
@@ -272,6 +276,7 @@ public class ToupieEnnemie  {
        if (alea() <= getCoupCritiqueEnnemie()){
            degat *= 2;
        }
+
 
        return degat;
    }
