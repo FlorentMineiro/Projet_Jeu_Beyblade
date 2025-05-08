@@ -179,6 +179,8 @@ public class HelloController implements Initializable {
     private int nombreAttaquesEvolution = 0;
     int colonne = 0;
     int ligne = 0;
+    int beyReste = 0;
+    int beyResteActuel = 0;
 
 
 
@@ -1026,11 +1028,12 @@ public class HelloController implements Initializable {
         changeZone("Environnement/Fond-Invocation.png", apInvocation);
 
         if (toupieJoueur.getNombreBeyPoints() >= 700) {
-
+            beyReste = beyResteActuel;
             invoquerPiece();
 
             toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() - 700);
-            writeRapideInt(lblBeyPoint, toupieJoueur.getNombreBeyPoints());
+            beyReste = toupieJoueur.getNombreBeyPoints();
+            writeRapideInt(lblBeyPoint, beyReste);
 
 
         } else {
@@ -1049,8 +1052,10 @@ public class HelloController implements Initializable {
             a.setContentText(null);
             a.setHeaderText("Il vous manque " + (700 - toupieJoueur.getNombreBeyPoints()) + " BeyPoints");
             a.showAndWait();
+            beyReste = toupieJoueur.getNombreBeyPoints();
 
         }
+        beyResteActuel = beyReste;
     }
 
 
@@ -1560,22 +1565,8 @@ public void retourMenu(){
                 break;
             }
         }
-        /*if (toupieJoueur.isReussi()){
-            toupieJoueur.appliquerEffetQTE(toupieJoueur.isReussi());
-        }else {
-            toupieJoueur.setReussi(false);
-            toupieJoueur.appliquerEffetQTE(toupieJoueur.isReussi());
-        }*/
 
-        //fight();
     }
-
-
-
-
-
-
-
 
     public void vitaMajJoueur() {
         writeRapideFloat(lblNombrePVToupiePerso,toupieJoueur.getVieActuelleToupie() );
@@ -1670,7 +1661,13 @@ public void retourMenu(){
 
         }
 
-        checkFinCombat();
+       animationOuNon();
+    }
+    public void animationOuNon(){
+        PauseTransition pauseFin = new PauseTransition(Duration.seconds(0.5));
+        pauseFin.setOnFinished(e -> checkFinCombat());
+        pauseFin.play();
+
     }
 
     private void gererChangementModeToupieEnnemi() {
@@ -1733,15 +1730,24 @@ public void retourMenu(){
             a.setHeaderText("Vous avez Perdu ! \n en vous prenant un burst ");
             a.setContentText("Perte de beyPoints : -"+500 + "beyPoint");
             a.showAndWait();
+
+            clearAll();
+            clearAllBorder();
+            visible(apMenuPrincipal);
         }
 
         if (toupieJoueur.getVieActuelleToupie() > 0 & toupieAdv.getVieActuelleEnnemie() < 0){
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Wouah !! Burst ");
             a.setHeaderText("Vous avez Gagné \n en éclatant la toupie adverse \n Vous recevez un bonus  !");
+            toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + 1500);
 
             a.setContentText("Votre Récompense :" + toupieJoueur.getNombreBeyPoints() + " BeyPoints");
             a.showAndWait();
+
+            clearAll();
+            clearAllBorder();
+            visible(apMenuPrincipal);
         }
 
 
@@ -1789,6 +1795,7 @@ public void retourMenu(){
         gererChangementModeEnnemiZAchilles();
 
         System.out.println("Grâce au principe de régénération d'endurance : Votre adversaire à gagner des pv");
+        animationOuNon();
 
 
     }
@@ -1969,7 +1976,7 @@ public void retourMenu(){
             }
             appliquerDegatsSurJoueur(attaque);
             majVieJoueur();
-            checkFinCombat();
+
             toupieAdv.decrementerCritique();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
@@ -2130,7 +2137,7 @@ public void retourMenu(){
 
             appliquerDegatsSurJoueur(attaque);
             majVieJoueur();
-            checkFinCombat();
+
             toupieAdv.decrementerCritique();
 
             return;
@@ -2169,67 +2176,54 @@ public void retourMenu(){
         vitaMajJoueur();
         checkFinCombat();
     }
-    public void checkFinCombat(){
-        if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
-            int apparitionD = alea();
-
-            // 20% de chance (1 sur 5)
-            if (apparitionD < 20) {
-                affBurst(() -> {
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setTitle("Dommage");
-                    a.setHeaderText("Vous avez Perdu !");
-                    a.setContentText(null);
-                    a.showAndWait();
-
-                    clearAll();
-                    visible(apMenuPrincipal);
-                    return;
-                });
+    public void finCombat(boolean victoire, boolean burst) {
+        Runnable finDeCombat = () -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            if (victoire) {
+                alert.setTitle("Félicitations !");
+                alert.setHeaderText(burst ? "Victoire par Burst !" : "Vous avez Gagné !");
+                alert.setContentText("BeyPoints gagnés : " + (burst ? "+1500" : "+1000"));
+                toupieJoueur.setNombreBeyPoints(beyResteActuel + (burst ?1500: 1000));
             } else {
-                // cas normal sans animation
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setTitle("Dommage");
-                a.setHeaderText("Vous avez Perdu !");
-                a.setContentText(null);
-                a.showAndWait();
+                alert.setTitle("Dommage...");
+                alert.setHeaderText(burst ? "Défaite par Burst !" : "Vous avez Perdu !");
+                alert.setContentText("BeyPoints perdus : " + (burst ? "-500" : "Pas de burst \n Rien de Perdu"));
+                toupieJoueur.setNombreBeyPoints(beyResteActuel - (burst ? 500 : 0));
 
-                clearAll();
-                visible(apMenuPrincipal);
+            }
+            alert.showAndWait();
+
+            clearAll();
+            visible(apMenuPrincipal);
+        };
+
+        if (burst) {
+            affBurst(finDeCombat); // animation + suite
+        } else {
+            finDeCombat.run(); // directe
+        }
+    }
+    public void checkFinCombat() {
+        if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
+            boolean burst = true;
+            int chance = alea();
+            if (chance < 20){
+                finCombat(false, burst);
+            }else {
+                finCombat(false, false);
+            }
+
+        } else if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
+            boolean burst = true;
+            int chance = alea();
+            if (chance < 20){
+                finCombat(true, burst);
+            }else {
+                finCombat(true, false);
             }
         }
-
-            if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
-            int apparitionV = alea();
-
-
-                if (apparitionV < 20) {
-                    affBurst(() -> {
-                        Alert a = new Alert(Alert.AlertType.INFORMATION);
-                        a.setTitle("Félicitation");
-                        a.setHeaderText("Vous avez Gagné!");
-                        a.setContentText(null);
-                        a.showAndWait();
-
-                        clearAll();
-                        visible(apMenuPrincipal);
-                        return;
-                    });
-                } else {
-                    // cas normal sans animation
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setTitle("Félicitations ");
-                    a.setHeaderText("Vous avez Gagné !");
-                    a.setContentText(null);
-                    a.showAndWait();
-
-                    clearAll();
-                    visible(apMenuPrincipal);
-                    return;
-                }
-            }
-
     }
+
 
 
 
