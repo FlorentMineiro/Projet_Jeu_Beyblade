@@ -250,6 +250,9 @@ public class ToupiePersonnage {
        }
        if (estEnProtection()) {
            degat *= 0.6f;
+           if (degat < 0){
+               degat = 0;
+           }
            System.out.println("Protection active : dégâts réduits !");
        }
 
@@ -293,11 +296,11 @@ public class ToupiePersonnage {
         gagnerVie(regen);
         if ("endurance".equalsIgnoreCase(getClasseToupie().getTypeToupie())){
             if ("défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
-                regen *= 1.3f;
+                regen *= 1.15f;
                 gagnerVie(regen);
             }
             if ("attaque".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
-                regen *= 0.7f;
+                regen *= 0.85f;
                 gagnerVie(regen);
             }
 

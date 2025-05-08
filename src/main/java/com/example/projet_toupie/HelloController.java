@@ -1655,9 +1655,9 @@ public void retourMenu(){
 
 
                 // Mise à jour UI
-                barreVieToupiePerso.setProgress(toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie());
-                barrevieToupieEnnemie.setProgress(toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie());
-                vitaMajJoueur();
+
+               majVieJoueur();
+               majVieEnnemi();
 
         }
 
@@ -1681,7 +1681,7 @@ public void retourMenu(){
             gererChangementModeEnnemiZAchilles();
         } else if (nomLayer.contains("fafnir")) {
             gererChangementFafnir();
-        } else if (nomLayer.contains("valkyrie")) {
+        } else if (nomLayer.contains("brave valkyrie")) {
             gererChangementValkyrie();
         } else if (nomLayer.contains("kerbeus")) {
             gererChangementKerbeus();
@@ -1689,7 +1689,7 @@ public void retourMenu(){
     }
     private void infligerDegatsEtGererModeEnnemi(float degat) {
         toupieAdv.perdrePDV(degat);
-        vitaMajAdv();
+        majVieEnnemi();
 
         gererChangementModeToupieEnnemi(); // appel centralisé
     }
@@ -1788,14 +1788,15 @@ public void retourMenu(){
     public void attaqueAdverse() {
 
 
-        gererChangementFafnir();
+        /*gererChangementFafnir();
 
         gererChangementValkyrie();
         gererChangementKerbeus();
-        gererChangementModeEnnemiZAchilles();
+        gererChangementModeEnnemiZAchilles();*/
 
         System.out.println("Grâce au principe de régénération d'endurance : Votre adversaire à gagner des pv");
         animationOuNon();
+        finDeTour();
 
 
     }
@@ -1810,16 +1811,18 @@ public void retourMenu(){
             if (chance < 40) {
                 float absorb = volRotationEnnemie();
                 if (absorb > 0) {
-                    barrevieToupieEnnemie.setProgress(pourcentageAdv);
+                    majVieEnnemi();
                     System.out.println("Absorption réussie");
-                } else {
+
+            } else {
                     System.out.println("Absorption impossible à cause de la rotation");
                 }
             } else {
                 appliquerDegatsSurJoueur(degats);
-                majVieJoueur();
+
                 System.out.println("Absorption échouée");
             }
+            appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -1839,7 +1842,7 @@ public void retourMenu(){
                     else nombreCoups = 2;
 
                     for (int i = 0; i < nombreCoups; i++) {
-                        float degat = toupieJoueur.barrage();
+                        float degat = toupieAdv.barrageEnnemie();
                         if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
                             nombreAttaquesEvolution++;
                             float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
@@ -1867,8 +1870,9 @@ public void retourMenu(){
                     degats *= bonus;
                 }
                 appliquerDegatsSurJoueur(degats);
-                majVieJoueur();
+
             }
+            appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -1903,7 +1907,7 @@ public void retourMenu(){
             }
 
             appliquerDegatsSurJoueur(degats);
-            majVieJoueur();
+            appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -1975,9 +1979,10 @@ public void retourMenu(){
                 }
             }
             appliquerDegatsSurJoueur(attaque);
-            majVieJoueur();
+
 
             toupieAdv.decrementerCritique();
+            appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -2027,9 +2032,9 @@ public void retourMenu(){
                     degats *= bonus;
                 }
                 appliquerDegatsSurJoueur(degats);
-                majVieJoueur();
-            }
 
+            }
+            appliquerRegenerationFinDeTour();
             return;
         }
 
@@ -2063,7 +2068,7 @@ public void retourMenu(){
             }
 
             appliquerDegatsSurJoueur(degats);
-            majVieJoueur();
+            appliquerRegenerationFinDeTour();
 
             return;
         }
@@ -2136,10 +2141,10 @@ public void retourMenu(){
             }
 
             appliquerDegatsSurJoueur(attaque);
-            majVieJoueur();
+
 
             toupieAdv.decrementerCritique();
-
+            appliquerRegenerationFinDeTour();
             return;
         }
 
@@ -2154,8 +2159,28 @@ public void retourMenu(){
     private void majVieEnnemi() {
         float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
         barrevieToupieEnnemie.setProgress(pourcentageAdv);
-        writeRapideFloat(lblNombrePVToupieEnnemie, toupieAdv.getVieActuelleEnnemie());
+        vitaMajAdv();
     }
+    private void appliquerRegenerationFinDeTour() {
+        toupieJoueur.regenererVieParEndurance();
+        toupieAdv.regenererVieParEnduranceEnnemie();
+        majVieJoueur();
+        majVieEnnemi(); // méthode à créer aussi si nécessaire
+    }
+    public void finDeTour() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            appliquerRegenerationFinDeTour();
+
+
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
+        gererChangementModeToupieEnnemi(); // Ajout ici pour centraliser les changements de mode
+        writeRapideInt(lblNombreTour, Tour.suivant());
+        checkFinCombat();
+    }
+
+
 
 
     private void appliquerDegatsSurJoueur(float degats) {
@@ -2250,15 +2275,14 @@ public void retourMenu(){
 
         toupieAdv.gagnerVieEnnemie(degatsSubis);
         toupieAdv.regenererVieParEnduranceEnnemie();
-        vitaMajAdv();
-
-
-        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
-        barrevieToupieEnnemie.setProgress(pourcentageAdv);
 
 
 
 
+
+
+
+        majVieEnnemi();
 
 
 
@@ -2272,32 +2296,29 @@ public void retourMenu(){
     public void btnEsquive(MouseEvent event) {
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
         if (alea() < toupieJoueur.getEsquive()){
-            toupieJoueur.perdrePDV(0);
-            toupieAdv.setVieActuelleEnnemie((float) (0.95 * toupieAdv.getVieActuelleEnnemie()));
-            toupieAdv.getVieActuelleEnnemie() ;
+            toupieAdv.perdrePDV(toupieAdv.getVieActuelleEnnemie() * 0.05f);
+
+
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
             a.setTitle(null);
             a.setHeaderText("Esquive Réussi");
             a.setContentText(null);
             a.showAndWait();
-            vitaMajJoueur();
-            vitaMajAdv();
+
 
         }else {
             toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
-            barreVieToupiePerso.setProgress(pourcentageJoueur);
-            vitaMajJoueur();
-            vitaMajAdv();
+
         }
 
         toupieJoueur.regenererVieParEndurance();
-        barreVieToupiePerso.setProgress(pourcentageJoueur);
-        vitaMajJoueur();
+        majVieEnnemi();
+        majVieJoueur();
 
     }
     @FXML
     public void btnProtection(MouseEvent event) {
-        float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
+
         toupieJoueur.activerProtection();
         invisibleImage(imgProtection);
 
@@ -2309,8 +2330,7 @@ public void retourMenu(){
         a.setContentText(null);
         a.showAndWait();
 
-        //toupieJoueur.regenererVieParEndurance();
-        barreVieToupiePerso.setProgress(pourcentageJoueur);
+
         majVieJoueur();
     }
 
@@ -2351,8 +2371,10 @@ public void retourMenu(){
         // ✅ Mettre à jour uniquement après tous les changements
         float nouveauPourcentage = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         barreVieToupiePerso.setProgress(nouveauPourcentage);
-        majVieJoueur();
+
         writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
+
+        majVieJoueur();
 
         writeRapideInt(lblNombreTour, Tour.suivant());
         checkFinCombat();
@@ -2368,8 +2390,7 @@ public void retourMenu(){
         toupieJoueur.desactiverModeSixLames();
         toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
         toupieJoueur.regenererVieParEndurance();
-        barreVieToupiePerso.setProgress(pourcentageJoueur);
-        vitaMajJoueur();
+        majVieJoueur();
     }
 
     @FXML
@@ -2380,8 +2401,7 @@ public void retourMenu(){
             invisibleImage(imgModeSixLames);
             toupieJoueur.activerModeSixLames();
             toupieJoueur.regenererVieParEndurance();
-            barreVieToupiePerso.setProgress(pourcentageJoueur);
-            vitaMajJoueur();
+            majVieJoueur();
         } else {
 
             Alert a = new Alert(Alert.AlertType.WARNING);
