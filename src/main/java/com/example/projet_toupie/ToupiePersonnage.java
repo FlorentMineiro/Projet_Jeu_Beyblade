@@ -267,12 +267,15 @@ public class ToupiePersonnage {
         La formule est : 0.5 * degat + reduitAttaque(degat)
                                          \__ reduitAttaque correspondant à la fonction ci-dessus
         */
-        degat = (float) (0.5 * degat + reduitAttaque(degat)) - toupieEnnemie.regenererVieParEnduranceEnnemie();
+        degat = (float) (0.5 * degat + reduitAttaque(degat));
         this.vieActuelle-= degat;
         if (vieActuelle <= 0){
             vieActuelle = 0;
         }
         if (jetEsquive()){
+            degat = 0;
+        }
+        if (degat < 0){
             degat = 0;
         }
 

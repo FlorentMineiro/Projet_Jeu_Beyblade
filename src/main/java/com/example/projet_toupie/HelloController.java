@@ -2147,10 +2147,16 @@ public void retourMenu(){
 
     private void majVieJoueur() {
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
-        toupieAdv.regenererVieParEnduranceEnnemie();
+
         barreVieToupiePerso.setProgress(pourcentageJoueur);
         vitaMajJoueur();
     }
+    private void majVieEnnemi() {
+        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
+        barrevieToupieEnnemie.setProgress(pourcentageAdv);
+        writeRapideFloat(lblNombrePVToupieEnnemie, toupieAdv.getVieActuelleEnnemie());
+    }
+
 
     private void appliquerDegatsSurJoueur(float degats) {
         if ("kerbeus".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) { // Si on joue Kerbeus
@@ -2183,13 +2189,16 @@ public void retourMenu(){
                 alert.setTitle("Félicitations !");
                 alert.setHeaderText(burst ? "Victoire par Burst !" : "Vous avez Gagné !");
                 alert.setContentText("BeyPoints gagnés : " + (burst ? "+1500" : "+1000"));
-                toupieJoueur.setNombreBeyPoints(beyResteActuel + (burst ?1500: 1000));
+                toupieJoueur.setNombreBeyPoints(beyResteActuel + (burst ? 1500 : 1000));
             } else {
                 alert.setTitle("Dommage...");
                 alert.setHeaderText(burst ? "Défaite par Burst !" : "Vous avez Perdu !");
                 alert.setContentText("BeyPoints perdus : " + (burst ? "-500" : "Pas de burst \n Rien de Perdu"));
-                toupieJoueur.setNombreBeyPoints(beyResteActuel - (burst ? 500 : 0));
-
+                int nouvelleValeur = beyResteActuel - (burst ? 500 : 0);
+                if (nouvelleValeur < 0) {
+                    nouvelleValeur = 0;
+                }
+                toupieJoueur.setNombreBeyPoints(nouvelleValeur);
             }
             alert.showAndWait();
 
@@ -2203,6 +2212,7 @@ public void retourMenu(){
             finDeCombat.run(); // directe
         }
     }
+
     public void checkFinCombat() {
         if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
             boolean burst = true;
@@ -2257,14 +2267,7 @@ public void retourMenu(){
 
 
 
-    public void reinitialisation(){
-        toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
-        toupieAdv.setVieActuelleEnnemie(toupieAdv.getVieMaxEnnemie());
-    }
-    public void reinitialisationBarre(){
-        barrevieToupieEnnemie.setProgress(toupieAdv.getVieMaxEnnemie());
-        barreVieToupiePerso.setProgress(toupieJoueur.getVieMaxToupie());
-    }
+
     @FXML
     public void btnEsquive(MouseEvent event) {
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
@@ -2308,7 +2311,7 @@ public void retourMenu(){
 
         //toupieJoueur.regenererVieParEndurance();
         barreVieToupiePerso.setProgress(pourcentageJoueur);
-        vitaMajJoueur();
+        majVieJoueur();
     }
 
 
@@ -2348,7 +2351,7 @@ public void retourMenu(){
         // ✅ Mettre à jour uniquement après tous les changements
         float nouveauPourcentage = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         barreVieToupiePerso.setProgress(nouveauPourcentage);
-        vitaMajJoueur();
+        majVieJoueur();
         writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
 
         writeRapideInt(lblNombreTour, Tour.suivant());
