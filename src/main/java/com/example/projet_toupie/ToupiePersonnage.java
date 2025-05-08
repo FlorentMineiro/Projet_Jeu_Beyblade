@@ -7,7 +7,7 @@ public class ToupiePersonnage {
     private EnergyLayer energyLayer;
     private ForgeDisc forgeDiscs;
     private PerformanceTip performanceTip;
-    public static  ClasseToupie classeToupie = new ClasseToupie("Neutre");
+    public   ClasseToupie classeToupie = new ClasseToupie("Neutre");
     private ClasseToupie classeToupie2;
     private static CollectionPieces collectionPieces = new CollectionPieces();
 
@@ -41,6 +41,8 @@ public class ToupiePersonnage {
         this.classeToupie = classeToupie;
         this.vieMax = vieMax;
         this.vieActuelle = vieActuelle;
+
+
         this.attaque = attaque;
         this.defense = defense;
         this.endurance = endurance;
@@ -50,6 +52,23 @@ public class ToupiePersonnage {
         this.nombreBeyPoints = 1000;
         this.rotation = rotation;
         this.urlToupie = urlToupie;
+
+        if ("Attaque".equals(this.classeToupie.getTypeToupie())){
+            vieActuelle += (1.5f * endurance);
+            vieMax += (1.5f * endurance);
+        }
+        if ("Défense".equals(this.classeToupie.getTypeToupie())){
+            vieActuelle += (2f * endurance);
+            vieMax += (2f * endurance);
+        }
+        if ("Equilibre".equals(this.classeToupie.getTypeToupie())){
+            vieActuelle += (2f * endurance);
+            vieMax += (2f * endurance);
+        }
+        if ("Endurance".equals(this.classeToupie.getTypeToupie())){
+            vieActuelle += (3f * endurance);
+            vieMax += (3f * endurance);
+        }
 
     }
 

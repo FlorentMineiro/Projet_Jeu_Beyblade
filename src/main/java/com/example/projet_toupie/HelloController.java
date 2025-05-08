@@ -204,7 +204,7 @@ public class HelloController implements Initializable {
 
 
 
-    ToupiePersonnage t = new ToupiePersonnage("null",null,null,null,null,0,0,0,0,0,0,0,null,"null");
+
     @FXML
     private BorderPane BpCollection;
     @FXML
@@ -1651,7 +1651,7 @@ public void retourMenu(){
 
 
 
-                attaqueAdverse();
+               // attaqueAdverse();
 
 
 
@@ -1693,7 +1693,9 @@ public void retourMenu(){
         toupieAdv.perdrePDV(degat);
         majVieEnnemi();
 
-        gererChangementModeToupieEnnemi(); // appel centralisé
+
+        //gererChangementModeToupieEnnemi(); // appel centralisé
+        finDeTour();
     }
 
 
@@ -1787,7 +1789,7 @@ public void retourMenu(){
 
     }
 
-    public void attaqueAdverse() {
+    //public void attaqueAdverse() {
 
 
         /*gererChangementFafnir();
@@ -1796,12 +1798,12 @@ public void retourMenu(){
         gererChangementKerbeus();
         gererChangementModeEnnemiZAchilles();*/
 
-        System.out.println("Grâce au principe de régénération d'endurance : Votre adversaire à gagner des pv");
-        animationOuNon();
-        finDeTour();
+        //System.out.println("Grâce au principe de régénération d'endurance : Votre adversaire à gagner des pv");
+       // animationOuNon();
 
 
-    }
+
+    //}
     private void gererChangementFafnir(){
         int chance = alea();
 
@@ -1825,7 +1827,7 @@ public void retourMenu(){
                 System.out.println("Absorption échouée");
             }
             //appliquerRegenerationFinDeTour();
-            writeRapideInt(lblNombreTour, Tour.suivant());
+            //writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
     }
@@ -1875,7 +1877,7 @@ public void retourMenu(){
 
             }
             //appliquerRegenerationFinDeTour();
-            writeRapideInt(lblNombreTour, Tour.suivant());
+            //writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
 
@@ -1910,7 +1912,7 @@ public void retourMenu(){
 
             appliquerDegatsSurJoueur(degats);
             //appliquerRegenerationFinDeTour();
-            writeRapideInt(lblNombreTour, Tour.suivant());
+            //writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
     }
@@ -1985,7 +1987,7 @@ public void retourMenu(){
 
             toupieAdv.decrementerCritique();
             //appliquerRegenerationFinDeTour();
-            writeRapideInt(lblNombreTour, Tour.suivant());
+            //writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
 
@@ -2163,11 +2165,11 @@ public void retourMenu(){
         barrevieToupieEnnemie.setProgress(pourcentageAdv);
         vitaMajAdv();
     }
-    private void appliquerRegenerationFinDeTour() {
+    /*private void appliquerRegenerationFinDeTour() {
 
         majVieJoueur();
         majVieEnnemi(); // méthode à créer aussi si nécessaire
-    }
+    }*/
     public void finDeTour() {
 
 
