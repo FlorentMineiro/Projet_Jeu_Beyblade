@@ -111,9 +111,9 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="400.0" fitWidth="600.0">
+            <ImageView fitHeight="400.0" fitWidth="605.0" layoutX="-1.0">
                <image>
                   <Image url="@../../../Environnement/fond-boutique_2.png" />
                </image>
@@ -123,17 +123,27 @@
                   <Image url="@../../../../../../../../Downloads/toupie-invocation.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgRetour" fitHeight="62.0" fitWidth="89.0" layoutX="21.0" layoutY="324.0" onMouseClicked="#btnRetour">
+            <ImageView fx:id="imgRetour" fitHeight="62.0" fitWidth="99.0" layoutX="11.0" layoutY="324.0" onMouseClicked="#btnRetour">
                <image>
                   <Image url="@../../../../../../../../Downloads/Toupie_Retour.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblBeyPoint" layoutX="223.0" layoutY="295.0" opacity="0.67" prefHeight="42.0" prefWidth="63.0" style="-fx-background-color: white;" text="...">
+            <Label fx:id="lblBeyPoint" layoutX="236.0" layoutY="334.0" opacity="0.67" prefHeight="42.0" prefWidth="63.0" style="-fx-background-color: white;" text="...">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgLogo" fitHeight="55.0" fitWidth="63.0" layoutX="323.0" layoutY="289.0">
+            <ImageView fx:id="imgLogo" fitHeight="55.0" fitWidth="63.0" layoutX="332.0" layoutY="328.0">
+               <image>
+                  <Image url="@../../../Logo/Logo_BeyPoint.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="221.0" layoutY="227.0" prefHeight="17.0" prefWidth="129.0" text="Invocation : 700">
+               <font>
+                  <Font name="Impact" size="16.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imgLogo1" fitHeight="32.0" fitWidth="31.0" layoutX="348.0" layoutY="222.0">
                <image>
                   <Image url="@../../../Logo/Logo_BeyPoint.png" />
                </image>
@@ -257,7 +267,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apDuelToupie" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="apDuelToupie" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <Label fx:id="lblCombo" layoutX="196.0" layoutY="101.0" prefHeight="42.0" prefWidth="251.0" textFill="GOLD">
                <font>

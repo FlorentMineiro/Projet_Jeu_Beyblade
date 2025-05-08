@@ -261,6 +261,8 @@ public class HelloController implements Initializable {
     private ImageView imgRetourDuCombat;
     @FXML
     private ImageView imgSelectionRetour;
+    @FXML
+    private ImageView imgLogo1;
 
 
     @Override
@@ -1657,7 +1659,7 @@ public void retourMenu(){
                 // Mise à jour UI
 
                majVieJoueur();
-               majVieEnnemi();
+              // majVieEnnemi();
 
         }
 
@@ -1822,7 +1824,7 @@ public void retourMenu(){
 
                 System.out.println("Absorption échouée");
             }
-            appliquerRegenerationFinDeTour();
+            //appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -1872,7 +1874,7 @@ public void retourMenu(){
                 appliquerDegatsSurJoueur(degats);
 
             }
-            appliquerRegenerationFinDeTour();
+            //appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -1907,7 +1909,7 @@ public void retourMenu(){
             }
 
             appliquerDegatsSurJoueur(degats);
-            appliquerRegenerationFinDeTour();
+            //appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -1936,7 +1938,7 @@ public void retourMenu(){
                         toupieAdv.setVieActuelleEnnemie(1);
                     }
 
-                    attaque *= 0.9f;
+                    attaque = toupieAdv.attaqueGlobale();
                 }
             }
 
@@ -1982,7 +1984,7 @@ public void retourMenu(){
 
 
             toupieAdv.decrementerCritique();
-            appliquerRegenerationFinDeTour();
+            //appliquerRegenerationFinDeTour();
             writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
@@ -2034,7 +2036,7 @@ public void retourMenu(){
                 appliquerDegatsSurJoueur(degats);
 
             }
-            appliquerRegenerationFinDeTour();
+            //appliquerRegenerationFinDeTour();
             return;
         }
 
@@ -2068,7 +2070,7 @@ public void retourMenu(){
             }
 
             appliquerDegatsSurJoueur(degats);
-            appliquerRegenerationFinDeTour();
+            //appliquerRegenerationFinDeTour();
 
             return;
         }
@@ -2097,7 +2099,7 @@ public void retourMenu(){
                         toupieAdv.setVieActuelleEnnemie(1);
                     }
 
-                    attaque *= 0.9f;
+                    attaque = toupieAdv.attaqueGlobale();
                 }
             }
 
@@ -2144,7 +2146,7 @@ public void retourMenu(){
 
 
             toupieAdv.decrementerCritique();
-            appliquerRegenerationFinDeTour();
+           // appliquerRegenerationFinDeTour();
             return;
         }
 
@@ -2162,19 +2164,13 @@ public void retourMenu(){
         vitaMajAdv();
     }
     private void appliquerRegenerationFinDeTour() {
-        toupieJoueur.regenererVieParEndurance();
-        toupieAdv.regenererVieParEnduranceEnnemie();
+
         majVieJoueur();
         majVieEnnemi(); // méthode à créer aussi si nécessaire
     }
     public void finDeTour() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            appliquerRegenerationFinDeTour();
 
 
-        }));
-        timeline.setCycleCount(1);
-        timeline.play();
         gererChangementModeToupieEnnemi(); // Ajout ici pour centraliser les changements de mode
         writeRapideInt(lblNombreTour, Tour.suivant());
         checkFinCombat();
@@ -2267,14 +2263,14 @@ public void retourMenu(){
 
         if (toupieAdv.getRotationEnnemie().getTypeRotation().equalsIgnoreCase(toupieJoueur.getRotation().getTypeRotation())) {
 
-            toupieAdv.regenererVieParEnduranceEnnemie();
+
             System.out.println("Impossible d'absorber les toupies de même rotation");
             return 0;
 
         }
 
         toupieAdv.gagnerVieEnnemie(degatsSubis);
-        toupieAdv.regenererVieParEnduranceEnnemie();
+
 
 
 
@@ -2311,7 +2307,7 @@ public void retourMenu(){
 
         }
 
-        toupieJoueur.regenererVieParEndurance();
+
         majVieEnnemi();
         majVieJoueur();
 
@@ -2389,7 +2385,7 @@ public void retourMenu(){
         invisibleImage(imgModeTroisLames);
         toupieJoueur.desactiverModeSixLames();
         toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
-        toupieJoueur.regenererVieParEndurance();
+
         majVieJoueur();
     }
 
@@ -2400,7 +2396,7 @@ public void retourMenu(){
             visibleImage(imgModeTroisLames);
             invisibleImage(imgModeSixLames);
             toupieJoueur.activerModeSixLames();
-            toupieJoueur.regenererVieParEndurance();
+
             majVieJoueur();
         } else {
 

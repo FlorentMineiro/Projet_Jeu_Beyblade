@@ -291,7 +291,7 @@ public class ToupiePersonnage {
         }
         return this.vieActuelle;
     }
-    public float regenererVieParEndurance() {
+   /* public float regenererVieParEndurance() {
         float regen = 0.15f * this.endurance;
         gagnerVie(regen);
         if ("endurance".equalsIgnoreCase(getClasseToupie().getTypeToupie())){
@@ -306,7 +306,7 @@ public class ToupiePersonnage {
 
         }
         return gagnerVie(regen);
-    }
+    }*/
     // Augmente l'attaque de la toupie
     public void augmenterAttaque(int valeur) {
         this.attaque = Math.min(this.attaque + valeur, 100); // limite à 100 si tu veux

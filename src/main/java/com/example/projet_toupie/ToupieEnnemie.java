@@ -240,7 +240,7 @@ public class ToupieEnnemie  {
         }
         return  this.vieActuelleEnnemie;
     }
-    public float regenererVieParEnduranceEnnemie() {
+    /*public float regenererVieParEnduranceEnnemie() {
         float regen = 0.2f * this.enduranceEnnemie;
         gagnerVieEnnemie(regen);
         if ("endurance".equalsIgnoreCase(getClasseToupieEnnemie().getTypeToupie())){
@@ -255,7 +255,7 @@ public class ToupieEnnemie  {
 
         }
         return gagnerVieEnnemie(regen);
-    }
+    }*/
 
 
    public float attaqueGlobale() {
