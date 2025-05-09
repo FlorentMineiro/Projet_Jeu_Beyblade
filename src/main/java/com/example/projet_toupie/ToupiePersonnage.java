@@ -25,7 +25,7 @@ public class ToupiePersonnage {
     private String urlToupie;
     private Tour tourAllie;
 
-    ToupieEnnemie toupieEnnemie = new ToupieEnnemie(new ClasseToupie("Neutre"));
+     private ToupieEnnemie toupieEnnemie ;
     public static ToupieEnnemie toupieAdv = new ToupieEnnemie("",new EnergyLayer(""),new ForgeDisc(""),new PerformanceTip(""),new ClasseToupie("neutre"),1000,1000,50,50,50,50,50,new Rotation("neutre"),"");
     private int toursDeProtectionRestants = 0;
     private boolean reussi;
@@ -54,20 +54,20 @@ public class ToupiePersonnage {
         this.urlToupie = urlToupie;
 
         if ("Attaque".equals(this.classeToupie.getTypeToupie())){
-            vieActuelle += (1.5f * endurance);
-            vieMax += (1.5f * endurance);
+            this.vieActuelle += (1.5f * endurance);
+            this.vieMax += (1.5f * endurance);
         }
         if ("Défense".equals(this.classeToupie.getTypeToupie())){
-            vieActuelle += (2f * endurance);
-            vieMax += (2f * endurance);
+            this.vieActuelle += (2f * endurance);
+            this.vieMax += (2f * endurance);
         }
         if ("Equilibre".equals(this.classeToupie.getTypeToupie())){
-            vieActuelle += (2f * endurance);
-            vieMax += (2f * endurance);
+            this.vieActuelle += (2f * endurance);
+            this.vieMax += (2f * endurance);
         }
         if ("Endurance".equals(this.classeToupie.getTypeToupie())){
-            vieActuelle += (3f * endurance);
-            vieMax += (3f * endurance);
+            this.vieActuelle += (3f * endurance);
+            this.vieMax += (3f * endurance);
         }
 
     }
@@ -158,28 +158,35 @@ public class ToupiePersonnage {
         return esquive;
     }
 
+    public void setToupieEnnemie(ToupieEnnemie toupieEnnemie) {
+        this.toupieEnnemie = toupieEnnemie;
+    }
+
     public float attaqueGlobale() {
 
-        float degat = (float) (this.attaque * 1.5);
+        float degat = (this.attaque * 2f);
         if (degat < 0){
             degat = 0;
         }
 
         if ("Attaque".equalsIgnoreCase(this.classeToupie.getTypeToupie())) {
             if ("Endurance".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
-                degat *= 1.2;
+                degat *= 1.2f;
             } else if ("Défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
-                degat *= 0.8;
+                degat *= 0.8f;
+            }else {
+                degat = this.attaque * 2f;
             }
         }
         if (alea() <= getCoupCritiqueToupie()){
-            degat *= 1.8;
+            degat *= 1.8f;
         }
 
         return degat;
     }
     public void activerProtection() {
         this.toursDeProtectionRestants = 4;
+
     }
 
     public boolean estEnProtection() {
@@ -253,59 +260,53 @@ public class ToupiePersonnage {
     }
 
 
-   public float reduitAttaque(float degat)
-   {
-        /* FACILE +0.5
-        Cette fonction aura pour mission de réduire les dégâts mis en paramètre par rapport à la défense.
-        /!\ Vous ne devez pas retourner un entier négatif car cela risquerait de soigner le monstre, si les dégâts
-        deviennent négatifs, il faudra alors retourner 0.
-        */
-       degat = degat - this.defense;
-       if ("Défense".equalsIgnoreCase(this.classeToupie.getTypeToupie())){
-           if ("Endurance".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
-               degat -= 0.8*this.defense;
-           }
-           if ("Attaque".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())){
-                degat -= 1.2*defense;
-           }
+    public float coefficientReduction(float degatBase, ToupieEnnemie toupieEnnemie) {
+        float coef = 1.0f;
 
-       }
-       if (estEnProtection()) {
-           degat *= 0.6f;
-           if (degat < 0){
-               degat = 0;
-           }
-           System.out.println("Protection active : dégâts réduits !");
-       }
+        // Réduction de base selon la défense
+        coef -= 0.7f * (this.defense / 100f);
 
-
-       if (degat < 0){
-           degat = 0;
-       }
-       return degat;
-   }
-
-    public float perdrePDV( float degat) {
-
-
-        degat = (float) (0.5 * degat + reduitAttaque(degat));
-        if (jetEsquive()){
-            degat = 0;
+        // Avantages/désavantages entre types
+        if ("Défense".equalsIgnoreCase(this.classeToupie.getTypeToupie())) {
+            if ("Endurance".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
+                coef += 0.15f; // Endurance > Défense
+            }
+            if ("Attaque".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
+                coef -= 0.15f; // Défense > Attaque
+            }
         }
 
-        if (degat < 0){
-            degat = 0;
+        // Protection active ?
+        if (estEnProtection()) {
+            coef *= 0.6f;
+            System.out.println("Protection active : dégâts réduits !");
         }
 
+        if (coef < 0.1f) coef = 0.1f; // Minimum 10% de dégâts
 
-        this.vieActuelle -= degat;
-        if (vieActuelle <= 0){
-            vieActuelle = 0;
-        }
-
-
-        return degat;
+        return coef;
     }
+
+
+    public float perdrePDV(float degat) {
+        float coef = coefficientReduction(degat, this.toupieEnnemie);
+        float degatFinal = degat * coef;
+
+        /*if (jetEsquive()) {
+            degatFinal = 0;
+            System.out.println("Esquive !");
+        }*/
+
+        if (degatFinal < 5 && degatFinal > 0) {
+            degatFinal = 5;
+        }
+
+        this.vieActuelle -= degatFinal;
+        if (vieActuelle < 0) vieActuelle = 0;
+
+        return degatFinal;
+    }
+
     public float gagnerVie(float quantite) {
         this.vieActuelle += quantite;
         if (this.vieActuelle > this.vieMax) {
@@ -366,21 +367,6 @@ public class ToupiePersonnage {
         adversaire.perdrePDV(degats);
         System.out.println(this.nomToupie + " contre-attaque et inflige " + degats + " points !");
     }
-
-
-
-    /*public float retourneDefense(ToupiePersonnage attaquant) {
-        float degatSubi = perdPV(attaquant); // La toupie subit l'attaque
-
-        if (degatSubi > 0) {
-            float contreDegat = degatSubi * 0.5f; // Par exemple, elle renvoie 50% des dégâts subis
-            attaquant.vieActuelle -= contreDegat;
-
-
-        }
-
-        return degatSubi; // On retourne quand même les dégâts que cette toupie a subis
-    }*/
 
 
     public boolean jetEsquive(){

@@ -75,6 +75,7 @@ public class HelloController implements Initializable {
     private PauseTransition timer; // Timer pour chaque lettre
 
 
+    private CombatController combatController;
 
 
     @FXML
@@ -403,24 +404,19 @@ public class HelloController implements Initializable {
         disc.add(Chassis2D);
 
 
-        GTSystem gtLayerBushin = new GTSystem("Ashura","Ten","Bushin");
-        SparkingSystem spBraveValkyrie = new SparkingSystem("Brave","2A","Valkyrie");
-        SparkingSystem spLuciferTheEnd2D = new SparkingSystem("The End", "2D", "Lucifer");
-        DBSystem DbGiga = new DBSystem("Roar","10");
-        DBSystem dbLuciferKou = new DBSystem("Lucifer the End","Kou");
 
 
-        EnergyLayer LayerKerbeus = new EnergyLayer("Kerbeus", EnergyLayer.SystemeLayer.SINGLE, droite, 30, 60, 40, 33, "Energy_Layer/LayerKerbeus.png");
-        EnergyLayer LayerHellSalamander = new EnergyLayer("Hell Salamander", EnergyLayer.SystemeLayer.cho_z, gauche, 45, 45, 60, 62, "Energy_Layer/LayerHellSalamander.png");
-        EnergyLayer LayerDrainFafnir = new EnergyLayer("Drain Fafnir", EnergyLayer.SystemeLayer.GOD, gauche, 35, 45, 80, 37, "Energy_Layer/LayerDrainFafnir.png");
-        EnergyLayer LayerZAchilles = new EnergyLayer("Z Achilles", EnergyLayer.SystemeLayer.cho_z, droite, 80, 30, 40, 43, "Energy_Layer/LayerZAchilles.png");
-        EnergyLayer LayerBraveValkyrie = new EnergyLayer("Brave Valkyrie", EnergyLayer.SystemeLayer.SPARKING, droite, 90, 30, 30, 62, "Energy_Layer/EnergyLayer_BraveValkyrie.png", spBraveValkyrie);
+        EnergyLayer LayerKerbeus = new EnergyLayer("Kerbeus", droite, 30, 60, 40, 33, "Energy_Layer/LayerKerbeus.png");
+        EnergyLayer LayerHellSalamander = new EnergyLayer("Hell Salamander", gauche, 45, 45, 60, 62, "Energy_Layer/LayerHellSalamander.png");
+        EnergyLayer LayerDrainFafnir = new EnergyLayer("Drain Fafnir", gauche, 35, 45, 80, 37, "Energy_Layer/LayerDrainFafnir.png");
+        EnergyLayer LayerZAchilles = new EnergyLayer("Z Achilles", droite, 80, 30, 40, 43, "Energy_Layer/LayerZAchilles.png");
+        EnergyLayer LayerBraveValkyrie = new EnergyLayer("Brave Valkyrie", droite, 90, 30, 30, 62, "Energy_Layer/EnergyLayer_BraveValkyrie.png");
 
 // Layers GT (Bushin Ashura)
         /*EnergyLayer LayerAshuraBushinChip = new EnergyLayer("Ashura", EnergyLayer.SystemeLayer.GT, droite, 15, 20, 10, 2.9f, "Energy_Layer/GatinkoChipAshura.png", gtLayerBushin);
         EnergyLayer LayerAshuraBushinWeight = new EnergyLayer("Ten", EnergyLayer.SystemeLayer.GT, droite, 5, 15, 10, 4.6f, "Energy_Layer/LayerWeightTen.png", gtLayerBushin);
         EnergyLayer LayerAshuraBushinBase = new EnergyLayer("Bushin", EnergyLayer.SystemeLayer.GT, droite, 10, 40, 15, 7.3f, "Energy_Layer/LayerBaseBushin.png", gtLayerBushin);*/
-        EnergyLayer LayerAshuraBushin = new EnergyLayer("Bushin Ashura", EnergyLayer.SystemeLayer.GT, droite, 30, 70, 35, 20.2f, "", gtLayerBushin);
+        //EnergyLayer LayerAshuraBushin = new EnergyLayer("Bushin Ashura", droite, 30, 70, 35, 20.2f, "", gtLayerBushin);
 
 // Pièces spéciales
         /*EnergyLayer LayerEndBlade = new EnergyLayer(" The End "
@@ -443,25 +439,24 @@ public class HelloController implements Initializable {
                 ,dbLuciferKou);*/
         EnergyLayer superkingChipLucifer = new EnergyLayer(
                 "Lucifer",
-                EnergyLayer.SystemeLayer.SPARKING,
+
                 gauche,
                 25,  // attaque
                 40,  // défense
                 30,  // endurance
                 3.0f,
-                "Energy_Layer/ChipLucifer.png",
-                spLuciferTheEnd2D
+                "Energy_Layer/ChipLucifer.png"
         );
         EnergyLayer RingTheEnd = new EnergyLayer(
                 "The End",
-                EnergyLayer.SystemeLayer.SPARKING,
+
                 gauche,
                 30,
                 50,
                 40,
                 5.0f,
-                "Energy_Layer/RingTheEnd.png",
-                spLuciferTheEnd2D
+                "Energy_Layer/RingTheEnd.png"
+
         );
 
         /*EnergyLayer LayerBladeRoar = new EnergyLayer("Roar"
@@ -484,25 +479,25 @@ public class HelloController implements Initializable {
                 ,DbGiga);*/
         EnergyLayer LayerLuciferTheEnd = new EnergyLayer(
                 "Lucifer The End",
-                EnergyLayer.SystemeLayer.SPARKING,
+
                 droite,
                 35,  // attaque
                 80,  // défense
                 90,  // endurance
                 32.8f,
-                "Energy_Layer/LayerLuciferTheEnd.png",
-                spLuciferTheEnd2D
+                "Energy_Layer/LayerLuciferTheEnd.png"
+
         );
         EnergyLayer LayerRoarBahamut = new EnergyLayer(
                 "Roar Bahamut",
-                EnergyLayer.SystemeLayer.DB,
+
                 gauche,
                 30,  // attaque
                 90,  // défense
                 70,  // endurance
                 31.5f,
-                "Energy_Layer/LayerRoarBahamut.png",
-                DbGiga
+                "Energy_Layer/LayerRoarBahamut.png"
+
         );
         /*EnergyLayer LayerLuciferTheEndDB = new EnergyLayer(
                 "Lucifer The End",
@@ -743,8 +738,8 @@ public class HelloController implements Initializable {
                 ,80
                 ,gauche
                 ,"Toupie/fafnir_gpt.png");
-        BushinAshuraE = new ToupieEnnemie("Bushin Ashura Hurricane Keep"
-                ,LayerAshuraBushin
+        /*BushinAshuraE = new ToupieEnnemie("Bushin Ashura Hurricane Keep"
+
                 ,DiskHurricane
                 ,Keep
                 , typeDefense
@@ -756,7 +751,7 @@ public class HelloController implements Initializable {
                 ,25
                 ,75
                 ,droite
-                ,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");
+                ,"Toupie/BBGT_Bushin_Ashura_Hurricane_Keep_Ten_Beyblade.png");*/
         ZAchillesE =new ToupieEnnemie("Z Achilles 11 Xtend"
                 ,LayerZAchilles
                 ,Disk11
@@ -1248,7 +1243,8 @@ public void retourMenu(){
         toupieAdv = listToupieEnnemie.get(3);
 
         initialiserCombat("Toupie/fafnir_gpt.png",3);
-        //choixToupieEnn = 1;
+        combatController = new CombatController(toupieJoueur, toupieAdv);
+
     }
 
     @FXML
@@ -1268,7 +1264,8 @@ public void retourMenu(){
         }
         toupieAdv = listToupieEnnemie.get(5);
         initialiserCombat("Toupie/ZA_.11.Xt_2.png",5);
-        //choixToupieEnn = 2;
+        combatController = new CombatController(toupieJoueur, toupieAdv);
+
 
 
     }
@@ -1292,7 +1289,8 @@ public void retourMenu(){
         toupieAdv = listToupieEnnemie.get(1);
 
         initialiserCombat("Toupie/valkyrie_gpt.png",1);
-        //choixToupieEnn = 3;
+        combatController = new CombatController(toupieJoueur, toupieAdv);
+
 
 
     }
@@ -1342,7 +1340,8 @@ public void retourMenu(){
         toupieAdv = listToupieEnnemie.get(0);
 
         initialiserCombat("Toupie/kerbeus_gpt.png",0);
-        //choixToupieEnn = 6;
+        combatController = new CombatController(toupieJoueur, toupieAdv);
+
 
     }
     public void initialiserCombat(String imgToupie, int indiceToupieEnn) {
@@ -1606,7 +1605,7 @@ public void retourMenu(){
             float degat = 0;
 
             // ATTAQUE DU JOUEUR
-            if (toupieJoueur.isModeSixLames()) {
+            if (combatController.isModeSixLames()) {
                 int nombreCoups;
                 if (nombre_A < 8) {
                     nombreCoups = 5;
@@ -1621,7 +1620,7 @@ public void retourMenu(){
                 }
 
                 for (int i = 0; i < nombreCoups; i++) {
-                    float coup = toupieJoueur.barrage();
+                    float coup = combatController.barrage();
 
                     // BOOST Evolution
                     if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
@@ -1635,7 +1634,7 @@ public void retourMenu(){
 
                 afficherCombo(nombreCoups);
             } else {
-                degat = toupieJoueur.attaqueGlobale();
+                degat = combatController.attaqueJoueur();
 
                 // BOOST Evolution
                 if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
@@ -1690,12 +1689,10 @@ public void retourMenu(){
         }
     }
     private void infligerDegatsEtGererModeEnnemi(float degat) {
-        toupieAdv.perdrePDV(degat);
+        combatController.perdrePDVEnnemie(degat);
         majVieEnnemi();
-
-
-        //gererChangementModeToupieEnnemi(); // appel centralisé
         finDeTour();
+
     }
 
 
@@ -1807,7 +1804,7 @@ public void retourMenu(){
     private void gererChangementFafnir(){
         int chance = alea();
 
-        float degats = toupieAdv.attaqueGlobale();
+        float degats = combatController.attaqueAdv();
 
         float pourcentageAdv = toupieAdv.getVieActuelleEnnemie()/toupieAdv.getVieMaxEnnemie();
 
@@ -1834,11 +1831,11 @@ public void retourMenu(){
     private void gererChangementValkyrie(){
         int chance = alea();
 
-        float degats = toupieAdv.attaqueGlobale();
+        float degats = combatController.attaqueAdv();
         if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
             if (Tour.getNumeroTour() % 3 == 0) {
-                toupieAdv.activerModeSixLamesEnnemi();
-                if (toupieAdv.isModeSixLamesEnnemi()) {
+                combatController.activerModeSixLamesEnnemi();
+                if (combatController.isModeSixLamesEnnemi()) {
                     int nombreCoups;
                     if (chance < 15) nombreCoups = 5;
                     else if (chance < 45) nombreCoups = 4;
@@ -1846,13 +1843,13 @@ public void retourMenu(){
                     else nombreCoups = 2;
 
                     for (int i = 0; i < nombreCoups; i++) {
-                        float degat = toupieAdv.barrageEnnemie();
+                        float degat = combatController.barrageEnnemie();
                         if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
                             nombreAttaquesEvolution++;
                             float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
                             degat *= bonus;
                         }
-                        toupieAdv.perdrePDV(degat);
+                        combatController.perdrePDV(degat);
                         if (toupieAdv.getVieActuelleEnnemie() <= 0 || toupieJoueur.getVieActuelleToupie() <= 0) {
                             checkFinCombat();
                             return;
@@ -1867,7 +1864,7 @@ public void retourMenu(){
                     afficherComboEnnemie(nombreCoups);
                 }
             } else {
-                toupieAdv.desactiverModeSixLamesEnnemi();
+                combatController.desactiverModeSixLamesEnnemi();
                 if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
                     nombreAttaquesEvolution++;
                     float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
@@ -1883,13 +1880,13 @@ public void retourMenu(){
 
     }
     private void gererChangementKerbeus(){
-        float degatsJoueur = toupieJoueur.attaqueGlobale();
-        float degats = toupieAdv.attaqueGlobale();
+        float degatsJoueur = combatController.attaqueJoueur();
+        float degats = combatController.attaqueAdv();
         int chance = alea();
         if ("Kerbeus".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
 
             if (Tour.getNumeroTour() % 4 == 0) {
-                toupieAdv.activerProtectionEnnemie();
+                combatController.activerProtectionEnnemie();
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setTitle("Changement de mode pour Kerbeus");
                 a.setHeaderText("Kerbeus reçoit une augmentation de défense \n Pendant 3 tours");
@@ -1897,17 +1894,17 @@ public void retourMenu(){
                 a.showAndWait();
             }
 
-            if (toupieAdv.estEnProtectionEnnemie()) {
-                degatsJoueur *= 0.40f;
+            if (combatController.estEnProtectionEnnemie()) {
+                degatsJoueur *= 0.60f;
 
                 if (chance < 50) {
-                    toupieJoueur.perdrePDV(0.2f * toupieJoueur.getVieActuelleToupie());
+                    combatController.perdrePDV(0.2f * toupieJoueur.getVieActuelleToupie());
                     degatsJoueur *= 0.9f;
                     afficherComboEnnemie();
                     System.out.println("Kerbeus active sa propulsion enchaînée !");
                 }
 
-                toupieAdv.reduireProtectionEnnemie();
+                combatController.reduireProtectionEnnemie();
             }
 
             appliquerDegatsSurJoueur(degats);
@@ -1919,38 +1916,39 @@ public void retourMenu(){
     private void gererChangementModeEnnemiZAchilles() {
         String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
 
-        if (nomToupieTip.contains("Xtend")){
-            float attaque = toupieAdv.attaqueGlobale();
+        if (nomToupieTip.contains("Xtend")) {
+            float attaque = combatController.attaqueJoueur();
 
             // 🔴 Mode Endurance : priorité si vie très basse
             if (toupieAdv.getVieActuelleEnnemie() <= 0.2f * toupieAdv.getVieMaxEnnemie()) {
-                if (!toupieAdv.isModeEnduranceZ()) {
-                    toupieAdv.resetStat(); // remet stats de base
-                    toupieAdv.desactiverModeAttaqueZ();
-                    toupieAdv.desactiverModeDefenseZ();
-                    toupieAdv.activerModeEnduranceZ();
+                if (!combatController.isModeEnduranceZ()) {
+                    // Ne pas réinitialiser la vie ou les stats permanentes ici
+                    combatController.desactiverModeAttaqueZ();
+                    combatController.desactiverModeDefenseZ();
+                    combatController.activerModeEnduranceZ();
 
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setTitle("Life After Death Activé");
-                    a.setHeaderText("La performance tip Xtend permet à Z Achilles de continuer malgré tout");
-                    a.setContentText("Mode Endurance activé !");
-                    a.showAndWait();
-
+                    // Applique le bonus Xtend si la vie est inférieure à 0
                     if (toupieAdv.getVieActuelleEnnemie() <= 0) {
-                        toupieAdv.setVieActuelleEnnemie(1);
+                        toupieAdv.setVieActuelleEnnemie(1); // Maintenir un minimum de vie
+                        Alert a = new Alert(Alert.AlertType.WARNING);
+                        a.setTitle("Life After Death Activé");
+                        a.setHeaderText("La performance tip Xtend permet à Z Achilles de continuer malgré tout");
+                        a.setContentText("Mode Endurance activé !");
+                        a.showAndWait();
                     }
 
-                    attaque = toupieAdv.attaqueGlobale();
+                    attaque = combatController.attaqueAdv();
                 }
             }
 
             // 🔴 Mode Attaque si vie < 60% et pas déjà en attaque
             else if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()) {
-                if (!toupieAdv.isModeAttaqueZ()) {
-                    toupieAdv.resetStat();
-                    toupieAdv.desactiverModeDefenseZ();
-                    toupieAdv.desactiverModeEnduranceZ();
-                    toupieAdv.activerModeAttaqueZ();
+                if (!combatController.isModeAttaqueZ()) {
+                    // Réinitialisation des stats de combat sans toucher à la vie
+                    combatController.resetStatsSansChangerMode(); // Ne pas toucher à la vie, juste réinitialiser les stats de combat
+                    combatController.desactiverModeDefenseZ();
+                    combatController.desactiverModeEnduranceZ();
+                    combatController.activerModeAttaqueZ();
                     toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
                     toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
 
@@ -1960,18 +1958,19 @@ public void retourMenu(){
                     alert.setContentText("Pendant 3 tours, tous ses coups sont critiques !");
                     alert.showAndWait();
 
-                    toupieAdv.activerModeCritiqueTemporaire(3);
-                    attaque = toupieAdv.attaqueGlobale();
+                    combatController.activerModeCritiqueTemporaire(3);
+                    attaque = combatController.attaqueAdv();
                 }
             }
 
             // 🔴 Mode Défense si aucune autre condition (cas de départ)
             else {
-                if (!toupieAdv.isModeDéfenseZ()) {
-                    toupieAdv.resetStat();
-                    toupieAdv.desactiverModeAttaqueZ();
-                    toupieAdv.desactiverModeEnduranceZ();
-                    toupieAdv.activerModeDefenseZ();
+                if (!combatController.isModeDéfenseZ()) {
+                    // Ne pas réinitialiser la vie ici, juste les stats de combat
+                    combatController.resetStatsSansChangerMode(); // Réinitialise les stats sans toucher à la vie
+                    combatController.desactiverModeAttaqueZ();
+                    combatController.desactiverModeEnduranceZ();
+                    combatController.activerModeDefenseZ();
                     toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
                     toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
 
@@ -1982,16 +1981,18 @@ public void retourMenu(){
                     alert.showAndWait();
                 }
             }
+
+            // Appliquer les dégâts après le changement de mode
             appliquerDegatsSurJoueur(attaque);
 
-
-            toupieAdv.decrementerCritique();
-            //appliquerRegenerationFinDeTour();
-            //writeRapideInt(lblNombreTour, Tour.suivant());
+            combatController.decrementerCritique();
+            // appliquerRegenerationFinDeTour();
+            // writeRapideInt(lblNombreTour, Tour.suivant());
             return;
         }
-
     }
+
+
 
     private void gererChangementValkyrie2(){
         int chance = alea();
@@ -2184,19 +2185,19 @@ public void retourMenu(){
     private void appliquerDegatsSurJoueur(float degats) {
         if ("kerbeus".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) { // Si on joue Kerbeus
 
-            if (toupieJoueur.estEnProtection()) { // protection active
+            if (combatController.estEnProtection()) { // protection active
 
                 degats = 0.6f * degats ; // exemple : réduire les dégâts
                 if ( degats < 0){
                     degats = 0;
                 }
             }
-            toupieJoueur.reduireProtection();
-            if (toupieJoueur.finProtection()) {
+            combatController.reduireProtection();
+            if (combatController.finProtection()) {
                 visibleImage(imgProtection); // la protection est finie, on ré-affiche
             }
         }
-        toupieJoueur.perdrePDV(degats );
+        combatController.perdrePDV(degats );
 
 
 
@@ -2269,7 +2270,7 @@ public void retourMenu(){
 
         }
 
-        toupieAdv.gagnerVieEnnemie(degatsSubis);
+        combatController.gagnerVieEnnemie(degatsSubis);
 
 
 
@@ -2292,7 +2293,7 @@ public void retourMenu(){
     public void btnEsquive(MouseEvent event) {
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
         if (alea() < toupieJoueur.getEsquive()){
-            toupieAdv.perdrePDV(toupieAdv.getVieActuelleEnnemie() * 0.05f);
+            combatController.perdrePDV(toupieAdv.getVieActuelleEnnemie() * 0.05f);
 
 
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -2303,7 +2304,7 @@ public void retourMenu(){
 
 
         }else {
-            toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
+            combatController.perdrePDV(combatController.attaqueAdv());
 
         }
 
@@ -2315,7 +2316,7 @@ public void retourMenu(){
     @FXML
     public void btnProtection(MouseEvent event) {
 
-        toupieJoueur.activerProtection();
+        combatController.activerProtection();
         invisibleImage(imgProtection);
 
 
@@ -2348,7 +2349,7 @@ public void retourMenu(){
 
             // ✅ Rotation opposée → absorption
             float pvAbsorbes = (float) (toupieJoueur.getVieMaxToupie() * 0.2);
-            toupieJoueur.gagnerVie(pvAbsorbes);
+            combatController.gagnerVie(pvAbsorbes);
 
             if (toupieJoueur.getVieActuelleToupie() > toupieJoueur.getVieMaxToupie()) {
                 toupieJoueur.setVieActuelle(toupieJoueur.getVieMaxToupie());
@@ -2383,8 +2384,8 @@ public void retourMenu(){
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
         visibleImage(imgModeSixLames);
         invisibleImage(imgModeTroisLames);
-        toupieJoueur.desactiverModeSixLames();
-        toupieJoueur.perdrePDV(toupieAdv.attaqueGlobale());
+        combatController.desactiverModeSixLames();
+        combatController.perdrePDV(combatController.attaqueAdv());
 
         majVieJoueur();
     }
@@ -2395,7 +2396,7 @@ public void retourMenu(){
         if ("Brave Valkyrie".equalsIgnoreCase(toupieJoueur.getEnergyLayer().getNomLayer())) {
             visibleImage(imgModeTroisLames);
             invisibleImage(imgModeSixLames);
-            toupieJoueur.activerModeSixLames();
+            combatController.activerModeSixLames();
 
             majVieJoueur();
         } else {

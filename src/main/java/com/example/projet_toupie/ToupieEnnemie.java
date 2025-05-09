@@ -10,13 +10,13 @@ public class ToupieEnnemie  {
         private ForgeDisc forgeDiscsEnnemie;
         private PerformanceTip performanceTipEnnemie;
         public static  ClasseToupie classeToupieEnnemie = new ClasseToupie("Neutre");
-        public ClasseToupie classeToupieEnnemie2 = new ClasseToupie("Neutre");
+        private ClasseToupie classeToupieEnnemie2 = new ClasseToupie("Neutre");
     private int vieMaxEnnemie;
         private float vieActuelleEnnemie;
         private float attaqueEnnemie;
         private float defenseEnnemie;
         private float enduranceEnnemie;
-        public static ToupiePersonnage toupiePersonnage = new ToupiePersonnage(new ClasseToupie("neutre"));
+        private   ToupiePersonnage toupiePersonnage ;
 
         private int coupCritiqueEnnemie;
         private int nombreBeyPointsEnnemie;
@@ -53,6 +53,23 @@ public class ToupieEnnemie  {
 
             this.rotationEnnemie = rotationEnnemie;
             this.urlToupieEnnemie = urlToupieEnnemiee;
+
+        if ("Attaque".equals(this.classeToupieEnnemie2.getTypeToupie())) {
+            this.vieActuelleEnnemie += (1.5f * enduranceEnnemie);
+            this.vieMaxEnnemie += (1.5f * enduranceEnnemie);
+        }
+        if ("Défense".equals(this.classeToupieEnnemie2.getTypeToupie())) {
+            this.vieActuelleEnnemie += (2f * enduranceEnnemie);
+            this.vieMaxEnnemie += (2f * enduranceEnnemie);
+        }
+        if ("Equilibre".equals(this.classeToupieEnnemie2.getTypeToupie())) {
+            this.vieActuelleEnnemie += (2f * enduranceEnnemie);
+            this.vieMaxEnnemie += (2f * enduranceEnnemie);
+        }
+        if ("Endurance".equals(this.classeToupieEnnemie2.getTypeToupie())) {
+            this.vieActuelleEnnemie += (3f * enduranceEnnemie);
+            this.vieMaxEnnemie += (3f * enduranceEnnemie);
+        }
         }
 
     public ToupieEnnemie(String nomToupieEnnemie,ClasseToupie classeToupieEnnemie, int vieMaxEnnemie, float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie, int esquiveEnnemie) {
@@ -194,45 +211,55 @@ public class ToupieEnnemie  {
         ToupieEnnemie.classeToupieEnnemie = classeToupieEnnemie;
     }
 
-
-    public float reduitAttaque(float degat)
-    {
-        /* FACILE +0.5
-        Cette fonction aura pour mission de réduire les dégâts mis en paramètre par rapport à la défense.
-        /!\ Vous ne devez pas retourner un entier négatif car cela risquerait de soigner le monstre, si les dégâts
-        deviennent négatifs, il faudra alors retourner 0.
-        */
-        degat = degat - this.defenseEnnemie;
-        if (degat < 0){
-            degat = 0;
-        }
-        if (estEnProtectionEnnemie()) {
-            degat *= 0.5f;
-            System.out.println("Protection active : dégâts réduits !");
-        }
-        return degat;
+    public void setToupiePersonnage(ToupiePersonnage toupiePersonnage) {
+        this.toupiePersonnage = toupiePersonnage;
     }
 
-    public float perdrePDV( float degat) {
+    public float coefficientReduction(float degatBase, ToupiePersonnage toupiePersonnage) {
+        float coef = 1.0f;
 
+        // Réduction de base selon la défense
+        coef -= 0.7f * (this.defenseEnnemie / 100f);
 
-        degat = (float) (0.5 * degat + reduitAttaque(degat));
-        if (jetEsquive()){
-            degat = 0;
+        // Avantages/désavantages entre types
+        if ("Défense".equalsIgnoreCase(this.classeToupieEnnemie.getTypeToupie())) {
+            if ("Endurance".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())) {
+                coef += 0.15f; // Endurance > Défense
+            }
+            if ("Attaque".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())) {
+                coef -= 0.15f; // Défense > Attaque
+            }
         }
 
-        if (degat < 0){
-            degat = 0;
+        // Protection active ?
+        if (estEnProtectionEnnemie()) {
+            coef *= 0.6f;
+            System.out.println("Protection active : dégâts réduits !");
         }
 
+        if (coef < 0.1f) coef = 0.1f; // Minimum 10% de dégâts
 
-        this.vieActuelleEnnemie -= degat;
-        if (vieActuelleEnnemie <= 0){
-            vieActuelleEnnemie = 0;
+        return coef;
+    }
+
+
+    public float perdrePDV(float degat) {
+        float coef = coefficientReduction(degat, this.toupiePersonnage);
+        float degatFinal = degat * coef;
+
+        /*if (jetEsquive()) {
+            degatFinal = 0;
+            System.out.println("Esquive !");
+        }*/
+
+        if (degatFinal < 5 && degatFinal > 0) {
+            degatFinal = 5;
         }
 
+        this.vieActuelleEnnemie -= degatFinal;
+        if (vieActuelleEnnemie < 0) vieActuelleEnnemie = 0;
 
-        return degat;
+        return degatFinal;
     }
     public float gagnerVieEnnemie(float quantite) {
         this.vieActuelleEnnemie += quantite;
@@ -261,20 +288,23 @@ public class ToupieEnnemie  {
 
    public float attaqueGlobale() {
 
-       float degat = (float) (this.attaqueEnnemie * 1.5);
+       float degat =  (this.attaqueEnnemie * 2f);
        if (degat < 0 ){
            degat = 0;
        }
 
        if ("Attaque".equalsIgnoreCase(this.classeToupieEnnemie.getTypeToupie())) {
            if ("Endurance".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())) {
-               degat *= 1.3;
+               degat *= 1.2f;
            } else if ("Défense".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())) {
-               degat *= 0.75;
+               degat *= 0.8f;
+           }
+           else if ("Equilibre".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())){
+               degat = this.attaqueEnnemie * 2f;
            }
        }
        if (alea() <= getCoupCritiqueEnnemie()){
-           degat *= 2;
+           degat *= 1.8f;
        }
 
 
@@ -365,11 +395,11 @@ public class ToupieEnnemie  {
     }
 
     public float barrageEnnemie(){
-        float degats =  (float)(this.attaqueEnnemie * 0.6);
+        float degats =  (float)(this.attaqueEnnemie * 0.6f);
         int chance = alea();
         setCoupCritiqueEnnemie(getCoupCritiqueEnnemie() - 5);
         if (chance < getCoupCritiqueEnnemie()){
-            degats *= 1.4;
+            degats *= 1.4f;
         }
 
 
