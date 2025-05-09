@@ -771,7 +771,7 @@ public class HelloController implements Initializable {
         listToupieEnnemie.add(BraveValkyrieE);
         listToupieEnnemie.add(HellSalamanderE);
         listToupieEnnemie.add(DrainFafnirE);
-        listToupieEnnemie.add(BushinAshuraE);
+        //listToupieEnnemie.add(BushinAshuraE);
         listToupieEnnemie.add(ZAchillesE);
 
 
@@ -784,7 +784,7 @@ public class HelloController implements Initializable {
         System.out.println("Kerbeus   "+listToupieEnnemie.indexOf(KerbeusE));
         System.out.println("Brave Valkyrie E"+listToupieEnnemie.indexOf(BraveValkyrieE));
         System.out.println("Drain Fafnir  "+listToupieEnnemie.indexOf(DrainFafnirE));
-        System.out.println("Bushin Ashura   "+listToupieEnnemie.indexOf(BushinAshuraE));
+
         System.out.println("Z achilles   "+listToupieEnnemie.indexOf(ZAchillesE));
 
         for (EnergyLayer e : layer){
@@ -1251,19 +1251,19 @@ public void retourMenu(){
     public void btnAdvZachilles(MouseEvent event) {
         momentLancer();
         if (choixToupie == 1){
-            demarrerCompteARebours(listToupie.get(3).getNomToupie(),listToupieEnnemie.get(5).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(3).getNomToupie(),listToupieEnnemie.get(4 ).getNomToupieEnnemie());
 
         }
         if (choixToupie == 2){
-            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(5).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(0).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
 
         }
         if (choixToupie == 3){
-            demarrerCompteARebours(listToupie.get(1).getNomToupie(),listToupieEnnemie.get(5).getNomToupieEnnemie());
+            demarrerCompteARebours(listToupie.get(1).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
 
         }
-        toupieAdv = listToupieEnnemie.get(5);
-        initialiserCombat("Toupie/ZA_.11.Xt_2.png",5);
+        toupieAdv = listToupieEnnemie.get(4);
+        initialiserCombat("Toupie/ZA_.11.Xt_2.png",4);
         combatController = new CombatController(toupieJoueur, toupieAdv);
 
 
@@ -1398,6 +1398,8 @@ public void retourMenu(){
 
     public void demarrerCompteARebours(String nomJoueur, String nomAdversaire) {
         List<String> etapes = List.of("3", "2", "1", "Hypervitesse !");
+        lblQTE.setText("...");
+
         Timeline timeline = new Timeline();
 
         // --- Initialisation du QTE ---
