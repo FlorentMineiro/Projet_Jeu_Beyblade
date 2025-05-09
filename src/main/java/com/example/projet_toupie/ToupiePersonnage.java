@@ -15,8 +15,8 @@ public class ToupiePersonnage {
     private float vieMax;
     private float vieActuelle;
     private float attaque;
-    private int defense;
-    private int endurance;
+    private float defense;
+    private float endurance;
 
     private int coupCritique;
     private int nombreBeyPoints;
@@ -54,23 +54,45 @@ public class ToupiePersonnage {
         this.urlToupie = urlToupie;
 
         if ("Attaque".equals(this.classeToupie.getTypeToupie())){
-            this.vieActuelle += (1.5f * endurance);
-            this.vieMax += (1.5f * endurance);
+            this.vieActuelle += (1.5f * this.endurance);
+            this.vieMax += (1.5f * this.endurance);
         }
         if ("Défense".equals(this.classeToupie.getTypeToupie())){
-            this.vieActuelle += (2f * endurance);
-            this.vieMax += (2f * endurance);
+            this.vieActuelle += (2f * this.endurance);
+            this.vieMax += (2f * this.endurance);
         }
         if ("Equilibre".equals(this.classeToupie.getTypeToupie())){
-            this.vieActuelle += (2f * endurance);
-            this.vieMax += (2f * endurance);
+            this.vieActuelle += (2f * this.endurance);
+            this.vieMax += (2f * this.endurance);
         }
         if ("Endurance".equals(this.classeToupie.getTypeToupie())){
-            this.vieActuelle += (3f * endurance);
-            this.vieMax += (3f * endurance);
+            this.vieActuelle += (3f * this.endurance);
+            this.vieMax += (3f * this.endurance);
         }
 
     }
+    public void mettreAJourVieMax() {
+        if ("Attaque".equals(this.classeToupie.getTypeToupie())) {
+            this.vieActuelle += (1.5f * endurance);
+            this.vieMax +=  (1.5f * endurance);
+        } else if ("Défense".equals(this.classeToupie.getTypeToupie())) {
+            this.vieActuelle += (2f * endurance);
+            this.vieMax +=  (2f * endurance);
+        } else if ("Equilibre".equals(this.classeToupie.getTypeToupie())) {
+            this.vieActuelle += (2f * endurance);
+            this.vieMax +=  (2f * endurance);
+        } else if ("Endurance".equals(this.classeToupie.getTypeToupie())) {
+            this.vieActuelle += (3f * endurance);
+            this.vieMax +=  (3f * endurance);
+        }
+
+        // On s'assure que la vie actuelle ne dépasse pas la vie maximale
+        if (this.vieActuelle > this.vieMax) {
+            this.vieActuelle = this.vieMax;
+        }
+    }
+
+
 
     public ToupiePersonnage(String nomToupie, ClasseToupie classeToupie, float vieMax, float vieActuelle, float attaque, int defense, int endurance, int coupCritique, int esquive,int nombreBeyPoints) {
         this.nomToupie = nomToupie;
@@ -136,11 +158,11 @@ public class ToupiePersonnage {
         return attaque;
     }
 
-    public int getDefenseToupie() {
+    public float getDefenseToupie() {
         return defense;
     }
 
-    public int getEnduranceToupie() {
+    public float getEnduranceToupie() {
         return endurance;
     }
 
@@ -393,11 +415,11 @@ public class ToupiePersonnage {
         this.attaque = attaque;
     }
 
-    public void setDefense(int defense) {
+    public void setDefense(float defense) {
         this.defense = defense;
     }
 
-    public void setEndurance(int endurance) {
+    public void setEndurance(float endurance) {
         this.endurance = endurance;
     }
 

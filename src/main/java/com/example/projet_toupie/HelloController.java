@@ -170,6 +170,8 @@ public class HelloController implements Initializable {
     @FXML
     private Label lblInfo;
     String imageName;
+    private ToupiePersonnage toupieSelectionnee;
+
 
 
     int choixToupie = 0;
@@ -201,6 +203,19 @@ public class HelloController implements Initializable {
     ToupieEnnemie DrainFafnirE;
     ToupieEnnemie ZAchillesE;
     ToupieEnnemie BushinAshuraE;
+
+    EnergyLayer LayerKerbeus;
+    EnergyLayer LayerDrainFafnir;
+    EnergyLayer LayerBraveValkyrie;
+
+    ForgeDisc Disk8;
+    ForgeDisc Disk2A;
+    ForgeDisc DiskCentral;
+
+    PerformanceTip Defense;
+    PerformanceTip Evolution;
+    PerformanceTip Nothing;
+
 
 
 
@@ -822,6 +837,23 @@ public class HelloController implements Initializable {
         visible(apMenuPrincipal);
         changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
 
+        toupieSelectionnee = new ToupiePersonnage("Drain Fafnir 8 Nothing "
+                ,LayerDrainFafnir
+                ,Disk8
+                ,Nothing
+                , typeEndurance
+                ,1400
+                ,1400
+                ,50
+                ,40
+                ,90
+                ,30
+                ,80
+                ,gauche
+                ,"Toupie/fafnir_gpt.png"
+
+        );
+
         choixToupie = 1;
 
 
@@ -838,6 +870,23 @@ public class HelloController implements Initializable {
         visible(apMenuPrincipal);
         changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
 
+        toupieSelectionnee = new ToupiePersonnage("Kerbeus Central Defense"
+                ,LayerKerbeus
+                ,DiskCentral
+                ,Defense,
+                typeDefense,
+                1500,
+                1500,
+                35,
+                85,
+                60,
+                20,
+                65,
+                droite,
+                "Toupie/kerbeus_gpt.png"
+
+        );
+
         choixToupie = 2;
     }
 
@@ -853,6 +902,23 @@ public class HelloController implements Initializable {
 
         visible(apMenuPrincipal);
         changeImageViewImg(imgFond,"Environnement/Ecran_d'accueil_3.png");
+
+        toupieSelectionnee = new ToupiePersonnage("Brave Valkyrie Evolution 2A "
+                ,LayerBraveValkyrie
+                ,Disk2A
+                ,Evolution
+                ,typeAttaque
+                ,1200
+                ,1200
+                ,90
+                ,45
+                ,50
+                ,85
+                ,45
+                ,droite
+                ,"Toupie/valkyrie_gpt.png"
+
+        );
         choixToupie = 3;
 
     }
@@ -929,8 +995,8 @@ public class HelloController implements Initializable {
             visible(apFichePerso);
             changeZone("Toupie/fafnir_gpt.png",apFichePerso);
             writeRapideFloat(lblAttaqueToupie, listToupie.get(3).getAttaqueToupie());
-            writeRapideInt(lblDefenseToupie, listToupie.get(3).getDefenseToupie());
-            writeRapideInt(lblEnduranceToupie, listToupie.get(3).getEnduranceToupie());
+            writeRapideFloat(lblDefenseToupie, listToupie.get(3).getDefenseToupie());
+            writeRapideFloat(lblEnduranceToupie, listToupie.get(3).getEnduranceToupie());
             writeRapideFloat(lblVieMaxToupie, listToupie.get(3).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(3).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(3).getClasseToupie().getTypeToupie()));
@@ -945,8 +1011,8 @@ public class HelloController implements Initializable {
             changeZone("Toupie/kerbeus_gpt.png",apFichePerso);
             writeRapideString(lblNomToupie, listToupie.get(0).getNomToupie());
             writeRapideFloat(lblAttaqueToupie, listToupie.get(0).getAttaqueToupie());
-            writeRapideInt(lblDefenseToupie, listToupie.get(0).getDefenseToupie());
-            writeRapideInt(lblEnduranceToupie, listToupie.get(0).getEnduranceToupie());
+            writeRapideFloat(lblDefenseToupie, listToupie.get(0).getDefenseToupie());
+            writeRapideFloat(lblEnduranceToupie, listToupie.get(0).getEnduranceToupie());
             writeRapideFloat(lblVieMaxToupie, listToupie.get(0).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(0).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(0).getClasseToupie().getTypeToupie()));
@@ -959,8 +1025,8 @@ public class HelloController implements Initializable {
             changeZone("Toupie/valkyrie_gpt.png",apFichePerso);
             writeRapideString(lblNomToupie, listToupie.get(1).getNomToupie());
             writeRapideFloat(lblAttaqueToupie, listToupie.get(1).getAttaqueToupie());
-            writeRapideInt(lblDefenseToupie, listToupie.get(1).getDefenseToupie());
-            writeRapideInt(lblEnduranceToupie, listToupie.get(1).getEnduranceToupie());
+            writeRapideFloat(lblDefenseToupie, listToupie.get(1).getDefenseToupie());
+            writeRapideFloat(lblEnduranceToupie, listToupie.get(1).getEnduranceToupie());
             writeRapideFloat(lblVieMaxToupie, listToupie.get(1).getVieMaxToupie());
             writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(1).getRotation().getTypeRotation()));
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(1).getClasseToupie().getTypeToupie()));
@@ -1445,19 +1511,32 @@ public void retourMenu(){
                 qteEnCours = false;
 
                 // Appliquer les effets QTE
-                ToupiePersonnage toupieJoueur = listToupie.get(choixToupie - 1);
+                ToupiePersonnage toupieJoueur = toupieSelectionnee;
                 qteLancer.appliquerEffetQTE(toupieJoueur, qteLancer.isReussi());
 
                 // ✅ Afficher les résultats avant de continuer
                 String message;
                 if (qteLancer.isReussi()) {
+                    toupieJoueur.setAttaque(Math.min(100,toupieJoueur.getAttaqueToupie() + 10));
+                    toupieJoueur.setEndurance(Math.min(100,toupieJoueur.getEnduranceToupie() + 10));
+                    toupieJoueur.mettreAJourVieMax();
                     message = "QTE Réussi !\n\n"
                             + "Attaque +10\n"
                             + "Endurance +10\n";
-                    if ("Défense".equalsIgnoreCase(toupieJoueur.getClasseToupie().getTypeToupie())) {
-                        message += "Bonus Défenseur :\nAttaque +5, Endurance +5, Défense +7";
+                    if ("Kerbeus Central Defense".equals(toupieJoueur.getNomToupie())) {
+                        toupieJoueur.setAttaque(Math.min(100,toupieJoueur.getAttaqueToupie() + 5));
+                        toupieJoueur.setEndurance(Math.min(100,toupieJoueur.getEnduranceToupie() + 5));
+                        toupieJoueur.setDefense(Math.min(100,toupieJoueur.getDefenseToupie() + 7));
+                        toupieJoueur.mettreAJourVieMax();
+                        message = "QTE Réussi !\n\n"
+                                + "Attaque +5\n"
+                                + "Endurance +5\n"
+                                +"Défense + 7 \n";
                     }
                 } else {
+                    toupieJoueur.setAttaque(Math.max(0,toupieJoueur.getAttaqueToupie() - 10));
+                    toupieJoueur.setEndurance(Math.max(0,toupieJoueur.getEnduranceToupie() - 10));
+                    toupieJoueur.mettreAJourVieMax();
                     message = "QTE Raté...\n\n"
                             + "Attaque -10\n"
                             + "Endurance -10";
