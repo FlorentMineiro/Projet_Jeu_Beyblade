@@ -170,6 +170,12 @@ public class CombatController {
             toupieEnnemie.desactiverModeEnduranceZ();
         }
     }
+    public void  desactiverModesZ(){
+        toupieEnnemie.desactiverModeEnduranceZ();
+        toupieEnnemie.desactiverModeDefenseZ();
+        toupieEnnemie.desactiverModeAttaqueZ();
+        toupieEnnemie.resetStats();
+    }
 
     public boolean isModeAttaqueZ() {
         return toupieEnnemie.isModeAttaqueZ();
