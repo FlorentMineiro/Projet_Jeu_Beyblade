@@ -29,6 +29,24 @@ public class CombatController {
         }
         return toupiePersonnage.perdrePDV(degat); // Et perdrePDV appliquera correctement le coefficient
     }
+
+    public float perdrePDV(float degat) {
+        if (!toupieEnnemie.getRotationEnnemie().getTypeRotation().equals(toupiePersonnage.getRotation().getTypeRotation())){
+            degat *= 1.1f;
+        }
+        return toupiePersonnage.perdrePDV(degat);
+
+
+    }
+    public float perdrePDVEnnemie(float degat) {
+        if (!toupiePersonnage.getRotation().getTypeRotation().equals(toupieEnnemie.getRotationEnnemie().getTypeRotation())){
+            degat *= 1.1f;
+        }
+
+        return toupieEnnemie.perdrePDV(degat);
+
+
+    }
     public float barrage(){
        return toupiePersonnage.barrage();
 
@@ -44,16 +62,7 @@ public class CombatController {
     public float gagnerVieEnnemie(float quantite) {
         return toupieEnnemie.gagnerVieEnnemie(quantite);
     }
-    public float perdrePDV(float degat) {
-       return toupiePersonnage.perdrePDV(degat);
 
-
-    }
-    public float perdrePDVEnnemie(float degat) {
-        return toupieEnnemie.perdrePDV(degat);
-
-
-    }
     public void activerProtection() {
        toupiePersonnage.activerProtection();
     }

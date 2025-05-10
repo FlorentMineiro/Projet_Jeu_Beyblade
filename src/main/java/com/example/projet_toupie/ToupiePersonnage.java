@@ -17,6 +17,8 @@ public class ToupiePersonnage {
     private float attaque;
     private float defense;
     private float endurance;
+    private int vieBase;
+
 
     private int coupCritique;
     private int nombreBeyPoints;
@@ -40,6 +42,7 @@ public class ToupiePersonnage {
         this.performanceTip = performanceTip;
         this.classeToupie = classeToupie;
         this.vieMax = vieMax;
+        this.vieBase = vieMax;
         this.vieActuelle = vieActuelle;
 
 
@@ -72,25 +75,28 @@ public class ToupiePersonnage {
 
     }
     public void mettreAJourVieMax() {
-        if ("Attaque".equals(this.classeToupie.getTypeToupie())) {
-            this.vieActuelle += (1.5f * endurance);
-            this.vieMax +=  (1.5f * endurance);
-        } else if ("Défense".equals(this.classeToupie.getTypeToupie())) {
-            this.vieActuelle += (2f * endurance);
-            this.vieMax +=  (2f * endurance);
-        } else if ("Equilibre".equals(this.classeToupie.getTypeToupie())) {
-            this.vieActuelle += (2f * endurance);
-            this.vieMax +=  (2f * endurance);
-        } else if ("Endurance".equals(this.classeToupie.getTypeToupie())) {
-            this.vieActuelle += (3f * endurance);
-            this.vieMax +=  (3f * endurance);
+        float factor = 0;
+        switch (this.classeToupie.getTypeToupie()) {
+            case "Attaque":
+                factor = 1.5f;
+                break;
+            case "Défense":
+                factor = 2f;
+                break;
+            case "Equilibre":
+                factor = 2f;
+                break;
+            case "Endurance":
+                factor = 3f;
+                break;
+            default:
+                factor = 0;
         }
-
-        // On s'assure que la vie actuelle ne dépasse pas la vie maximale
-        if (this.vieActuelle > this.vieMax) {
-            this.vieActuelle = this.vieMax;
-        }
+        this.vieMax = this.vieBase + (int)(factor * this.endurance);
+        this.vieActuelle = Math.min(this.vieActuelle, this.vieMax);
     }
+
+
 
 
 
@@ -420,7 +426,8 @@ public class ToupiePersonnage {
     }
 
     public void setEndurance(float endurance) {
-        this.endurance = endurance;
+        this.endurance = Math.max(0, Math.min(100, endurance));
+        mettreAJourVieMax();
     }
 
     public void setCoupCritique(int coupCritique) {

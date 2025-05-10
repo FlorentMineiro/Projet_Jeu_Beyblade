@@ -37,7 +37,7 @@ public class HelloController implements Initializable {
 
     @FXML
     private AnchorPane apBoutique;
-
+    private boolean combatEnCours = true;
     private Node zoomableNode;
     @FXML
     private ImageView imgCoffre;
@@ -1520,6 +1520,8 @@ public void retourMenu(){
                     toupieJoueur.setAttaque(Math.min(100,toupieJoueur.getAttaqueToupie() + 10));
                     toupieJoueur.setEndurance(Math.min(100,toupieJoueur.getEnduranceToupie() + 10));
                     toupieJoueur.mettreAJourVieMax();
+
+                    //toupieJoueur.mettreAJourVieMax();
                     message = "QTE Réussi !\n\n"
                             + "Attaque +10\n"
                             + "Endurance +10\n";
@@ -1528,6 +1530,8 @@ public void retourMenu(){
                         toupieJoueur.setEndurance(Math.min(100,toupieJoueur.getEnduranceToupie() + 5));
                         toupieJoueur.setDefense(Math.min(100,toupieJoueur.getDefenseToupie() + 7));
                         toupieJoueur.mettreAJourVieMax();
+                        //toupieJoueur.setVieActuelle(toupieJoueur.getVieActuelleToupie() + 10);
+                       // toupieJoueur.mettreAJourVieMax();
                         message = "QTE Réussi !\n\n"
                                 + "Attaque +5\n"
                                 + "Endurance +5\n"
@@ -1537,6 +1541,8 @@ public void retourMenu(){
                     toupieJoueur.setAttaque(Math.max(0,toupieJoueur.getAttaqueToupie() - 10));
                     toupieJoueur.setEndurance(Math.max(0,toupieJoueur.getEnduranceToupie() - 10));
                     toupieJoueur.mettreAJourVieMax();
+
+                    //toupieJoueur.mettreAJourVieMax();
                     message = "QTE Raté...\n\n"
                             + "Attaque -10\n"
                             + "Endurance -10";
@@ -1552,7 +1558,7 @@ public void retourMenu(){
                     alert.showAndWait(); // attend que le joueur ferme l'alerte
 
                     // Initialiser les toupies après la fermeture de l'alerte
-                    initialiserToupies(nomJoueur, nomAdversaire);
+                    //initialiserToupies(nomJoueur, nomAdversaire);
 
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev2 -> fight());
@@ -1739,17 +1745,18 @@ public void retourMenu(){
                 // Mise à jour UI
 
                majVieJoueur();
-              // majVieEnnemi();
+
 
         }
 
        animationOuNon();
     }
-    public void animationOuNon(){
+    public void animationOuNon() {
+        if (!combatEnCours) return; // Ne pas vérifier si combat terminé
+
         PauseTransition pauseFin = new PauseTransition(Duration.seconds(0.5));
         pauseFin.setOnFinished(e -> checkFinCombat());
         pauseFin.play();
-
     }
 
     private void gererChangementModeToupieEnnemi() {
@@ -1954,8 +1961,7 @@ public void retourMenu(){
                 appliquerDegatsSurJoueur(degats);
 
             }
-            //appliquerRegenerationFinDeTour();
-            //writeRapideInt(lblNombreTour, Tour.suivant());
+
             return;
         }
 
@@ -2285,55 +2291,71 @@ public void retourMenu(){
         majVieJoueur();
         checkFinCombat();
     }
-    public void finCombat(boolean victoire, boolean burst) {
-        Runnable finDeCombat = () -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            if (victoire) {
-                alert.setTitle("Félicitations !");
-                alert.setHeaderText(burst ? "Victoire par Burst !" : "Vous avez Gagné !");
-                alert.setContentText("BeyPoints gagnés : " + (burst ? "+1500" : "+1000"));
-                toupieJoueur.setNombreBeyPoints(beyResteActuel + (burst ? 1500 : 1000));
-            } else {
-                alert.setTitle("Dommage...");
-                alert.setHeaderText(burst ? "Défaite par Burst !" : "Vous avez Perdu !");
-                alert.setContentText("BeyPoints perdus : " + (burst ? "-500" : "Pas de burst \n Rien de Perdu"));
-                int nouvelleValeur = beyResteActuel - (burst ? 500 : 0);
-                if (nouvelleValeur < 0) {
-                    nouvelleValeur = 0;
-                }
-                toupieJoueur.setNombreBeyPoints(nouvelleValeur);
-            }
-            alert.showAndWait();
 
-            clearAll();
-            visible(apMenuPrincipal);
+
+    public void finCombat(boolean victoire, boolean burst) {
+        if (!combatEnCours) return;
+        combatEnCours = false;
+
+        Runnable finDeCombat = () -> {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+                // ▼▼▼ RÉTABLIR LA LOGIQUE DE MESSAGE ▼▼▼
+                if (victoire) {
+                    alert.setTitle("Félicitations !");
+                    alert.setHeaderText(burst ? "Victoire par Burst !" : "Vous avez Gagné !");
+                    int gain = burst ? 1500 : 1000;
+                    toupieJoueur.setNombreBeyPoints(toupieJoueur.getNombreBeyPoints() + gain);
+                    alert.setContentText("BeyPoints gagnés : +" + gain +
+                            "\nTotal actuel : " + toupieJoueur.getNombreBeyPoints());
+
+                } else {
+                    alert.setTitle("Dommage...");
+                    alert.setHeaderText(burst ? "Défaite par Burst !" : "Vous avez Perdu !");
+                    int perte = burst ? 500 : 0;
+                    int nouvelleValeur = Math.max(0, toupieJoueur.getNombreBeyPoints() - perte);
+                    toupieJoueur.setNombreBeyPoints(nouvelleValeur);
+                    alert.setContentText("BeyPoints perdus : " + (burst ? "-500" : "0") +
+                            "\nTotal actuel : " + nouvelleValeur);
+                }
+
+                alert.showAndWait();
+                writeRapideInt(lblBeyPoint, toupieJoueur.getNombreBeyPoints());
+                resetCombat();
+                visible(apMenuPrincipal);
+            });
         };
 
         if (burst) {
-            affBurst(finDeCombat); // animation + suite
+            affBurst(() -> Platform.runLater(finDeCombat));
         } else {
-            finDeCombat.run(); // directe
+            Platform.runLater(finDeCombat);
         }
+        checkFinCombat();
+    }
+
+
+    private void resetCombat() {
+        combatEnCours = true; // Réactiver pour le prochain combat
+        clearAll();
+        // Réinitialiser les stats des toupies si nécessaire
+        toupieJoueur.resetStats();
+        toupieAdv.resetStats();
     }
 
     public void checkFinCombat() {
         if (toupieJoueur.getVieActuelleToupie() <= 0 && toupieAdv.getVieActuelleEnnemie() > 0) {
-            boolean burst = true;
+            // Défaite du joueur
             int chance = alea();
-            if (chance < 20){
-                finCombat(false, burst);
-            }else {
-                finCombat(false, false);
-            }
+            boolean burst = (chance < 20); // 20% de chance de burst
+            finCombat(false, burst); // Appel avec burst calculé
 
         } else if (toupieJoueur.getVieActuelleToupie() > 0 && toupieAdv.getVieActuelleEnnemie() <= 0) {
-            boolean burst = true;
+            // Victoire du joueur
             int chance = alea();
-            if (chance < 20){
-                finCombat(true, burst);
-            }else {
-                finCombat(true, false);
-            }
+            boolean burst = (chance < 20); // 20% de chance de burst
+            finCombat(true, burst); // Appel avec burst calculé
         }
     }
 
