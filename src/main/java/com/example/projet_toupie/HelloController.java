@@ -1128,57 +1128,71 @@ public class HelloController implements Initializable {
 
         switch (pieceType) {
             case 0:
-                EnergyLayer newLayer = layer.get(random.nextInt(layer.size())); // Choix aléatoire dans la liste
-                toupieJoueur.getCollectionPieces().ajouterEnergyLayer(newLayer);
-                afficherInfoPiece("Energy Layer", newLayer.getNomLayer());
-                changeImageViewImg(imgPieceToupie, newLayer.getUrlLayer());
-                writeRapideInt(lblStatAttaque, newLayer.getStatAttaqueLayer());
-                writeRapideInt(lblStatDefense, newLayer.getStatDefenseLayer());
-                writeRapideInt(lblStatEndurance, newLayer.getStatEnduranceLayer());
-                writeRapideInt(lblPoids, (int) newLayer.getPoidsLayer());
-                List<ImageView> energyLayerSlots = Arrays.asList(
-                        imgEnergyLayer2, imgEnergyLayer3, imgEnergyLayer4,
-                        imgEnergyLayer5, imgEnergyLayer6, imgEnergyLayer7
-                );
-                afficherImageDansCaseDisponible(energyLayerSlots, newLayer.getUrlLayer());
+                EnergyLayer newLayer = layer.get(random.nextInt(layer.size()));
 
+                if (!toupieJoueur.getCollectionPieces().possedeDejaEnergyLayer(newLayer)) {
+                    toupieJoueur.getCollectionPieces().ajouterEnergyLayer(newLayer);
+                    afficherInfoPiece("Energy Layer", newLayer.getNomLayer());
+                    changeImageViewImg(imgPieceToupie, newLayer.getUrlLayer());
+                    writeRapideInt(lblStatAttaque, newLayer.getStatAttaqueLayer());
+                    writeRapideInt(lblStatDefense, newLayer.getStatDefenseLayer());
+                    writeRapideInt(lblStatEndurance, newLayer.getStatEnduranceLayer());
+                    writeRapideInt(lblPoids, (int) newLayer.getPoidsLayer());
+                    List<ImageView> energyLayerSlots = Arrays.asList(
+                            imgEnergyLayer2, imgEnergyLayer3, imgEnergyLayer4,
+                            imgEnergyLayer5, imgEnergyLayer6, imgEnergyLayer7
+                    );
+                    afficherImageDansCaseDisponible(energyLayerSlots, newLayer.getUrlLayer());
+                } else {
+                    afficherInfoPiece("Déjà obtenu", newLayer.getNomLayer());
+                    // Optionnel : tu peux afficher un effet visuel ici (ex: glow rouge)
+                }
                 break;
+
 
             case 1:
                 ForgeDisc newDisc = disc.get(random.nextInt(disc.size()));
-                toupieJoueur.getCollectionPieces().ajouterForgeDisc(newDisc);
-                afficherInfoPiece("Forge Disc", newDisc.getNomDisc());
-                changeImageViewImg(imgPieceToupie, newDisc.getUrlDisc());
-                writeRapideInt(lblStatAttaque, newDisc.getStatAttaqueDisc());
-                writeRapideInt(lblStatDefense, newDisc.getStatDefenseDisc());
-                writeRapideInt(lblStatEndurance, newDisc.getStatEnduranceDisc());
-                writeRapideInt(lblPoids, (int) newDisc.getPoidsDisc());
-                List<ImageView> ForgeDiscsSlots = Arrays.asList(
-                        imgForgeDisc2, imgForgeDisc3, imgForgeDisc4,
-                        imgForgeDisc5, imgForgeDisc6, imgForgeDisc7
-                );
-                afficherImageDansCaseDisponible(ForgeDiscsSlots, newDisc.getUrlDisc());
 
+                if (!toupieJoueur.getCollectionPieces().possedeDejaForgeDiscs(newDisc)) {
+                    toupieJoueur.getCollectionPieces().ajouterForgeDisc(newDisc);
+                    afficherInfoPiece("Forge Disc", newDisc.getNomDisc());
+                    changeImageViewImg(imgPieceToupie, newDisc.getUrlDisc());
+                    writeRapideInt(lblStatAttaque, newDisc.getStatAttaqueDisc());
+                    writeRapideInt(lblStatDefense, newDisc.getStatDefenseDisc());
+                    writeRapideInt(lblStatEndurance, newDisc.getStatEnduranceDisc());
+                    writeRapideInt(lblPoids, (int) newDisc.getPoidsDisc());
+                    List<ImageView> ForgeDiscsSlots = Arrays.asList(
+                            imgForgeDisc2, imgForgeDisc3, imgForgeDisc4,
+                            imgForgeDisc5, imgForgeDisc6, imgForgeDisc7
+                    );
+                    afficherImageDansCaseDisponible(ForgeDiscsSlots, newDisc.getUrlDisc());
+                } else {
+                    afficherInfoPiece("Déjà obtenu", newDisc.getNomDisc());
+                }
                 break;
+
 
             case 2:
                 PerformanceTip newTip = tip.get(random.nextInt(tip.size()));
-                toupieJoueur.getCollectionPieces().ajouterPerformanceTip(newTip);
-                afficherInfoPiece("Performance Tip", newTip.getNomTip());
-                changeImageViewImg(imgPieceToupie, newTip.getUrlTip());
-                writeRapideInt(lblStatAttaque, newTip.getStatAttaqueTip());
-                writeRapideInt(lblStatDefense, newTip.getStatDefenseTip());
-                writeRapideInt(lblStatEndurance, newTip.getStatEnduranceTip());
-                writeRapideInt(lblPoids, (int) newTip.getPoidsTip());
-                List<ImageView> performanceTipSlots = Arrays.asList(
-                        imgPerformanceTip2, imgPerformanceTip3, imgPerformanceTip4,
-                        imgPerformanceTip5, imgPerformanceTip6, imgPerformanceTip7
-                );
-                afficherImageDansCaseDisponible(performanceTipSlots, newTip.getUrlTip());
 
-
-
+                if (!toupieJoueur.getCollectionPieces().possedeDejaPerformanceTip(newTip)) {
+                    toupieJoueur.getCollectionPieces().ajouterPerformanceTip(newTip);
+                    afficherInfoPiece("Performance Tip", newTip.getNomTip());
+                    changeImageViewImg(imgPieceToupie, newTip.getUrlTip());
+                    writeRapideInt(lblStatAttaque, newTip.getStatAttaqueTip());
+                    writeRapideInt(lblStatDefense, newTip.getStatDefenseTip());
+                    writeRapideInt(lblStatEndurance, newTip.getStatEnduranceTip());
+                    writeRapideInt(lblPoids, (int) newTip.getPoidsTip());
+                    List<ImageView> performanceTipSlots = Arrays.asList(
+                            imgPerformanceTip2, imgPerformanceTip3, imgPerformanceTip4,
+                            imgPerformanceTip5, imgPerformanceTip6, imgPerformanceTip7
+                    );
+                    afficherImageDansCaseDisponible(performanceTipSlots, newTip.getUrlTip());
+                } else {
+                    afficherInfoPiece("Déjà obtenu", newTip.getNomTip());
+                }
                 break;
+
         }
     }
     private void afficherImageDansCaseDisponible(List<ImageView> listeImages, String urlImagePiece) {
@@ -1873,6 +1887,24 @@ public void retourMenu(){
         });
 
     }
+    private void afficherComboEnnemieAchilles() {
+        Platform.runLater(() ->{
+            lblComboEnnemie.setText("Critique !");
+            lblComboEnnemie.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+
+            lblComboEnnemie.setVisible(true);
+
+            lblComboEnnemie.toFront();
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1.5), e -> lblComboEnnemie.setVisible(false))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
+
+    }
 
     //public void attaqueAdverse() {
 
@@ -2029,7 +2061,7 @@ public void retourMenu(){
                     majVieEnnemi();
                     checkFinCombat();
                 });
-                appliquerDegatsSurJoueur(1.5f * attaque);
+                appliquerDegatsSurJoueur( attaque);
                 return; // ▼ Arrêt prématuré pour éviter les autres modes
             }
 
@@ -2062,13 +2094,20 @@ public void retourMenu(){
 
                     toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
                     toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
+                    if (combatController.dernierCoupEtaitCritique()){
+                        afficherComboEnnemieAchilles();
+                    }
+
+
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Mode Attaque");
                     alert.setHeaderText("Z Achilles devient hyper agressif !");
                     alert.setContentText("Attaque +15 / Défense -15 \n (Coups Critiques pendant 5 tours)");
-                    combatController.activerModeCritiqueTemporaire(5);
+                    combatController.activerModeCritiqueTemporaire(3);
+
                     alert.showAndWait();
+
                 }
             }
             // Mode Défense par défaut
@@ -2091,7 +2130,7 @@ public void retourMenu(){
             }
 
             appliquerDegatsSurJoueur(attaque);
-            combatController.decrementerCritique();
+            combatController.checkEtDecrementerCritique();
         }
     }
 
@@ -2431,7 +2470,7 @@ public void retourMenu(){
     public void btnEsquive(MouseEvent event) {
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie()/toupieJoueur.getVieMaxToupie();
         if (alea() < toupieJoueur.getEsquive()){
-            combatController.perdrePDV(toupieAdv.getVieActuelleEnnemie() * 0.05f);
+            combatController.perdrePDVEnnemie(toupieAdv.getVieActuelleEnnemie() * 0.05f);
 
 
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);

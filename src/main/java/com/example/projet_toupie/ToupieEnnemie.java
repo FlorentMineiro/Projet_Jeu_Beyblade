@@ -430,6 +430,9 @@ public class ToupieEnnemie  {
         this.tourRestantCritique = tours;
         setCoupCritiqueEnnemie(100);
     }
+    public boolean isModeCritiqueActif() {
+        return tourRestantCritique > 0;
+    }
 
     public void decrementerCritique() {
         if (tourRestantCritique > 0) {

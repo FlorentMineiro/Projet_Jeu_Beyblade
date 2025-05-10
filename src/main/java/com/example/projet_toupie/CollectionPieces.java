@@ -30,4 +30,29 @@ public class CollectionPieces {
     public ArrayList<PerformanceTip> getPerformanceTips() {
         return performanceTips;
     }
+    public boolean possedeDejaEnergyLayer(EnergyLayer layer) {
+        for (EnergyLayer l : energyLayers) {
+            if (l.getNomLayer().equals(layer.getNomLayer())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean possedeDejaForgeDiscs(ForgeDisc disc ) {
+        for (ForgeDisc f : forgeDiscs) {
+            if (f.getNomDisc().equals(disc.getNomDisc())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean possedeDejaPerformanceTip(PerformanceTip tip) {
+        for (PerformanceTip p : performanceTips) {
+            if (p.getNomTip().equals(tip.getNomTip())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

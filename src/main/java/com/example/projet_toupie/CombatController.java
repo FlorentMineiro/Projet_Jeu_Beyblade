@@ -23,11 +23,20 @@ public class CombatController {
 
 
     public float attaqueAdv() {
-        float degat = toupieEnnemie.attaqueGlobale();  // Avec les bons bonus/malus déjà intégrés
-        if (!toupieEnnemie.getRotationEnnemie().getTypeRotation().equals(toupiePersonnage.getRotation().getTypeRotation())){
+        float degat = toupieEnnemie.attaqueGlobale();
+
+        // Application du bonus/malus
+        if (!toupieEnnemie.getRotationEnnemie().getTypeRotation().equals(toupiePersonnage.getRotation().getTypeRotation())) {
             degat *= 1.1f;
         }
-        return toupiePersonnage.perdrePDV(degat); // Et perdrePDV appliquera correctement le coefficient
+
+        // Gestion du critique
+        boolean estCritique = checkEtDecrementerCritique();
+        if (estCritique) {
+            degat *= 1.5f; // Exemple de bonus de critique
+        }
+
+        return toupiePersonnage.perdrePDV(degat);
     }
 
     public float perdrePDV(float degat) {
@@ -189,19 +198,46 @@ public class CombatController {
         return toupieEnnemie.isModeEnduranceZ();
     }
 
-    public void activerModeCritiqueTemporaire(int tours) {
-        toupieEnnemie.activerModeCritiqueTemporaire(tours);
-    }
+
     public void resetStatsSansChangerMode() {
         toupieEnnemie.setAttaqueEnnemie(toupieEnnemie.getAttaqueEnnemie());
         toupieEnnemie.setDefenseEnnemie(toupieEnnemie.getDefenseEnnemie());
         // Pas de modification de vie ni des flags de mode
     }
 
+        // [...] Variables existantes
 
-    public void decrementerCritique() {
-       toupieEnnemie.decrementerCritique();
-    }
+        private int toursCritiquesRestants = 0;
+        private boolean dernierCoupEtaitCritique = false;
+
+        // Méthode pour activer le mode critique
+        public void activerModeCritiqueTemporaire(int tours) {
+            this.toursCritiquesRestants = tours;
+        }
+
+        // Vérifie si un critique doit être déclenché
+        public boolean checkEtDecrementerCritique() {
+            if (toursCritiquesRestants > 0) {
+                dernierCoupEtaitCritique = true;
+                toursCritiquesRestants--;
+                return true;
+            }
+            dernierCoupEtaitCritique = false;
+            return false;
+        }
+
+        // Getter pour l'UI
+        public boolean dernierCoupEtaitCritique() {
+            return dernierCoupEtaitCritique;
+        }
+
+        // Méthode d'attaque modifiée
+
+
+
+
+
+
 
     public int alea(){
         return  (int) (Math.random()*101);
