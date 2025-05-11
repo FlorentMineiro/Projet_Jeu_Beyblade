@@ -2136,177 +2136,8 @@ public void retourMenu(){
 
 
 
-    private void gererChangementValkyrie2(){
-        int chance = alea();
-
-        float degats = toupieAdv.attaqueGlobale();
-        if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            if (Tour.getNumeroTour() % 3 == 0) {
-                toupieAdv.activerModeSixLamesEnnemi();
-                if (toupieAdv.isModeSixLamesEnnemi()) {
-                    int nombreCoups;
-                    if (chance < 15) nombreCoups = 5;
-                    else if (chance < 45) nombreCoups = 4;
-                    else if (chance < 75) nombreCoups = 3;
-                    else nombreCoups = 2;
-
-                    for (int i = 0; i < nombreCoups; i++) {
-                        float degat = toupieJoueur.barrage();
-                        if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
-                            nombreAttaquesEvolution++;
-                            float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
-                            degat *= bonus;
-                        }
-                        toupieAdv.perdrePDV(degat);
-                        if (toupieAdv.getVieActuelleEnnemie() <= 0 || toupieJoueur.getVieActuelleToupie() <= 0) {
-                            checkFinCombat();
-                            return;
-                        }
-                    }
-
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setTitle("Changement de mode");
-                    a.setHeaderText("Brave Valkyrie passe en mode 6 lames");
-                    a.setContentText("Plusieurs coups vont être lancés !");
-                    a.showAndWait();
-                    afficherComboEnnemie(nombreCoups);
-                }
-            } else {
-                toupieAdv.desactiverModeSixLamesEnnemi();
-                if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
-                    nombreAttaquesEvolution++;
-                    float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
-                    degats *= bonus;
-                }
-                appliquerDegatsSurJoueur(degats);
-
-            }
-            //appliquerRegenerationFinDeTour();
-            return;
-        }
-
-    }
-    private void gererChangementKerbeus2(){
-        float degatsJoueur = toupieJoueur.attaqueGlobale();
-        float degats = toupieAdv.attaqueGlobale();
-        int chance = alea();
-        if ("Kerbeus".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-
-            if (Tour.getNumeroTour() % 4 == 0) {
-                toupieAdv.activerProtectionEnnemie();
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setTitle("Changement de mode pour Kerbeus");
-                a.setHeaderText("Kerbeus reçoit une augmentation de défense \n Pendant 3 tours");
-                a.setContentText("Réduction de dégâts de 60 % ");
-                a.showAndWait();
-            }
-
-            if (toupieAdv.estEnProtectionEnnemie()) {
-                degatsJoueur *= 0.40f;
-
-                if (chance < 50) {
-                    toupieJoueur.perdrePDV(0.2f * toupieJoueur.getVieActuelleToupie());
-                    degatsJoueur *= 0.9f;
-                    afficherComboEnnemie();
-                    System.out.println("Kerbeus active sa propulsion enchaînée !");
-                }
-
-                toupieAdv.reduireProtectionEnnemie();
-            }
-
-            appliquerDegatsSurJoueur(degats);
-            //appliquerRegenerationFinDeTour();
-
-            return;
-        }
-    }
-    private void gererChangementModeEnnemiZAchilles2() {
-        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
-
-        if (nomToupieTip.contains("Xtend")){
-            float attaque = toupieAdv.attaqueGlobale();
-
-            // 🔴 Mode Endurance : priorité si vie très basse
-            if (toupieAdv.getVieActuelleEnnemie() <= 0.2f * toupieAdv.getVieMaxEnnemie()) {
-                if (!combatController.isModeEnduranceZ()) {
-                    combatController.desactiverModeAttaqueZ();
-                    combatController.desactiverModeDefenseZ();
-                    combatController.activerModeEnduranceZ();
-
-                    // ▼▼▼ Déplacer le Life After Death ici ▼▼▼
-                    if (toupieAdv.getVieActuelleEnnemie() <= 1) { // Se déclenche à 1 PV ou moins
-                        toupieAdv.setVieActuelleEnnemie(1);
-                        Alert a = new Alert(Alert.AlertType.WARNING);
-                        a.setTitle("Life After Death Activé");
-                        a.setHeaderText("La performance tip Xtend permet à Z Achilles de continuer !");
-                        a.setContentText("Mode Endurance activé - PV fixés à 1 !");
-                        a.showAndWait();
-
-                        // ▼▼▼ Forcer la mise à jour UI et vérifier fin combat ▼▼▼
-                        Platform.runLater(() -> {
-                            majVieEnnemi();
-                            checkFinCombat();
-                        });
-                    }
 
 
-
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setTitle(null);
-                    a.setHeaderText("Z Achilles passe en mode Enduance ");
-                    a.setContentText(null);
-                    a.showAndWait();
-                }
-            }
-
-            // 🔴 Mode Attaque si vie < 60% et pas déjà en attaque
-            else if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()) {
-                if (!toupieAdv.isModeAttaqueZ()) {
-                    toupieAdv.resetStat();
-                    toupieAdv.desactiverModeDefenseZ();
-                    toupieAdv.desactiverModeEnduranceZ();
-                    toupieAdv.activerModeAttaqueZ();
-                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
-                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Mode Attaque");
-                    alert.setHeaderText("Z Achilles passe en mode attaque !");
-                    alert.setContentText("Pendant 3 tours, tous ses coups sont critiques !");
-                    alert.showAndWait();
-
-                    toupieAdv.activerModeCritiqueTemporaire(3);
-                    attaque = toupieAdv.attaqueGlobale();
-                }
-            }
-
-            // 🔴 Mode Défense si aucune autre condition (cas de départ)
-            else {
-                if (!toupieAdv.isModeDéfenseZ()) {
-                    toupieAdv.resetStat();
-                    toupieAdv.desactiverModeAttaqueZ();
-                    toupieAdv.desactiverModeEnduranceZ();
-                    toupieAdv.activerModeDefenseZ();
-                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
-                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Mode Défense");
-                    alert.setHeaderText("Z Achilles entre en mode Défense");
-                    alert.setContentText("Il encaissera mieux les coups !");
-                    alert.showAndWait();
-                }
-            }
-
-            appliquerDegatsSurJoueur(attaque);
-
-
-            toupieAdv.decrementerCritique();
-           // appliquerRegenerationFinDeTour();
-            return;
-        }
-
-    }
 
     private void majVieJoueur() {
         float pourcentageJoueur = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
@@ -2449,13 +2280,6 @@ public void retourMenu(){
 
         combatController.gagnerVieEnnemie(degatsSubis);
 
-
-
-
-
-
-
-
         majVieEnnemi();
 
 
@@ -2538,9 +2362,9 @@ public void retourMenu(){
 
 
         // Enchaînements ennemis
-        gererChangementValkyrie2();
-        gererChangementKerbeus2();
-        gererChangementModeEnnemiZAchilles2();
+        gererChangementValkyrie();
+        gererChangementKerbeus();
+        gererChangementModeEnnemiZAchilles();
 
         // ✅ Mettre à jour uniquement après tous les changements
         float nouveauPourcentage = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
