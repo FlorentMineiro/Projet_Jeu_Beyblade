@@ -9,7 +9,7 @@ public class ToupieEnnemie  {
         private EnergyLayer energyLayerEnnemie;
         private ForgeDisc forgeDiscsEnnemie;
         private PerformanceTip performanceTipEnnemie;
-        public static  ClasseToupie classeToupieEnnemie = new ClasseToupie("Neutre");
+        public static ClasseToupie classeToupieEnnemie = new ClasseToupie("Neutre");
         private ClasseToupie classeToupieEnnemie2 = new ClasseToupie("Neutre");
     private int vieMaxEnnemie;
         private float vieActuelleEnnemie;
@@ -32,7 +32,7 @@ public class ToupieEnnemie  {
     private float baseAttaque;
     private float baseDefense;
     private float baseEndurance;
-    private ZAchilles zAchilles;
+
 
 
 
@@ -55,23 +55,14 @@ public class ToupieEnnemie  {
             this.rotationEnnemie = rotationEnnemie;
             this.urlToupieEnnemie = urlToupieEnnemiee;
 
-        if ("Attaque".equals(this.classeToupieEnnemie2.getTypeToupie())) {
-            this.vieActuelleEnnemie += (1.5f * enduranceEnnemie);
-            this.vieMaxEnnemie += (1.5f * enduranceEnnemie);
-        }
-        if ("Défense".equals(this.classeToupieEnnemie2.getTypeToupie())) {
-            this.vieActuelleEnnemie += (2f * enduranceEnnemie);
-            this.vieMaxEnnemie += (2f * enduranceEnnemie);
-        }
-        if ("Equilibre".equals(this.classeToupieEnnemie2.getTypeToupie())) {
-            this.vieActuelleEnnemie += (2f * enduranceEnnemie);
-            this.vieMaxEnnemie += (2f * enduranceEnnemie);
-        }
-        if ("Endurance".equals(this.classeToupieEnnemie2.getTypeToupie())) {
-            this.vieActuelleEnnemie += (3f * enduranceEnnemie);
-            this.vieMaxEnnemie += (3f * enduranceEnnemie);
-        }
-        }
+       if ("Endurance".equalsIgnoreCase(this.classeToupieEnnemie2.getTypeToupie())){
+           this.vieMaxEnnemie += 2f * this.enduranceEnnemie;
+           this.vieActuelleEnnemie += 2f * this.enduranceEnnemie;
+       }else {
+           this.vieMaxEnnemie +=  this.enduranceEnnemie;
+           this.vieActuelleEnnemie +=  this.enduranceEnnemie;
+       }
+    }
 
     public ToupieEnnemie(String nomToupieEnnemie,ClasseToupie classeToupieEnnemie, int vieMaxEnnemie, float vieActuelleEnnemie, int attaqueEnnemie, int defenseEnnemie, int enduranceEnnemie, int coupCritiqueEnnemie, int esquiveEnnemie) {
         this.nomToupieEnnemie = nomToupieEnnemie;
@@ -469,13 +460,6 @@ public class ToupieEnnemie  {
     }
 
 
-    public ZAchilles getZAchilles() {
-        return zAchilles;
-    }
-
-    public void setZAchilles(ZAchilles zAchilles) {
-        this.zAchilles = zAchilles;
-    }
 
 
 

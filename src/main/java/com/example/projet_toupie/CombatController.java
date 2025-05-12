@@ -151,44 +151,41 @@ public class CombatController {
         this.modeDefenseZActive = false;
         this.modeEnduranceZActive = false;
     }
+    public void activerModeDefenseZ() {
+        this.modeAttaqueZActive = false;
+        this.modeDefenseZActive = true;
+        this.modeEnduranceZActive = false;
+    }
+    public void activerModeEnduranceZ() {
+        this.modeAttaqueZActive = false;
+        this.modeDefenseZActive = false;
+        this.modeEnduranceZActive = true;
+    }
 
     public boolean isModeAttaqueZ() {
         return this.modeAttaqueZActive;
     }
-
-
-    public void activerModeDefenseZ() {
-        if (!toupieEnnemie.isModeDéfenseZ()) {  // Vérifie si le mode n'est pas déjà activé
-            toupieEnnemie.activerModeDefenseZ();
-            toupieEnnemie.desactiverModeAttaqueZ();
-            toupieEnnemie.desactiverModeEnduranceZ();
-        }
+    public boolean isModeDéfenseZ() {
+        return this.modeDefenseZActive;
     }
 
-    public void activerModeEnduranceZ() {
-        if (!toupieEnnemie.isModeEnduranceZ()) {  // Vérifie si le mode n'est pas déjà activé
-            toupieEnnemie.activerModeEnduranceZ();
-            toupieEnnemie.desactiverModeAttaqueZ();
-            toupieEnnemie.desactiverModeDefenseZ();
-        }
+    public boolean isModeEnduranceZ() {
+        return this.modeEnduranceZActive;
     }
+
+
 
     public void desactiverModeAttaqueZ() {
-        if (toupieEnnemie.isModeAttaqueZ()) {
-            toupieEnnemie.desactiverModeAttaqueZ();
-        }
+        modeAttaqueZActive = false;
     }
 
+
     public void desactiverModeDefenseZ() {
-        if (toupieEnnemie.isModeDéfenseZ()) {
-            toupieEnnemie.desactiverModeDefenseZ();
-        }
+        modeDefenseZActive = false;
     }
 
     public void desactiverModeEnduranceZ() {
-        if (toupieEnnemie.isModeEnduranceZ()) {
-            toupieEnnemie.desactiverModeEnduranceZ();
-        }
+        modeEnduranceZActive = false;
     }
     public void  desactiverModesZ(){
         toupieEnnemie.desactiverModeEnduranceZ();
@@ -199,13 +196,6 @@ public class CombatController {
 
 
 
-    public boolean isModeDéfenseZ() {
-        return toupieEnnemie.isModeDéfenseZ();
-    }
-
-    public boolean isModeEnduranceZ() {
-        return toupieEnnemie.isModeEnduranceZ();
-    }
 
 
     public void resetStatsSansChangerMode() {

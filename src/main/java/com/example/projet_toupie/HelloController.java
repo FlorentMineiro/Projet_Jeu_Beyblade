@@ -39,6 +39,8 @@ public class HelloController implements Initializable {
     private boolean modeAttaqueZActive = false;
     private boolean modeEnduranceZActive = false;
     private boolean modeDefenseZActive = false;
+    private boolean zAchillesEstMort = false;
+
 
 
     @FXML
@@ -556,8 +558,8 @@ public class HelloController implements Initializable {
                 ,DiskCentral
                 ,Defense,
                 typeDefense,
-                1500,
-                1500,
+                1400,
+                1400,
                 35,
                 85,
                 60,
@@ -712,8 +714,8 @@ public class HelloController implements Initializable {
                 ,Defense
                 , typeDefense,
 
-                2000,
-                2000,
+                1900,
+                1900,
                 35,
                 85,
                 60,
@@ -1354,13 +1356,24 @@ public void retourMenu(){
             demarrerCompteARebours(listToupie.get(1).getNomToupie(),listToupieEnnemie.get(4).getNomToupieEnnemie());
 
         }
+       resetModesZAchilles();
+
         toupieAdv = listToupieEnnemie.get(4);
+
         initialiserCombat("Toupie/ZA_.11.Xt_2.png",4);
         combatController = new CombatController(toupieJoueur, toupieAdv);
 
 
 
     }
+    private void resetModesZAchilles() {
+        modeAttaqueZActive = false;
+        modeEnduranceZActive = false;
+        modeDefenseZActive = false;
+        lifeAfterDeathActivated = false;
+        zAchillesEstMort = false;
+    }
+
 
     @FXML
     public void btnAdvValkyrie(MouseEvent event) {
@@ -2151,19 +2164,20 @@ public void retourMenu(){
 
 
     private void gererChangementModeEnnemiZAchilles() {
-        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
-
-        if (!nomToupieTip.contains("Xtend")) return;
-
+        // ▼▼ Blocage complet si Z Achilles est déjà mort ▼▼
         float vieActuelle = toupieAdv.getVieActuelleEnnemie();
         float vieMax = toupieAdv.getVieMaxEnnemie();
 
-        // LIFE AFTER DEATH – priorité absolue
+        if (zAchillesEstMort || vieActuelle <= 0) return;
+
+        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
+        if (!nomToupieTip.contains("Xtend")) return;
+
+        // ▼ LIFE AFTER DEATH ▼
         if (vieActuelle <= 1 && !lifeAfterDeathActivated) {
             lifeAfterDeathActivated = true;
             toupieAdv.setVieActuelleEnnemie(1);
 
-            // Activation forcée du mode Endurance
             combatController.desactiverModesZ();
             combatController.activerModeEnduranceZ();
 
@@ -2185,14 +2199,11 @@ public void retourMenu(){
                 checkFinCombat();
             });
 
-            return; // Pas d'attaque si PV bloqués
+            return; // Pas d’attaque, on attend le prochain tour
         }
 
-        // MODE ENDURANCE
-        if (vieActuelle <= 0.1f * vieMax
-                && !combatController.isModeEnduranceZ()
-                && !modeEnduranceZActive) {
-
+        // ▼ MODE ENDURANCE ▼
+        if (vieActuelle <= 0.1f * vieMax && !modeEnduranceZActive && !lifeAfterDeathActivated) {
             combatController.desactiverModeAttaqueZ();
             combatController.desactiverModeDefenseZ();
             combatController.activerModeEnduranceZ();
@@ -2211,11 +2222,8 @@ public void retourMenu(){
             a.showAndWait();
         }
 
-        // MODE ATTAQUE
-        else if (vieActuelle <= 0.6f * vieMax
-                && !combatController.isModeAttaqueZ()
-                && !modeAttaqueZActive) {
-
+        // ▼ MODE ATTAQUE ▼
+        else if (vieActuelle <= 0.6f * vieMax && !modeAttaqueZActive && !modeEnduranceZActive) {
             combatController.resetStatsSansChangerMode();
             combatController.desactiverModeDefenseZ();
             combatController.desactiverModeEnduranceZ();
@@ -2237,9 +2245,8 @@ public void retourMenu(){
             combatController.activerModeCritiqueTemporaire(3);
         }
 
-        // MODE DEFENSE PAR DÉFAUT
-        else if (!combatController.isModeDéfenseZ() && !modeDefenseZActive) {
-
+        // ▼ MODE DÉFENSE PAR DÉFAUT ▼
+        else if (!modeDefenseZActive && !modeEnduranceZActive && !modeAttaqueZActive) {
             combatController.resetStatsSansChangerMode();
             combatController.desactiverModeAttaqueZ();
             combatController.desactiverModeEnduranceZ();
@@ -2252,35 +2259,41 @@ public void retourMenu(){
             modeEnduranceZActive = false;
             modeDefenseZActive = true;
 
-        /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mode Défense");
-        alert.setHeaderText("Z Achilles se concentre sur la défense !");
-        alert.setContentText("Défense +15 / Attaque -15");
-        alert.showAndWait(); */
+            // Alert désactivé ici volontairement
         }
 
-        // ▼▼▼ CALCUL DES DÉGÂTS APRÈS LES MODES ▼▼▼
+        // ▼▼▼ ATTAQUE ▼▼▼
         float degat = combatController.attaqueAdv();
         float attaque = combatController.perdrePDV(degat);
         appliquerDegatsSurJoueur(attaque);
-        combatController.checkEtDecrementerCritique();
+        //combatController.checkEtDecrementerCritique();
+
+        // ▼▼▼ Check si Z Achilles meurt ▼▼▼
+        if (toupieAdv.getVieActuelleEnnemie() <= 0) {
+            zAchillesEstMort = true;
+            toupieAdv.setVieActuelleEnnemie(0);
+            checkFinCombat();
+        }
     }
 
 
+
+
     private void gererChangementModeEnnemiZAchilles2() {
-        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
-
-        if (!nomToupieTip.contains("Xtend")) return;
-
+        // ▼▼ Blocage complet si Z Achilles est déjà mort ▼▼
         float vieActuelle = toupieAdv.getVieActuelleEnnemie();
         float vieMax = toupieAdv.getVieMaxEnnemie();
 
-        // LIFE AFTER DEATH – priorité absolue
+        if (zAchillesEstMort || vieActuelle <= 0) return;
+
+        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
+        if (!nomToupieTip.contains("Xtend")) return;
+
+        // ▼ LIFE AFTER DEATH ▼
         if (vieActuelle <= 1 && !lifeAfterDeathActivated) {
             lifeAfterDeathActivated = true;
             toupieAdv.setVieActuelleEnnemie(1);
 
-            // Activation forcée du mode Endurance
             combatController.desactiverModesZ();
             combatController.activerModeEnduranceZ();
 
@@ -2302,14 +2315,11 @@ public void retourMenu(){
                 checkFinCombat();
             });
 
-            return; // Pas d'attaque si PV bloqués
+            return; // Pas d’attaque, on attend le prochain tour
         }
 
-        // MODE ENDURANCE
-        if (vieActuelle <= 0.1f * vieMax
-                && !combatController.isModeEnduranceZ()
-                && !modeEnduranceZActive) {
-
+        // ▼ MODE ENDURANCE ▼
+        if (vieActuelle <= 0.1f * vieMax && !modeEnduranceZActive && !lifeAfterDeathActivated) {
             combatController.desactiverModeAttaqueZ();
             combatController.desactiverModeDefenseZ();
             combatController.activerModeEnduranceZ();
@@ -2328,11 +2338,8 @@ public void retourMenu(){
             a.showAndWait();
         }
 
-        // MODE ATTAQUE
-        else if (vieActuelle <= 0.6f * vieMax
-                && !combatController.isModeAttaqueZ()
-                && !modeAttaqueZActive) {
-
+        // ▼ MODE ATTAQUE ▼
+        else if (vieActuelle <= 0.6f * vieMax && !modeAttaqueZActive && !modeEnduranceZActive) {
             combatController.resetStatsSansChangerMode();
             combatController.desactiverModeDefenseZ();
             combatController.desactiverModeEnduranceZ();
@@ -2354,9 +2361,8 @@ public void retourMenu(){
             combatController.activerModeCritiqueTemporaire(3);
         }
 
-        // MODE DEFENSE PAR DÉFAUT
-        else if (!combatController.isModeDéfenseZ() && !modeDefenseZActive) {
-
+        // ▼ MODE DÉFENSE PAR DÉFAUT ▼
+        else if (!modeDefenseZActive && !modeEnduranceZActive && !modeAttaqueZActive) {
             combatController.resetStatsSansChangerMode();
             combatController.desactiverModeAttaqueZ();
             combatController.desactiverModeEnduranceZ();
@@ -2369,19 +2375,24 @@ public void retourMenu(){
             modeEnduranceZActive = false;
             modeDefenseZActive = true;
 
-        /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Mode Défense");
-        alert.setHeaderText("Z Achilles se concentre sur la défense !");
-        alert.setContentText("Défense +15 / Attaque -15");
-        alert.showAndWait(); */
+            // Alert désactivé ici volontairement
         }
 
-        // ▼▼▼ CALCUL DES DÉGÂTS APRÈS LES MODES ▼▼▼
+        // ▼▼▼ ATTAQUE ▼▼▼
         float degat = combatController.attaqueAdv();
         float attaque = combatController.perdrePDV(degat);
-        appliquerDegatsSurJoueur(attaque / 3.0f);
-        combatController.checkEtDecrementerCritique();
+        appliquerDegatsSurJoueur(attaque / 2.0f);
+       // combatController.checkEtDecrementerCritique();
+
+        // ▼▼▼ Check si Z Achilles meurt ▼▼▼
+        if (toupieAdv.getVieActuelleEnnemie() <= 0) {
+            zAchillesEstMort = true;
+            toupieAdv.setVieActuelleEnnemie(0);
+            checkFinCombat();
+        }
     }
+
+
 
 
 
