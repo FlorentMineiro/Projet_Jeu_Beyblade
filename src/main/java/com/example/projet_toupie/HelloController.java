@@ -35,6 +35,12 @@ public class HelloController implements Initializable {
     @FXML
     public AnchorPane apMenuPrincipal;
     private boolean lifeAfterDeathActivated = false;
+    private boolean attaqueValkyrieEffectueeCeTour = false;
+    private boolean modeAttaqueZActive = false;
+    private boolean modeEnduranceZActive = false;
+    private boolean modeDefenseZActive = false;
+
+
     @FXML
     private AnchorPane apBoutique;
     private boolean combatEnCours = true;
@@ -279,6 +285,10 @@ public class HelloController implements Initializable {
     private ImageView imgSelectionRetour;
     @FXML
     private ImageView imgLogo1;
+    @FXML
+    private Label lblCombo2;
+    @FXML
+    private Label lblComboEnnemie2;
 
 
     @Override
@@ -293,6 +303,8 @@ public class HelloController implements Initializable {
         Font policeLuckiestGuy = Font.loadFont(getClass().getResourceAsStream("/fonts/LuckiestGuy-Regular.ttf"), 42);
         lblCombo.setFont(policeLuckiestGuy);
         lblComboEnnemie.setFont(policeLuckiestGuy);
+        lblComboEnnemie2.setFont(policeLuckiestGuy);
+        lblCombo2.setFont(policeLuckiestGuy);
 
 
 
@@ -1792,6 +1804,7 @@ public void retourMenu(){
     }
     private void infligerDegatsEtGererModeEnnemi(float degat) {
         combatController.perdrePDVEnnemie(degat);
+       // gererChangementModeEnnemiZAchilles();
         majVieEnnemi();
         finDeTour();
 
@@ -1814,6 +1827,23 @@ public void retourMenu(){
         });
 
     }
+    private void afficherComboEsquive() {
+        Platform.runLater(() -> {
+            lblCombo2.setText("Esquive Réussi !");
+            lblCombo2.setVisible(true);
+            lblCombo2.toFront();
+
+            // ✅ Appliquer un style : police Regular, taille 13px
+            lblCombo2.setStyle("-fx-font-size: 15px; -fx-font-weight: normal;");
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), e -> lblCombo2.setVisible(false))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
+    }
+
     public void affBurst(Runnable onAnimationFinished) {
         clearAll();
         clearAllBorder();
@@ -1998,6 +2028,56 @@ public void retourMenu(){
         }
 
     }
+    private void verifierEtChangerModeValkyrie() {
+        if (!"Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) return;
+
+        if (Tour.getNumeroTour() % 3 == 0) {
+            combatController.activerModeSixLamesEnnemi();
+            if (combatController.isModeSixLamesEnnemi()) {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setTitle("Changement de mode");
+                a.setHeaderText("Brave Valkyrie passe en mode 6 lames !");
+                a.setContentText("Elle prépare une série de coups !");
+                a.showAndWait();
+            }
+        } else {
+            combatController.desactiverModeSixLamesEnnemi();
+        }
+    }
+    private void attaquerAvecValkyrieSiModeActif() {
+        if (!"Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) return;
+        if (!combatController.isModeSixLamesEnnemi() || attaqueValkyrieEffectueeCeTour) return;
+
+        attaqueValkyrieEffectueeCeTour = true; // ✅ Empêche d'attaquer plusieurs fois dans le même tour
+
+        int chance = alea();
+        int nombreCoups;
+
+        if (chance < 15) nombreCoups = 5;
+        else if (chance < 45) nombreCoups = 4;
+        else if (chance < 75) nombreCoups = 3;
+        else nombreCoups = 2;
+
+        for (int i = 0; i < nombreCoups; i++) {
+            float degat = combatController.barrageEnnemie();
+
+            if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
+                nombreAttaquesEvolution++;
+                float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                degat *= bonus;
+            }
+
+            combatController.perdrePDV(degat);
+
+            if (toupieAdv.getVieActuelleEnnemie() <= 0 || toupieJoueur.getVieActuelleToupie() <= 0) {
+                checkFinCombat();
+                return;
+            }
+        }
+
+        afficherComboEnnemie(nombreCoups);
+    }
+
     private void gererChangementKerbeus(){
         float degatsJoueur = combatController.attaqueJoueur();
         float degats = combatController.attaqueAdv();
@@ -2032,106 +2112,275 @@ public void retourMenu(){
             return;
         }
     }
+    private void gererChangementKerbeus2(){
+        float degatsJoueur = combatController.attaqueJoueur();
+        float degats = combatController.attaqueAdv();
+        int chance = alea();
+        if ("Kerbeus".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+
+            if (Tour.getNumeroTour() % 4 == 0) {
+                combatController.activerProtectionEnnemie();
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setTitle("Changement de mode pour Kerbeus");
+                a.setHeaderText("Kerbeus reçoit une augmentation de défense \n Pendant 3 tours");
+                a.setContentText("Réduction de dégâts de 60 % ");
+                a.showAndWait();
+            }
+
+            if (combatController.estEnProtectionEnnemie()) {
+                degatsJoueur *= 0.60f;
+
+                if (chance < 50) {
+                    combatController.perdrePDV(0.2f * toupieJoueur.getVieActuelleToupie());
+                    degatsJoueur *= 0.9f;
+                    afficherComboEnnemie();
+                    System.out.println("Kerbeus active sa propulsion enchaînée !");
+                }
+
+                combatController.reduireProtectionEnnemie();
+            }
+
+
+            //appliquerRegenerationFinDeTour();
+            //writeRapideInt(lblNombreTour, Tour.suivant());
+            return;
+        }
+    }
+
+
 
 
     private void gererChangementModeEnnemiZAchilles() {
         String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
 
-        if (nomToupieTip.contains("Xtend")) {
-            float attaque = combatController.attaqueAdv();
+        if (!nomToupieTip.contains("Xtend")) return;
 
-            // Gestion prioritaire du Life After Death + Endurance
-            if (toupieAdv.getVieActuelleEnnemie() <= 1 && !lifeAfterDeathActivated) {
-                lifeAfterDeathActivated = true;
-                toupieAdv.setVieActuelleEnnemie(1);
+        float vieActuelle = toupieAdv.getVieActuelleEnnemie();
+        float vieMax = toupieAdv.getVieMaxEnnemie();
 
-                // ▼▼▼ Activation forcée du mode Endurance ▼▼▼
-                combatController.desactiverModesZ();
-                combatController.activerModeEnduranceZ();
-                toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 25);
-                toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 10);
+        // LIFE AFTER DEATH – priorité absolue
+        if (vieActuelle <= 1 && !lifeAfterDeathActivated) {
+            lifeAfterDeathActivated = true;
+            toupieAdv.setVieActuelleEnnemie(1);
 
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setTitle("Double Activation");
-                a.setHeaderText("Life After Death + Mode Endurance !");
-                a.setContentText("PV bloqués à 1, Défense +25/Attaque -10");
-                a.showAndWait();
+            // Activation forcée du mode Endurance
+            combatController.desactiverModesZ();
+            combatController.activerModeEnduranceZ();
 
-                Platform.runLater(() -> {
-                    majVieEnnemi();
-                    checkFinCombat();
-                });
-                appliquerDegatsSurJoueur( attaque);
-                return; // ▼ Arrêt prématuré pour éviter les autres modes
-            }
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 25);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 10);
 
-            // Mode Endurance (si vie ≤ 20% ET non déjà activé)
-            if (toupieAdv.getVieActuelleEnnemie() <= 0.1f * toupieAdv.getVieMaxEnnemie()
-                    && !combatController.isModeEnduranceZ()) {
+            modeAttaqueZActive = false;
+            modeDefenseZActive = false;
+            modeEnduranceZActive = true;
 
-                combatController.desactiverModeAttaqueZ();
-                combatController.desactiverModeDefenseZ();
-                combatController.activerModeEnduranceZ();
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Double Activation");
+            a.setHeaderText("Life After Death + Mode Endurance !");
+            a.setContentText("PV bloqués à 1, Défense +25 / Attaque -10");
+            a.showAndWait();
 
-                // Applique les bonus/malus
-                toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 25);
-                toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 10);
+            Platform.runLater(() -> {
+                majVieEnnemi();
+                checkFinCombat();
+            });
 
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setTitle("Mode Endurance Activé");
-                a.setHeaderText("Z Achilles devient ultra résistant !");
-                a.setContentText("Défense +25 / Attaque -10");
-                a.showAndWait();
-            }
-            // Mode Attaque (si vie ≤ 60%)
-            else if (toupieAdv.getVieActuelleEnnemie() <= 0.6f * toupieAdv.getVieMaxEnnemie()) {
-                if (!combatController.isModeAttaqueZ()) {
-                    combatController.resetStatsSansChangerMode();
-                    combatController.desactiverModeEnduranceZ();
-
-                    combatController.desactiverModeDefenseZ();
-                    combatController.activerModeAttaqueZ();
-
-                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
-                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
-                    if (combatController.dernierCoupEtaitCritique()){
-                        afficherComboEnnemieAchilles();
-                    }
-
-
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Mode Attaque");
-                    alert.setHeaderText("Z Achilles devient hyper agressif !");
-                    alert.setContentText("Attaque +15 / Défense -15 \n (Coups Critiques pendant 5 tours)");
-                    combatController.activerModeCritiqueTemporaire(3);
-
-                    alert.showAndWait();
-
-                }
-            }
-            // Mode Défense par défaut
-            else {
-                if (!combatController.isModeDéfenseZ()) {
-                    combatController.resetStatsSansChangerMode();
-                    combatController.desactiverModeAttaqueZ();
-                    combatController.desactiverModeEnduranceZ();
-                    combatController.activerModeDefenseZ();
-
-                    toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
-                    toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Mode Défense");
-                    alert.setHeaderText("Z Achilles se concentre sur la défense !");
-                    alert.setContentText("Défense +15 / Attaque -15");
-                    alert.showAndWait();
-                }
-            }
-
-            appliquerDegatsSurJoueur(attaque);
-            combatController.checkEtDecrementerCritique();
+            return; // Pas d'attaque si PV bloqués
         }
+
+        // MODE ENDURANCE
+        if (vieActuelle <= 0.1f * vieMax
+                && !combatController.isModeEnduranceZ()
+                && !modeEnduranceZActive) {
+
+            combatController.desactiverModeAttaqueZ();
+            combatController.desactiverModeDefenseZ();
+            combatController.activerModeEnduranceZ();
+
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 25);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 10);
+
+            modeAttaqueZActive = false;
+            modeDefenseZActive = false;
+            modeEnduranceZActive = true;
+
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Mode Endurance Activé");
+            a.setHeaderText("Z Achilles devient ultra résistant !");
+            a.setContentText("Défense +25 / Attaque -10");
+            a.showAndWait();
+        }
+
+        // MODE ATTAQUE
+        else if (vieActuelle <= 0.6f * vieMax
+                && !combatController.isModeAttaqueZ()
+                && !modeAttaqueZActive) {
+
+            combatController.resetStatsSansChangerMode();
+            combatController.desactiverModeDefenseZ();
+            combatController.desactiverModeEnduranceZ();
+            combatController.activerModeAttaqueZ();
+
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
+
+            modeAttaqueZActive = true;
+            modeDefenseZActive = false;
+            modeEnduranceZActive = false;
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Mode Attaque");
+            alert.setHeaderText("Z Achilles devient hyper agressif !");
+            alert.setContentText("Attaque +15 / Défense -15 \n(Coups Critiques pendant 3 tours)");
+            alert.showAndWait();
+
+            combatController.activerModeCritiqueTemporaire(3);
+        }
+
+        // MODE DEFENSE PAR DÉFAUT
+        else if (!combatController.isModeDéfenseZ() && !modeDefenseZActive) {
+
+            combatController.resetStatsSansChangerMode();
+            combatController.desactiverModeAttaqueZ();
+            combatController.desactiverModeEnduranceZ();
+            combatController.activerModeDefenseZ();
+
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
+
+            modeAttaqueZActive = false;
+            modeEnduranceZActive = false;
+            modeDefenseZActive = true;
+
+        /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Mode Défense");
+        alert.setHeaderText("Z Achilles se concentre sur la défense !");
+        alert.setContentText("Défense +15 / Attaque -15");
+        alert.showAndWait(); */
+        }
+
+        // ▼▼▼ CALCUL DES DÉGÂTS APRÈS LES MODES ▼▼▼
+        float degat = combatController.attaqueAdv();
+        float attaque = combatController.perdrePDV(degat);
+        appliquerDegatsSurJoueur(attaque);
+        combatController.checkEtDecrementerCritique();
+    }
+
+
+    private void gererChangementModeEnnemiZAchilles2() {
+        String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
+
+        if (!nomToupieTip.contains("Xtend")) return;
+
+        float vieActuelle = toupieAdv.getVieActuelleEnnemie();
+        float vieMax = toupieAdv.getVieMaxEnnemie();
+
+        // LIFE AFTER DEATH – priorité absolue
+        if (vieActuelle <= 1 && !lifeAfterDeathActivated) {
+            lifeAfterDeathActivated = true;
+            toupieAdv.setVieActuelleEnnemie(1);
+
+            // Activation forcée du mode Endurance
+            combatController.desactiverModesZ();
+            combatController.activerModeEnduranceZ();
+
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 25);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 10);
+
+            modeAttaqueZActive = false;
+            modeDefenseZActive = false;
+            modeEnduranceZActive = true;
+
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Double Activation");
+            a.setHeaderText("Life After Death + Mode Endurance !");
+            a.setContentText("PV bloqués à 1, Défense +25 / Attaque -10");
+            a.showAndWait();
+
+            Platform.runLater(() -> {
+                majVieEnnemi();
+                checkFinCombat();
+            });
+
+            return; // Pas d'attaque si PV bloqués
+        }
+
+        // MODE ENDURANCE
+        if (vieActuelle <= 0.1f * vieMax
+                && !combatController.isModeEnduranceZ()
+                && !modeEnduranceZActive) {
+
+            combatController.desactiverModeAttaqueZ();
+            combatController.desactiverModeDefenseZ();
+            combatController.activerModeEnduranceZ();
+
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 25);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 10);
+
+            modeAttaqueZActive = false;
+            modeDefenseZActive = false;
+            modeEnduranceZActive = true;
+
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Mode Endurance Activé");
+            a.setHeaderText("Z Achilles devient ultra résistant !");
+            a.setContentText("Défense +25 / Attaque -10");
+            a.showAndWait();
+        }
+
+        // MODE ATTAQUE
+        else if (vieActuelle <= 0.6f * vieMax
+                && !combatController.isModeAttaqueZ()
+                && !modeAttaqueZActive) {
+
+            combatController.resetStatsSansChangerMode();
+            combatController.desactiverModeDefenseZ();
+            combatController.desactiverModeEnduranceZ();
+            combatController.activerModeAttaqueZ();
+
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() - 15);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() + 15);
+
+            modeAttaqueZActive = true;
+            modeDefenseZActive = false;
+            modeEnduranceZActive = false;
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Mode Attaque");
+            alert.setHeaderText("Z Achilles devient hyper agressif !");
+            alert.setContentText("Attaque +15 / Défense -15 \n(Coups Critiques pendant 3 tours)");
+            alert.showAndWait();
+
+            combatController.activerModeCritiqueTemporaire(3);
+        }
+
+        // MODE DEFENSE PAR DÉFAUT
+        else if (!combatController.isModeDéfenseZ() && !modeDefenseZActive) {
+
+            combatController.resetStatsSansChangerMode();
+            combatController.desactiverModeAttaqueZ();
+            combatController.desactiverModeEnduranceZ();
+            combatController.activerModeDefenseZ();
+
+            toupieAdv.setDefenseEnnemie(toupieAdv.getDefenseEnnemie() + 15);
+            toupieAdv.setAttaqueEnnemie(toupieAdv.getAttaqueEnnemie() - 15);
+
+            modeAttaqueZActive = false;
+            modeEnduranceZActive = false;
+            modeDefenseZActive = true;
+
+        /* Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Mode Défense");
+        alert.setHeaderText("Z Achilles se concentre sur la défense !");
+        alert.setContentText("Défense +15 / Attaque -15");
+        alert.showAndWait(); */
+        }
+
+        // ▼▼▼ CALCUL DES DÉGÂTS APRÈS LES MODES ▼▼▼
+        float degat = combatController.attaqueAdv();
+        float attaque = combatController.perdrePDV(degat);
+        appliquerDegatsSurJoueur(attaque / 3.0f);
+        combatController.checkEtDecrementerCritique();
     }
 
 
@@ -2157,6 +2406,7 @@ public void retourMenu(){
     }*/
     public void finDeTour() {
 
+        attaqueValkyrieEffectueeCeTour = false;
 
         gererChangementModeToupieEnnemi(); // Ajout ici pour centraliser les changements de mode
         writeRapideInt(lblNombreTour, Tour.suivant());
@@ -2297,11 +2547,7 @@ public void retourMenu(){
             combatController.perdrePDVEnnemie(toupieAdv.getVieActuelleEnnemie() * 0.05f);
 
 
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setTitle(null);
-            a.setHeaderText("Esquive Réussi");
-            a.setContentText(null);
-            a.showAndWait();
+            afficherComboEsquive();
 
 
         }else {
@@ -2312,6 +2558,8 @@ public void retourMenu(){
 
         majVieEnnemi();
         majVieJoueur();
+        writeRapideInt(lblNombreTour,Tour.suivant());
+        checkFinCombat();
 
     }
     @FXML
@@ -2362,9 +2610,10 @@ public void retourMenu(){
 
 
         // Enchaînements ennemis
-        gererChangementValkyrie();
-        gererChangementKerbeus();
-        gererChangementModeEnnemiZAchilles();
+      verifierEtChangerModeValkyrie();
+        attaquerAvecValkyrieSiModeActif();
+        gererChangementKerbeus2();
+        gererChangementModeEnnemiZAchilles2();
 
         // ✅ Mettre à jour uniquement après tous les changements
         float nouveauPourcentage = toupieJoueur.getVieActuelleToupie() / toupieJoueur.getVieMaxToupie();
@@ -2373,9 +2622,9 @@ public void retourMenu(){
         writeRapideFloat(lblNombrePVToupiePerso, toupieJoueur.getVieActuelleToupie());
 
         majVieJoueur();
+        writeRapideInt(lblNombreTour,Tour.suivant());
 
-        writeRapideInt(lblNombreTour, Tour.suivant());
-        checkFinCombat();
+       checkFinCombat();
     }
 
 

@@ -32,6 +32,7 @@ public class ToupieEnnemie  {
     private float baseAttaque;
     private float baseDefense;
     private float baseEndurance;
+    private ZAchilles zAchilles;
 
 
 
@@ -288,7 +289,7 @@ public class ToupieEnnemie  {
 
    public float attaqueGlobale() {
 
-       float degat =  (this.attaqueEnnemie * 2f);
+       float degat =  (this.attaqueEnnemie * 1.5f);
        if (degat < 0 ){
            degat = 0;
        }
@@ -300,7 +301,7 @@ public class ToupieEnnemie  {
                degat *= 0.8f;
            }
            else if ("Equilibre".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())){
-               degat = this.attaqueEnnemie * 2f;
+               degat = this.attaqueEnnemie * 1.5f;
            }
        }
        if (alea() <= getCoupCritiqueEnnemie()){
@@ -467,6 +468,14 @@ public class ToupieEnnemie  {
         }
     }
 
+
+    public ZAchilles getZAchilles() {
+        return zAchilles;
+    }
+
+    public void setZAchilles(ZAchilles zAchilles) {
+        this.zAchilles = zAchilles;
+    }
 
 
 

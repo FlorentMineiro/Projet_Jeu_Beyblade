@@ -18,7 +18,7 @@ public class CombatController {
         if (!toupiePersonnage.getRotation().getTypeRotation().equals(toupieEnnemie.getRotationEnnemie().getTypeRotation())){
             degat *= 1.1f;
         }
-        return toupieEnnemie.perdrePDV(degat); // Et perdrePDV appliquera correctement le coefficient
+        return degat; // Et perdrePDV appliquera correctement le coefficient
     }
 
 
@@ -35,8 +35,11 @@ public class CombatController {
         if (estCritique) {
             degat *= 1.5f; // Exemple de bonus de critique
         }
+        if (toursCritiquesRestants == 0 && dernierCoupEtaitCritique) {
+            desactiverCritiqueForce();
+        }
 
-        return toupiePersonnage.perdrePDV(degat);
+        return degat;
     }
 
     public float perdrePDV(float degat) {
@@ -138,13 +141,21 @@ public class CombatController {
         return toupieEnnemie.isModeSixLamesEnnemi();
     }
     // Méthodes dans CombatController pour gérer les modes de toupie ennemie
+    private boolean modeAttaqueZActive = false;
+    private boolean modeDefenseZActive = false;
+    private boolean modeEnduranceZActive = false;
+
+
     public void activerModeAttaqueZ() {
-        if (!toupieEnnemie.isModeAttaqueZ()) {  // Vérifie si le mode n'est pas déjà activé
-            toupieEnnemie.activerModeAttaqueZ();
-            toupieEnnemie.desactiverModeDefenseZ();
-            toupieEnnemie.desactiverModeEnduranceZ();
-        }
+        this.modeAttaqueZActive = true;
+        this.modeDefenseZActive = false;
+        this.modeEnduranceZActive = false;
     }
+
+    public boolean isModeAttaqueZ() {
+        return this.modeAttaqueZActive;
+    }
+
 
     public void activerModeDefenseZ() {
         if (!toupieEnnemie.isModeDéfenseZ()) {  // Vérifie si le mode n'est pas déjà activé
@@ -186,9 +197,7 @@ public class CombatController {
         toupieEnnemie.resetStats();
     }
 
-    public boolean isModeAttaqueZ() {
-        return toupieEnnemie.isModeAttaqueZ();
-    }
+
 
     public boolean isModeDéfenseZ() {
         return toupieEnnemie.isModeDéfenseZ();
@@ -213,6 +222,7 @@ public class CombatController {
         // Méthode pour activer le mode critique
         public void activerModeCritiqueTemporaire(int tours) {
             this.toursCritiquesRestants = tours;
+            toupieEnnemie.setCoupCritiqueEnnemie(100);
         }
 
         // Vérifie si un critique doit être déclenché
@@ -225,8 +235,14 @@ public class CombatController {
             dernierCoupEtaitCritique = false;
             return false;
         }
+    public void desactiverCritiqueForce() {
+        this.toursCritiquesRestants = 0;
+        this.dernierCoupEtaitCritique = false;
+        toupieEnnemie.setCoupCritiqueEnnemie(75); // Ou remets la valeur par défaut
+    }
 
-        // Getter pour l'UI
+
+    // Getter pour l'UI
         public boolean dernierCoupEtaitCritique() {
             return dernierCoupEtaitCritique;
         }

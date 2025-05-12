@@ -25,24 +25,27 @@
             </ImageView>
             <ImageView fx:id="imgToupiePerso" fitHeight="150.0" fitWidth="180.0" layoutX="20.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
             <Button layoutX="491.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#btnCollectionToupie" style="-fx-background-color: white;" text="Collections" />
-            <Label fx:id="lblNomToupie" layoutX="20.0" layoutY="27.0" prefHeight="62.0" prefWidth="215.0" style="-fx-background-color: white;" text="...">
+            <Label fx:id="lblNomToupie" layoutX="20.0" layoutY="27.0" prefHeight="62.0" prefWidth="215.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="358.0" layoutY="58.0" prefHeight="17.0" prefWidth="72.0" style="-fx-background-color: white;" text="Statistiques :" />
-            <Label layoutX="358.0" layoutY="241.0" prefHeight="17.0" prefWidth="82.0" style="-fx-background-color: white;" text="Vie  Maximale: " />
-            <Label layoutX="358.0" layoutY="200.0" prefHeight="17.0" prefWidth="63.0" style="-fx-background-color: white;" text="Endurance :" />
-            <Label layoutX="358.0" layoutY="157.0" prefHeight="17.0" prefWidth="55.0" style="-fx-background-color: white;" text="Défense :" />
-            <Label layoutX="358.0" layoutY="114.0" prefHeight="17.0" prefWidth="55.0" style="-fx-background-color: white;" text="Attaque :" />
+            <Label layoutX="358.0" layoutY="58.0" prefHeight="17.0" prefWidth="89.0" text="Statistiques :" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="358.0" layoutY="241.0" prefHeight="17.0" prefWidth="82.0" text="Vie  Maximale: " textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="200.0" prefHeight="17.0" prefWidth="63.0" text="Endurance :" textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="157.0" prefHeight="17.0" prefWidth="55.0" text="Défense :" textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="114.0" prefHeight="17.0" prefWidth="55.0" text="Attaque :" textFill="WHITE" />
             <Label fx:id="lblVieMaxToupie" layoutX="448.0" layoutY="241.0" prefHeight="17.0" prefWidth="55.0" text="..." textFill="WHITE" />
             <Label fx:id="lblEnduranceToupie" layoutX="429.0" layoutY="200.0" prefHeight="17.0" prefWidth="43.0" text="..." textFill="WHITE" />
             <Label fx:id="lblDefenseToupie" layoutX="422.0" layoutY="157.0" prefHeight="17.0" prefWidth="31.0" text="..." textFill="WHITE" />
             <Label fx:id="lblAttaqueToupie" layoutX="420.0" layoutY="114.0" prefHeight="17.0" prefWidth="31.0" text="..." textFill="WHITE" />
             <Label fx:id="lblRotationToupie" layoutX="435.0" layoutY="285.0" prefHeight="17.0" prefWidth="56.0" text="..." textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="285.0" prefHeight="17.0" prefWidth="55.0" style="-fx-background-color: white;" text="Rotation : " />
+            <Label layoutX="358.0" layoutY="285.0" prefHeight="17.0" prefWidth="55.0" text="Rotation : " textFill="WHITE" />
             <Label fx:id="lblTypeToupie" layoutX="430.0" layoutY="321.0" prefHeight="17.0" prefWidth="63.0" text="..." textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="321.0" prefHeight="17.0" prefWidth="43.0" style="-fx-background-color: white;" text="Type : " />
+            <Label layoutX="358.0" layoutY="321.0" prefHeight="17.0" prefWidth="43.0" text="Type : " textFill="WHITE" />
             <ImageView fx:id="imgRetour2" fitHeight="55.0" fitWidth="82.0" layoutX="10.0" layoutY="340.0" onMouseClicked="#btnRetour2">
                <image>
                   <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
@@ -269,11 +272,6 @@
       </AnchorPane>
       <AnchorPane fx:id="apDuelToupie" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Label fx:id="lblCombo" layoutX="196.0" layoutY="101.0" prefHeight="55.0" prefWidth="251.0" textFill="GOLD">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Label>
             <ImageView fx:id="imgStadium2" fitHeight="402.0" fitWidth="605.0" layoutY="1.0">
                <image>
                   <Image url="@../../../Environnement/Stadium_Beyblade.png" />
@@ -313,12 +311,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblTour" alignment="CENTER" layoutX="209.0" layoutY="14.0" prefHeight="22.0" prefWidth="72.0" style="-fx-background-color: blue;" text="Tour : " textFill="WHITE">
+            <Label fx:id="lblTour" alignment="CENTER" layoutX="209.0" layoutY="14.0" prefHeight="22.0" prefWidth="72.0" text="Tour : " textFill="RED">
                <font>
                   <Font name="Impact" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblNombreTour" layoutX="283.0" layoutY="12.0" style="-fx-background-color: blue;" text="..." textFill="WHITE">
+            <Label fx:id="lblNombreTour" layoutX="283.0" layoutY="12.0" text="..." textFill="RED">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -338,9 +336,9 @@
                   <Image url="@../../../Bouton-Combat/Mode-3-lames.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblComboEnnemie" alignment="CENTER" layoutX="139.0" layoutY="174.0" prefHeight="55.0" prefWidth="287.0" textFill="#0028ff">
+            <Label fx:id="lblComboEnnemie" alignment="CENTER" layoutX="148.0" layoutY="187.0" prefHeight="27.0" prefWidth="287.0" textFill="#0028ff">
                <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
             <ImageView fx:id="imgRetourDuCombat" fitHeight="55.0" fitWidth="63.0" layoutY="9.0" onMouseClicked="#btnRetourDuCombat">
@@ -351,6 +349,21 @@
             <Label fx:id="lblToupiePersoModeCombat" layoutX="58.0" layoutY="258.0" prefHeight="17.0" prefWidth="89.0" text="...">
                <font>
                   <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCombo" layoutX="186.0" layoutY="78.0" prefHeight="22.0" prefWidth="251.0" textFill="GOLD">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblComboEnnemie2" alignment="CENTER" layoutX="148.0" layoutY="228.0" prefHeight="27.0" prefWidth="287.0" textFill="#0028ff">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCombo2" alignment="CENTER" layoutX="168.0" layoutY="122.0" prefHeight="27.0" prefWidth="287.0" textFill="GOLD">
+               <font>
+                  <Font size="13.0" />
                </font>
             </Label>
          </children>

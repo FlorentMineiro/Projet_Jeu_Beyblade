@@ -192,7 +192,7 @@ public class ToupiePersonnage {
 
     public float attaqueGlobale() {
 
-        float degat = (this.attaque * 2f);
+        float degat = (this.attaque * 1.5f);
         if (degat < 0){
             degat = 0;
         }
@@ -203,7 +203,7 @@ public class ToupiePersonnage {
             } else if ("Défense".equalsIgnoreCase(toupieEnnemie.getClasseToupieEnnemie().getTypeToupie())) {
                 degat *= 0.8f;
             }else {
-                degat = this.attaque * 2f;
+                degat = this.attaque * 1.5f;
             }
         }
         if (alea() <= getCoupCritiqueToupie()){
