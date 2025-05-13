@@ -786,8 +786,8 @@ public class HelloController implements Initializable {
                 ,Disk11
                 ,Xtend
                 , typeEquilibre
-                ,1750
-                ,1750
+                ,1650
+                ,1650
                 ,85
                 ,50
                 ,60
@@ -1012,7 +1012,7 @@ public class HelloController implements Initializable {
             writeRapideFloat(lblDefenseToupie, listToupie.get(3).getDefenseToupie());
             writeRapideFloat(lblEnduranceToupie, listToupie.get(3).getEnduranceToupie());
             writeRapideFloat(lblVieMaxToupie, listToupie.get(3).getVieMaxToupie());
-            writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(3).getRotation().getTypeRotation()));
+            writeRapideString(lblRotationToupie, listToupie.get(3).getRotation().getTypeRotation());
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(3).getClasseToupie().getTypeToupie()));
             changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
 
@@ -1028,7 +1028,7 @@ public class HelloController implements Initializable {
             writeRapideFloat(lblDefenseToupie, listToupie.get(0).getDefenseToupie());
             writeRapideFloat(lblEnduranceToupie, listToupie.get(0).getEnduranceToupie());
             writeRapideFloat(lblVieMaxToupie, listToupie.get(0).getVieMaxToupie());
-            writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(0).getRotation().getTypeRotation()));
+            writeRapideString(lblRotationToupie,listToupie.get(0).getRotation().getTypeRotation());
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(0).getClasseToupie().getTypeToupie()));
             changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
 
@@ -1042,7 +1042,7 @@ public class HelloController implements Initializable {
             writeRapideFloat(lblDefenseToupie, listToupie.get(1).getDefenseToupie());
             writeRapideFloat(lblEnduranceToupie, listToupie.get(1).getEnduranceToupie());
             writeRapideFloat(lblVieMaxToupie, listToupie.get(1).getVieMaxToupie());
-            writeRapideString(lblRotationToupie, String.valueOf(listToupie.get(1).getRotation().getTypeRotation()));
+            writeRapideString(lblRotationToupie, listToupie.get(1).getRotation().getTypeRotation());
             writeRapideString(lblTypeToupie, String.valueOf(listToupie.get(1).getClasseToupie().getTypeToupie()));
             changeImageViewImg(imgRetour2,"Bouton_Spécial/Toupie_Retour.png");
 
@@ -1089,12 +1089,12 @@ public class HelloController implements Initializable {
         changeImageViewImg(imgMenuCombat , "Environnement/Fond-SelectionToupie2.png");
         visible(apSelectionAdversaire);
         changeZone("Environnement/Fond-SelectionToupie2.png",apSelectionAdversaire);
-        writeRapideString(lblAdversaireValkyrie,"Brave Valkyrie");
-        writeRapideString(lblAdversaireKerbeus,"Kerbeus");
-        writeRapideString(lblAdversaireFafnir,"Fafnir");
+        writeRapideString(lblAdversaireValkyrie,listToupieEnnemie.get(1).getNomToupieEnnemie());
+        writeRapideString(lblAdversaireKerbeus,listToupieEnnemie.get(0).getNomToupieEnnemie());
+        writeRapideString(lblAdversaireFafnir,listToupieEnnemie.get(3).getNomToupieEnnemie());
 
 
-        writeRapideString(lblAdversaireZachilles,"Z Achilles");
+        writeRapideString(lblAdversaireZachilles,listToupieEnnemie.get(4).getNomToupieEnnemie());
     }
 
     @FXML
@@ -1310,6 +1310,11 @@ public void retourMenu(){
     public void writeRapideFloat(Label lblTexte, float floatTexte)
     {
         lblTexte.setText(Float.toString(floatTexte));
+        return;
+    }
+    public void writeRapideRotation(Label lblTexte, Rotation rotationTexte)
+    {
+        lblTexte.setText(rotationTexte.getTypeRotation());
         return;
     }
 
@@ -1930,18 +1935,36 @@ public void retourMenu(){
         });
 
     }
-    private void afficherComboEnnemieAchilles() {
+    private void afficherComboEnnemieCritique() {
         Platform.runLater(() ->{
-            lblComboEnnemie.setText("Critique !");
-            lblComboEnnemie.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+            lblComboEnnemie2.setText("Critique !");
+            lblComboEnnemie2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 
 
-            lblComboEnnemie.setVisible(true);
+            lblComboEnnemie2.setVisible(true);
 
-            lblComboEnnemie.toFront();
+            lblComboEnnemie2.toFront();
 
             Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(1.5), e -> lblComboEnnemie.setVisible(false))
+                    new KeyFrame(Duration.seconds(1.5), e -> lblComboEnnemie2.setVisible(false))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        });
+
+    }
+    private void afficherComboEnnemieEsquive() {
+        Platform.runLater(() ->{
+            lblComboEnnemie2.setText("Esquive Réussi");
+            lblComboEnnemie2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+
+            lblComboEnnemie2.setVisible(true);
+
+            lblComboEnnemie2.toFront();
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1.5), e -> lblComboEnnemie2.setVisible(false))
             );
             timeline.setCycleCount(1);
             timeline.play();
@@ -1964,83 +1987,79 @@ public void retourMenu(){
 
 
     //}
-    private void gererChangementFafnir(){
+    private void gererChangementFafnir() {
         int chance = alea();
-
         float degats = combatController.attaqueAdv();
-
-        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie()/toupieAdv.getVieMaxEnnemie();
+        float pourcentageAdv = toupieAdv.getVieActuelleEnnemie() / toupieAdv.getVieMaxEnnemie();
 
         if ("Drain Fafnir".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            if (chance < 30) {
+
+            if (chance < 34) {
                 float absorb = volRotationEnnemie();
                 if (absorb > 0) {
-                    majVieEnnemi();
-                    System.out.println("Absorption réussie");
 
-            } else {
+                    majVieEnnemi();
+                    System.out.println("Absorption réussie !");
+                    return;
+                } else {
                     System.out.println("Absorption impossible à cause de la rotation");
                 }
-            } else {
-                appliquerDegatsSurJoueur(degats);
-
-                System.out.println("Absorption échouée");
             }
-            //appliquerRegenerationFinDeTour();
-            //writeRapideInt(lblNombreTour, Tour.suivant());
-            return;
+
+
+
+
+
+            appliquerDegatsSurJoueur(degats);
+            System.out.println("Fafnir subit les dégâts");
         }
     }
-    private void gererChangementValkyrie(){
+
+    private void gererChangementValkyrie() {
         int chance = alea();
-
         float degats = combatController.attaqueAdv();
-        if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
-            if (Tour.getNumeroTour() % 3 == 0) {
-                combatController.activerModeSixLamesEnnemi();
-                if (combatController.isModeSixLamesEnnemi()) {
-                    int nombreCoups;
-                    if (chance < 15) nombreCoups = 5;
-                    else if (chance < 45) nombreCoups = 4;
-                    else if (chance < 75) nombreCoups = 3;
-                    else nombreCoups = 2;
 
-                    for (int i = 0; i < nombreCoups; i++) {
-                        float degat = combatController.barrageEnnemie();
-                        if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
-                            nombreAttaquesEvolution++;
-                            float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
-                            degat *= bonus;
+
+            // Attaque de Valkyrie
+            if ("Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+                if (Tour.getNumeroTour() % 3 == 0) {
+                    combatController.activerModeSixLamesEnnemi();
+                    if (combatController.isModeSixLamesEnnemi()) {
+                        // Calcul du nombre de coups en fonction du hasard
+                        int nombreCoups = (chance < 15) ? 5 : (chance < 45) ? 4 : (chance < 75) ? 3 : 2;
+                        for (int i = 0; i < nombreCoups; i++) {
+                            float degat = combatController.barrageEnnemie();
+                            if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
+                                nombreAttaquesEvolution++;
+                                float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                                degat *= bonus;
+                            }
+                            combatController.perdrePDV(degat);
+                            if (toupieAdv.getVieActuelleEnnemie() <= 0 || toupieJoueur.getVieActuelleToupie() <= 0) {
+                                checkFinCombat();
+                                return;
+                            }
                         }
-                        combatController.perdrePDV(degat);
-                        if (toupieAdv.getVieActuelleEnnemie() <= 0 || toupieJoueur.getVieActuelleToupie() <= 0) {
-                            checkFinCombat();
-                            return;
-                        }
+                        Alert a = new Alert(Alert.AlertType.WARNING);
+                        a.setTitle("Changement de mode");
+                        a.setHeaderText("Brave Valkyrie passe en mode 6 lames");
+                        a.setContentText("Plusieurs coups vont être lancés !");
+                        a.showAndWait();
+                        afficherComboEnnemie(nombreCoups);
                     }
-
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setTitle("Changement de mode");
-                    a.setHeaderText("Brave Valkyrie passe en mode 6 lames");
-                    a.setContentText("Plusieurs coups vont être lancés !");
-                    a.showAndWait();
-                    afficherComboEnnemie(nombreCoups);
+                } else {
+                    combatController.desactiverModeSixLamesEnnemi();
+                    if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
+                        nombreAttaquesEvolution++;
+                        float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
+                        degats *= bonus;
+                    }
+                    appliquerDegatsSurJoueur(degats);
                 }
-            } else {
-                combatController.desactiverModeSixLamesEnnemi();
-                if ("Evolution".equalsIgnoreCase(toupieJoueur.getPerformanceTip().getNomTip())) {
-                    nombreAttaquesEvolution++;
-                    float bonus = 1.0f + 0.02f * nombreAttaquesEvolution;
-                    degats *= bonus;
-                }
-                appliquerDegatsSurJoueur(degats);
-
             }
 
-            return;
-        }
-
     }
+
     private void verifierEtChangerModeValkyrie() {
         if (!"Brave Valkyrie".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) return;
 
@@ -2091,40 +2110,41 @@ public void retourMenu(){
         afficherComboEnnemie(nombreCoups);
     }
 
-    private void gererChangementKerbeus(){
+    private void gererChangementKerbeus() {
         float degatsJoueur = combatController.attaqueJoueur();
         float degats = combatController.attaqueAdv();
-        int chance = alea();
+        int chance = alea();  // Générer un nombre aléatoire pour l'esquive
+
         if ("Kerbeus".equalsIgnoreCase(toupieAdv.getEnergyLayerEnnemie().getNomLayer())) {
+
+
 
             if (Tour.getNumeroTour() % 4 == 0) {
                 combatController.activerProtectionEnnemie();
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setTitle("Changement de mode pour Kerbeus");
-                a.setHeaderText("Kerbeus reçoit une augmentation de défense \n Pendant 3 tours");
-                a.setContentText("Réduction de dégâts de 60 % ");
+                a.setHeaderText("Kerbeus reçoit une augmentation de défense pendant 3 tours");
+                a.setContentText("Réduction de dégâts de 60%");
                 a.showAndWait();
             }
 
             if (combatController.estEnProtectionEnnemie()) {
-                degatsJoueur *= 0.60f;
+                degatsJoueur *= 0.60f;  // Réduit les dégâts infligés par le joueur
 
                 if (chance < 50) {
-                    combatController.perdrePDV(0.2f * toupieJoueur.getVieActuelleToupie());
-                    degatsJoueur *= 0.9f;
+                    combatController.perdrePDV(0.2f * toupieJoueur.getVieActuelleToupie());  // Kerbeus inflige des dégâts à la toupie du joueur
+                    degatsJoueur *= 0.9f;  // Réduit légèrement les dégâts
                     afficherComboEnnemie();
                     System.out.println("Kerbeus active sa propulsion enchaînée !");
                 }
 
-                combatController.reduireProtectionEnnemie();
+                combatController.reduireProtectionEnnemie();  // Réduit la protection à la fin du tour
             }
 
             appliquerDegatsSurJoueur(degats);
-            //appliquerRegenerationFinDeTour();
-            //writeRapideInt(lblNombreTour, Tour.suivant());
-            return;
         }
     }
+
     private void gererChangementKerbeus2(){
         float degatsJoueur = combatController.attaqueJoueur();
         float degats = combatController.attaqueAdv();
@@ -2164,16 +2184,18 @@ public void retourMenu(){
 
 
     private void gererChangementModeEnnemiZAchilles() {
-        // ▼▼ Blocage complet si Z Achilles est déjà mort ▼▼
         float vieActuelle = toupieAdv.getVieActuelleEnnemie();
         float vieMax = toupieAdv.getVieMaxEnnemie();
+        int chance = alea();  // Générer un nombre aléatoire pour l'esquive
 
         if (zAchillesEstMort || vieActuelle <= 0) return;
 
         String nomToupieTip = toupieAdv.getPerformanceTipEnnemie().getNomTip();
         if (!nomToupieTip.contains("Xtend")) return;
 
-        // ▼ LIFE AFTER DEATH ▼
+
+
+        // Life After Death (si applicable)
         if (vieActuelle <= 1 && !lifeAfterDeathActivated) {
             lifeAfterDeathActivated = true;
             toupieAdv.setVieActuelleEnnemie(1);
@@ -2199,10 +2221,10 @@ public void retourMenu(){
                 checkFinCombat();
             });
 
-            return; // Pas d’attaque, on attend le prochain tour
+            return; // Attente du prochain tour
         }
 
-        // ▼ MODE ENDURANCE ▼
+        // Modes de Z Achilles et gestion des dégâts
         if (vieActuelle <= 0.1f * vieMax && !modeEnduranceZActive && !lifeAfterDeathActivated) {
             combatController.desactiverModeAttaqueZ();
             combatController.desactiverModeDefenseZ();
@@ -2222,7 +2244,7 @@ public void retourMenu(){
             a.showAndWait();
         }
 
-        // ▼ MODE ATTAQUE ▼
+        // Mode Attaque ou Défense (selon les conditions)
         else if (vieActuelle <= 0.6f * vieMax && !modeAttaqueZActive && !modeEnduranceZActive) {
             combatController.resetStatsSansChangerMode();
             combatController.desactiverModeDefenseZ();
@@ -2245,7 +2267,7 @@ public void retourMenu(){
             combatController.activerModeCritiqueTemporaire(3);
         }
 
-        // ▼ MODE DÉFENSE PAR DÉFAUT ▼
+        // Mode Défense par défaut
         else if (!modeDefenseZActive && !modeEnduranceZActive && !modeAttaqueZActive) {
             combatController.resetStatsSansChangerMode();
             combatController.desactiverModeAttaqueZ();
@@ -2258,23 +2280,19 @@ public void retourMenu(){
             modeAttaqueZActive = false;
             modeEnduranceZActive = false;
             modeDefenseZActive = true;
-
-            // Alert désactivé ici volontairement
         }
 
-        // ▼▼▼ ATTAQUE ▼▼▼
-        float degat = combatController.attaqueAdv();
-        float attaque = combatController.perdrePDV(degat);
-        appliquerDegatsSurJoueur(attaque);
-        //combatController.checkEtDecrementerCritique();
+        // Attaque de Z Achilles
+        float degat = combatController.attaqueAdvZAchilles();
+        appliquerDegatsSurJoueur(degat);
 
-        // ▼▼▼ Check si Z Achilles meurt ▼▼▼
         if (toupieAdv.getVieActuelleEnnemie() <= 0) {
             zAchillesEstMort = true;
             toupieAdv.setVieActuelleEnnemie(0);
             checkFinCombat();
         }
     }
+
 
 
 
@@ -2379,10 +2397,10 @@ public void retourMenu(){
         }
 
         // ▼▼▼ ATTAQUE ▼▼▼
-        float degat = combatController.attaqueAdv();
+        float degat = combatController.attaqueAdvZAchilles();
         float attaque = combatController.perdrePDV(degat);
-        appliquerDegatsSurJoueur(attaque / 2.0f);
-       // combatController.checkEtDecrementerCritique();
+        appliquerDegatsSurJoueur(attaque / 1.5f);
+        //combatController.checkEtDecrementerCritique();
 
         // ▼▼▼ Check si Z Achilles meurt ▼▼▼
         if (toupieAdv.getVieActuelleEnnemie() <= 0) {

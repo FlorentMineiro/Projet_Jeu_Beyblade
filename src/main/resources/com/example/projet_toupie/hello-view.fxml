@@ -16,7 +16,7 @@
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
    <children>
       <ImageView fx:id="imgFond" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="apFichePerso" prefHeight="600.0" prefWidth="800.0" visible="false">
+      <AnchorPane fx:id="apFichePerso" prefHeight="600.0" prefWidth="800.0">
          <children>
             <ImageView fitHeight="600.0" fitWidth="800.0">
                <image>
@@ -30,23 +30,59 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="358.0" layoutY="58.0" prefHeight="17.0" prefWidth="89.0" text="Statistiques :" textFill="WHITE">
+            <Label layoutX="607.0" layoutY="58.0" prefHeight="31.0" prefWidth="129.0" text="Statistiques :" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Label layoutX="358.0" layoutY="241.0" text="Vie  Maximale: " textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="200.0" text="Endurance :" textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="157.0" text="Défense :" textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="114.0" text="Attaque :" textFill="WHITE" />
-            <Label fx:id="lblVieMaxToupie" layoutX="448.0" layoutY="241.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblEnduranceToupie" layoutX="429.0" layoutY="200.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblDefenseToupie" layoutX="422.0" layoutY="157.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblAttaqueToupie" layoutX="420.0" layoutY="114.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblRotationToupie" layoutX="435.0" layoutY="285.0" text="..." textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="285.0" text="Rotation : " textFill="WHITE" />
-            <Label fx:id="lblTypeToupie" layoutX="430.0" layoutY="321.0" text="..." textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="321.0" text="Type : " textFill="WHITE" />
+            <Label layoutX="591.0" layoutY="261.0" text="Vie  Maximale: " textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label layoutX="605.0" layoutY="208.0" text="Endurance :" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label layoutX="611.0" layoutY="157.0" text="Défense :" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label layoutX="612.0" layoutY="114.0" text="Attaque :" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label fx:id="lblVieMaxToupie" layoutX="728.0" layoutY="261.0" text="..." textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label fx:id="lblEnduranceToupie" layoutX="712.0" layoutY="208.0" prefHeight="26.0" prefWidth="49.0" text="..." textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label fx:id="lblDefenseToupie" layoutX="707.0" layoutY="157.0" text="..." textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label fx:id="lblAttaqueToupie" layoutX="707.0" layoutY="115.0" text="..." textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label fx:id="lblRotationToupie" layoutX="707.0" layoutY="300.0" prefHeight="26.0" prefWidth="77.0" text="..." textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label layoutX="591.0" layoutY="300.0" text="Rotation : " textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label fx:id="lblTypeToupie" layoutX="686.0" layoutY="354.0" text="..." textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
+            <Label layoutX="591.0" layoutY="354.0" text="Type : " textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font></Label>
             <ImageView fx:id="imgRetour2" fitHeight="55.0" fitWidth="82.0" layoutX="10.0" layoutY="540.0" onMouseClicked="#btnRetour2">
                <image>
                   <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
@@ -220,47 +256,47 @@
                   <Image url="@../../../Environnement/Fond-SelectionToupie2.png" />
                </image>
             </ImageView>
-            <Label layoutX="300.0" layoutY="14.0" text="Choisissez votre adversaire" textFill="WHITE">
+            <Label layoutX="166.0" layoutY="41.0" text="Choisissez votre adversaire" textFill="WHITE">
                <font>
-                  <Font name="Arial Black" size="18.0" />
+                  <Font name="Arial Black" size="28.0" />
                </font>
             </Label>
-            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="100.0" layoutY="100.0" onMouseClicked="#btnAdvValkyrie">
+            <ImageView fitHeight="91.0" fitWidth="99.0" layoutX="15.0" layoutY="195.0" onMouseClicked="#btnAdvValkyrie">
                <image>
                   <Image url="@../../../Toupie/valkyrie_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="250.0" layoutY="100.0" onMouseClicked="#btnAdvFafnir">
+            <ImageView fitHeight="91.0" fitWidth="99.0" layoutX="210.0" layoutY="195.0" onMouseClicked="#btnAdvFafnir">
                <image>
                   <Image url="@../../../Toupie/fafnir_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="74.0" layoutX="400.0" layoutY="100.0" onMouseClicked="#btnAdvKerbeus">
+            <ImageView fitHeight="91.0" fitWidth="109.0" layoutX="421.0" layoutY="191.0" onMouseClicked="#btnAdvKerbeus">
                <image>
                   <Image url="@../../../Toupie/kerbeus_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="82.0" fitWidth="74.0" layoutX="550.0" layoutY="100.0" onMouseClicked="#btnAdvZachilles">
+            <ImageView fitHeight="111.0" fitWidth="129.0" layoutX="640.0" layoutY="200.0" onMouseClicked="#btnAdvZachilles">
                <image>
                   <Image url="@../../../Toupie/ZA_.11.Xt_2.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblAdversaireValkyrie" layoutX="90.0" layoutY="180.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireValkyrie" layoutX="17.0" layoutY="300.0" prefHeight="42.0" prefWidth="153.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireFafnir" layoutX="240.0" layoutY="180.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireFafnir" layoutX="228.0" layoutY="300.0" prefHeight="42.0" prefWidth="129.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireKerbeus" layoutX="390.0" layoutY="180.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireKerbeus" layoutX="421.0" layoutY="300.0" prefHeight="42.0" prefWidth="138.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireZachilles" layoutX="540.0" layoutY="180.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireZachilles" layoutX="630.0" layoutY="300.0" prefHeight="42.0" prefWidth="163.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
@@ -293,7 +329,7 @@
          </children>
       </AnchorPane>
 
-      <AnchorPane fx:id="apDuelToupie" prefHeight="600.0" prefWidth="800.0">
+      <AnchorPane fx:id="apDuelToupie" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
             <ImageView fx:id="imgStadium2" fitHeight="600.0" fitWidth="800.0" layoutY="0.0">
                <image>

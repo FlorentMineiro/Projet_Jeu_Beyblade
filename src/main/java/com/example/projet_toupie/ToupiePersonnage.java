@@ -57,16 +57,16 @@ public class ToupiePersonnage {
         this.urlToupie = urlToupie;
 
         if ("Attaque".equals(this.classeToupie.getTypeToupie())){
-            this.vieActuelle += (1.5f * this.endurance);
-            this.vieMax += (1.5f * this.endurance);
+            this.vieActuelle += (2f * this.endurance);
+            this.vieMax += (2f * this.endurance);
         }
         if ("Défense".equals(this.classeToupie.getTypeToupie())){
-            this.vieActuelle += (2f * this.endurance);
-            this.vieMax += (2f * this.endurance);
+            this.vieActuelle += (2.5f * this.endurance);
+            this.vieMax += (2.5f * this.endurance);
         }
         if ("Equilibre".equals(this.classeToupie.getTypeToupie())){
-            this.vieActuelle += (2f * this.endurance);
-            this.vieMax += (2f * this.endurance);
+            this.vieActuelle += (2.5f * this.endurance);
+            this.vieMax += (2.5f * this.endurance);
         }
         if ("Endurance".equals(this.classeToupie.getTypeToupie())){
             this.vieActuelle += (3f * this.endurance);

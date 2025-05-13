@@ -3,6 +3,10 @@ package com.example.projet_toupie;
 public class CombatController {
     private ToupiePersonnage toupiePersonnage;
     private ToupieEnnemie toupieEnnemie;
+    private boolean critiqueForceActive = false;
+    private int toursCritiquesRestants = 0;
+    private boolean dernierCoupEtaitCritique = false;
+
 
     public CombatController(ToupiePersonnage toupiePersonnage, ToupieEnnemie toupieEnnemie) {
         this.toupiePersonnage = toupiePersonnage;
@@ -31,16 +35,48 @@ public class CombatController {
         }
 
         // Gestion du critique
-        boolean estCritique = checkEtDecrementerCritique();
+        /*boolean estCritique = checkEtDecrementerCritique();
         if (estCritique) {
             degat *= 1.5f; // Exemple de bonus de critique
         }
         if (toursCritiquesRestants == 0 && dernierCoupEtaitCritique) {
             desactiverCritiqueForce();
+        }*/
+
+        return degat;
+    }
+    public float attaqueAdvZAchilles() {
+        float degat = toupieEnnemie.attaqueGlobaleSansCritique();
+
+        if (!toupieEnnemie.getRotationEnnemie().getTypeRotation().equals(toupiePersonnage.getRotation().getTypeRotation())) {
+            degat *= 1.1f;
+        }
+
+        boolean estCritique = false;
+
+        // Gestion critique forcé
+        if (critiqueForceActive && checkEtDecrementerCritique()) {
+            estCritique = true;
+        }
+        // Sinon critique normal
+        else if (alea() <= toupieEnnemie.getCoupCritiqueEnnemie()) {
+            estCritique = true;
+        }
+
+        // Si critique, applique le bonus
+        if (estCritique) {
+            degat *= 1.8f;
+            System.out.println("Coup Critique de Z achilles");
+        }
+
+        // Fin du mode critique forcé
+        if (critiqueForceActive && toursCritiquesRestants <= 0) {
+            desactiverCritiqueForce();
         }
 
         return degat;
     }
+
 
     public float perdrePDV(float degat) {
         if (!toupieEnnemie.getRotationEnnemie().getTypeRotation().equals(toupiePersonnage.getRotation().getTypeRotation())){
@@ -206,16 +242,16 @@ public class CombatController {
 
         // [...] Variables existantes
 
-        private int toursCritiquesRestants = 0;
-        private boolean dernierCoupEtaitCritique = false;
+
 
         // Méthode pour activer le mode critique
         public void activerModeCritiqueTemporaire(int tours) {
             this.toursCritiquesRestants = tours;
-            toupieEnnemie.setCoupCritiqueEnnemie(100);
+            this.critiqueForceActive = true;
         }
 
-        // Vérifie si un critique doit être déclenché
+
+    // Vérifie si un critique doit être déclenché
         public boolean checkEtDecrementerCritique() {
             if (toursCritiquesRestants > 0) {
                 dernierCoupEtaitCritique = true;
@@ -226,10 +262,10 @@ public class CombatController {
             return false;
         }
     public void desactiverCritiqueForce() {
-        this.toursCritiquesRestants = 0;
+        this.critiqueForceActive = false;
         this.dernierCoupEtaitCritique = false;
-        toupieEnnemie.setCoupCritiqueEnnemie(75); // Ou remets la valeur par défaut
     }
+
 
 
     // Getter pour l'UI

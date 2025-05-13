@@ -302,6 +302,28 @@ public class ToupieEnnemie  {
 
        return degat;
    }
+    public float attaqueGlobaleSansCritique() {
+
+        float degat =  (this.attaqueEnnemie * 1.5f);
+        if (degat < 0 ){
+            degat = 0;
+        }
+
+        if ("Attaque".equalsIgnoreCase(this.classeToupieEnnemie.getTypeToupie())) {
+            if ("Endurance".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())) {
+                degat *= 1.2f;
+            } else if ("Défense".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())) {
+                degat *= 0.8f;
+            }
+            else if ("Equilibre".equalsIgnoreCase(toupiePersonnage.getClasseToupie().getTypeToupie())){
+                degat = this.attaqueEnnemie * 1.5f;
+            }
+        }
+
+
+
+        return degat;
+    }
     public void activerProtectionEnnemie() {
         this.toursDeProtectionRestants = 4;
     }
