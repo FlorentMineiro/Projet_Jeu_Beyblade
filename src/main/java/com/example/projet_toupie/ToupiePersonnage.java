@@ -292,7 +292,7 @@ public class ToupiePersonnage {
         float coef = 1.0f;
 
         // Réduction de base selon la défense
-        coef -= 0.7f * (this.defense / 100f);
+        coef -= 0.8f * (this.defense / 100f);
 
         // Avantages/désavantages entre types
         if ("Défense".equalsIgnoreCase(this.classeToupie.getTypeToupie())) {

@@ -13,18 +13,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projet_toupie.HelloController">
    <children>
       <ImageView fx:id="imgFond" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="apFichePerso" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="apFichePerso" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
-            <ImageView fitHeight="400.0" fitWidth="601.0">
+            <ImageView fitHeight="600.0" fitWidth="800.0">
                <image>
                   <Image url="@../../../Environnement/Fond-EcranFichePerso.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imgToupiePerso" fitHeight="150.0" fitWidth="180.0" layoutX="20.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
-            <Button layoutX="491.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#btnCollectionToupie" style="-fx-background-color: white;" text="Collections" />
+            <Button layoutX="660.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#btnCollectionToupie" style="-fx-background-color: white;" text="Collections" />
             <Label fx:id="lblNomToupie" layoutX="20.0" layoutY="27.0" prefHeight="62.0" prefWidth="215.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
@@ -33,335 +33,358 @@
             <Label layoutX="358.0" layoutY="58.0" prefHeight="17.0" prefWidth="89.0" text="Statistiques :" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
-               </font></Label>
-            <Label layoutX="358.0" layoutY="241.0" prefHeight="17.0" prefWidth="82.0" text="Vie  Maximale: " textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="200.0" prefHeight="17.0" prefWidth="63.0" text="Endurance :" textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="157.0" prefHeight="17.0" prefWidth="55.0" text="Défense :" textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="114.0" prefHeight="17.0" prefWidth="55.0" text="Attaque :" textFill="WHITE" />
-            <Label fx:id="lblVieMaxToupie" layoutX="448.0" layoutY="241.0" prefHeight="17.0" prefWidth="55.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblEnduranceToupie" layoutX="429.0" layoutY="200.0" prefHeight="17.0" prefWidth="43.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblDefenseToupie" layoutX="422.0" layoutY="157.0" prefHeight="17.0" prefWidth="31.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblAttaqueToupie" layoutX="420.0" layoutY="114.0" prefHeight="17.0" prefWidth="31.0" text="..." textFill="WHITE" />
-            <Label fx:id="lblRotationToupie" layoutX="435.0" layoutY="285.0" prefHeight="17.0" prefWidth="56.0" text="..." textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="285.0" prefHeight="17.0" prefWidth="55.0" text="Rotation : " textFill="WHITE" />
-            <Label fx:id="lblTypeToupie" layoutX="430.0" layoutY="321.0" prefHeight="17.0" prefWidth="63.0" text="..." textFill="WHITE" />
-            <Label layoutX="358.0" layoutY="321.0" prefHeight="17.0" prefWidth="43.0" text="Type : " textFill="WHITE" />
-            <ImageView fx:id="imgRetour2" fitHeight="55.0" fitWidth="82.0" layoutX="10.0" layoutY="340.0" onMouseClicked="#btnRetour2">
+               </font>
+            </Label>
+            <Label layoutX="358.0" layoutY="241.0" text="Vie  Maximale: " textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="200.0" text="Endurance :" textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="157.0" text="Défense :" textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="114.0" text="Attaque :" textFill="WHITE" />
+            <Label fx:id="lblVieMaxToupie" layoutX="448.0" layoutY="241.0" text="..." textFill="WHITE" />
+            <Label fx:id="lblEnduranceToupie" layoutX="429.0" layoutY="200.0" text="..." textFill="WHITE" />
+            <Label fx:id="lblDefenseToupie" layoutX="422.0" layoutY="157.0" text="..." textFill="WHITE" />
+            <Label fx:id="lblAttaqueToupie" layoutX="420.0" layoutY="114.0" text="..." textFill="WHITE" />
+            <Label fx:id="lblRotationToupie" layoutX="435.0" layoutY="285.0" text="..." textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="285.0" text="Rotation : " textFill="WHITE" />
+            <Label fx:id="lblTypeToupie" layoutX="430.0" layoutY="321.0" text="..." textFill="WHITE" />
+            <Label layoutX="358.0" layoutY="321.0" text="Type : " textFill="WHITE" />
+            <ImageView fx:id="imgRetour2" fitHeight="55.0" fitWidth="82.0" layoutX="10.0" layoutY="540.0" onMouseClicked="#btnRetour2">
                <image>
                   <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apInvocation" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="apInvocation" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
-            <ImageView fx:id="imgInvocation" fitHeight="400.0" fitWidth="601.0">
+            <ImageView fx:id="imgInvocation" fitHeight="600.0" fitWidth="800.0" layoutX="0.0" layoutY="0.0">
                <image>
                   <Image url="@../../../Environnement/Fond-Invocation.png" />
                </image>
             </ImageView>
-            <Label layoutX="439.0" layoutY="90.0" text="Endurance " textFill="WHITE">
+            <Label layoutX="580.0" layoutY="90.0" text="Endurance" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblStatDefense" layoutX="523.0" layoutY="210.0" text="..." textFill="WHITE">
+            <Label fx:id="lblStatEndurance" layoutX="660.0" layoutY="90.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblStatAttaque" layoutX="523.0" layoutY="166.0" text="..." textFill="WHITE">
+            <Label layoutX="580.0" layoutY="166.0" text="Attaque" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="457.0" layoutY="210.0" text="Défense" textFill="WHITE">
+            <Label fx:id="lblStatAttaque" layoutX="660.0" layoutY="166.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblStatEndurance" layoutX="518.0" layoutY="90.0" text="..." textFill="WHITE">
+            <Label layoutX="580.0" layoutY="210.0" text="Défense" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="457.0" layoutY="166.0" text="Attaque" textFill="WHITE">
+            <Label fx:id="lblStatDefense" layoutX="660.0" layoutY="210.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblPoids" layoutX="523.0" layoutY="251.0" text="..." textFill="WHITE">
+            <Label layoutX="580.0" layoutY="251.0" text="Poids" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="470.0" layoutY="251.0" text="Poids" textFill="WHITE">
+            <Label fx:id="lblPoids" layoutX="660.0" layoutY="251.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button layoutX="507.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#btnSuivant" style="-fx-background-color: white;" text=" -&gt;" />
-            <Label layoutX="540.0" layoutY="251.0" text="g" textFill="WHITE">
+            <Label layoutX="685.0" layoutY="251.0" text="g" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgPieceToupie" fitHeight="111.0" fitWidth="153.0" layoutX="206.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="lblInfo" alignment="CENTER" layoutX="101.0" layoutY="54.0" prefHeight="28.0" prefWidth="326.0" text="Label" textFill="WHITE">
+            <Button layoutX="670.0" layoutY="520.0" mnemonicParsing="false" onMouseClicked="#btnSuivant" style="-fx-background-color: white;" text=" →" />
+            <ImageView fx:id="imgPieceToupie" fitHeight="111.0" fitWidth="153.0" layoutX="300.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblInfo" alignment="CENTER" layoutX="180.0" layoutY="100.0" prefHeight="28.0" prefWidth="440.0" text="Label" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apBoutique" prefHeight="200.0" prefWidth="200.0" visible="false">
+
+      <AnchorPane fx:id="apBoutique" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
-            <ImageView fitHeight="400.0" fitWidth="605.0" layoutX="-1.0">
+            <ImageView fitHeight="600.0" fitWidth="800.0" layoutX="0.0" layoutY="0.0">
                <image>
                   <Image url="@../../../Environnement/fond-boutique_2.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCoffre" fitHeight="105.0" fitWidth="109.0" layoutX="232.0" layoutY="122.0" onMouseClicked="#btnCoffreToupie">
+            <ImageView fx:id="imgCoffre" fitHeight="105.0" fitWidth="109.0" layoutX="346.0" layoutY="220.0" onMouseClicked="#btnCoffreToupie">
                <image>
                   <Image url="@../../../../../../../../Downloads/toupie-invocation.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgRetour" fitHeight="62.0" fitWidth="99.0" layoutX="11.0" layoutY="324.0" onMouseClicked="#btnRetour">
+            <ImageView fx:id="imgRetour" fitHeight="62.0" fitWidth="99.0" layoutX="20.0" layoutY="510.0" onMouseClicked="#btnRetour">
                <image>
                   <Image url="@../../../../../../../../Downloads/Toupie_Retour.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblBeyPoint" layoutX="236.0" layoutY="334.0" opacity="0.67" prefHeight="42.0" prefWidth="63.0" style="-fx-background-color: white;" text="...">
+            <Label fx:id="lblBeyPoint" layoutX="370.0" layoutY="520.0" opacity="0.67" prefHeight="42.0" prefWidth="63.0" style="-fx-background-color: white;" text="...">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgLogo" fitHeight="55.0" fitWidth="63.0" layoutX="332.0" layoutY="328.0">
+            <ImageView fx:id="imgLogo" fitHeight="55.0" fitWidth="63.0" layoutX="440.0" layoutY="520.0">
                <image>
                   <Image url="@../../../Logo/Logo_BeyPoint.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="221.0" layoutY="227.0" prefHeight="17.0" prefWidth="129.0" text="Invocation : 700">
+            <Label alignment="CENTER" layoutX="340.0" layoutY="340.0" prefHeight="17.0" prefWidth="129.0" text="Invocation : 700">
                <font>
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgLogo1" fitHeight="32.0" fitWidth="31.0" layoutX="348.0" layoutY="222.0">
+            <ImageView fx:id="imgLogo1" fitHeight="32.0" fitWidth="31.0" layoutX="478.0" layoutY="337.0">
                <image>
                   <Image url="@../../../Logo/Logo_BeyPoint.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apMenuPrincipal" prefHeight="200.0" prefWidth="200.0" visible="false">
+
+      <AnchorPane fx:id="apMenuPrincipal" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
-            <ImageView fitHeight="400.0" fitWidth="600.0">
+            <ImageView fitHeight="600.0" fitWidth="800.0">
                <image>
                   <Image url="@../../../Environnement/Ecran_d'accueil_3.png" />
                </image>
             </ImageView>
-            <Button layoutX="23.0" layoutY="323.0" mnemonicParsing="false" onMouseClicked="#btnFichePerso" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #FFD700;" styleClass="f" text="Fiche Personnage" wrapText="true" />
-            <Button layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnModeCombat" prefHeight="62.0" prefWidth="153.0" style="-fx-background-color: #FFD700;" text="Mode Combat" />
-            <Button layoutX="472.0" layoutY="319.0" mnemonicParsing="false" onMouseClicked="#btnBoutique" prefHeight="55.0" prefWidth="109.0" style="-fx-background-color: #FFD700;" text="Boutique" />
+            <Button layoutX="50.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#btnFichePerso" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #FFD700; -fx-font-size: 14px;" text="Fiche Personnage" />
+            <Button layoutX="325.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#btnModeCombat" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #FFD700; -fx-font-size: 16px;" text="Mode Combat" />
+            <Button layoutX="600.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#btnBoutique" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #FFD700; -fx-font-size: 14px;" text="Boutique" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apCommencement" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="apCommencement" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
-            <Label layoutX="169.0" layoutY="25.0" prefHeight="28.0" prefWidth="310.0" text="CHOISIS TA TOUPIE et TON TYPE">
+            <Label layoutX="250.0" layoutY="50.0" prefHeight="40.0" prefWidth="400.0" style="-fx-font-weight: bold;" text="CHOISIS TA TOUPIE et TON TYPE">
                <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <ImageView fitHeight="122.0" fitWidth="122.0" layoutX="25.0" layoutY="114.0" onMouseClicked="#btnToupieEndurance">
+
+            <!-- Toupie Endurance -->
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="100.0" layoutY="150.0" onMouseClicked="#btnToupieEndurance">
                <image>
                   <Image url="@../../../Toupie/fafnir_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="128.0" fitWidth="122.0" layoutX="223.0" layoutY="111.0" onMouseClicked="#btnToupieDefense">
+            <Label layoutX="160.0" layoutY="340.0" style="-fx-font-size: 16px;" text="Endurance">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+
+            <!-- Toupie Défense -->
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="310.0" layoutY="150.0" onMouseClicked="#btnToupieDefense">
                <image>
                   <Image url="@../../../Toupie/kerbeus_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="122.0" fitWidth="122.0" layoutX="418.0" layoutY="114.0" onMouseClicked="#btnToupieAttaque">
+            <Label layoutX="360.0" layoutY="340.0" style="-fx-font-size: 16px;" text="Défense">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+
+            <!-- Toupie Attaque -->
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="520.0" layoutY="150.0" onMouseClicked="#btnToupieAttaque">
                <image>
                   <Image url="@../../../Toupie/valkyrie_gpt.png" />
                </image>
             </ImageView>
-            <Label layoutX="468.0" layoutY="260.0" text="Attaque" />
-            <Label layoutX="262.0" layoutY="260.0" text="Défense" />
-            <Label layoutX="58.0" layoutY="260.0" text="Endurance" />
+            <Label layoutX="570.0" layoutY="340.0" style="-fx-font-size: 16px;" text="Attaque">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apSelectionAdversaire" prefHeight="462.0" prefWidth="600.0" visible="false">
+      <AnchorPane fx:id="apSelectionAdversaire" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
-            <ImageView fx:id="imgMenuCombat" fitHeight="503.0" fitWidth="600.0" layoutY="-103.0">
+            <ImageView fx:id="imgMenuCombat" fitHeight="600.0" fitWidth="800.0" layoutY="0.0">
                <image>
                   <Image url="@../../../Environnement/Fond-SelectionToupie2.png" />
                </image>
             </ImageView>
-            <Label layoutX="164.0" layoutY="14.0" text="Choisissez votre adversaire" textFill="WHITE">
+            <Label layoutX="300.0" layoutY="14.0" text="Choisissez votre adversaire" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="14.0" layoutY="69.0" onMouseClicked="#btnAdvValkyrie">
+            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="100.0" layoutY="100.0" onMouseClicked="#btnAdvValkyrie">
                <image>
                   <Image url="@../../../Toupie/valkyrie_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="171.0" layoutY="60.0" onMouseClicked="#btnAdvFafnir">
+            <ImageView fitHeight="69.0" fitWidth="63.0" layoutX="250.0" layoutY="100.0" onMouseClicked="#btnAdvFafnir">
                <image>
                   <Image url="@../../../Toupie/fafnir_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="69.0" fitWidth="74.0" layoutX="310.0" layoutY="60.0" onMouseClicked="#btnAdvKerbeus">
+            <ImageView fitHeight="69.0" fitWidth="74.0" layoutX="400.0" layoutY="100.0" onMouseClicked="#btnAdvKerbeus">
                <image>
                   <Image url="@../../../Toupie/kerbeus_gpt.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="82.0" fitWidth="74.0" layoutX="454.0" layoutY="54.0" onMouseClicked="#btnAdvZachilles">
+            <ImageView fitHeight="82.0" fitWidth="74.0" layoutX="550.0" layoutY="100.0" onMouseClicked="#btnAdvZachilles">
                <image>
                   <Image url="@../../../Toupie/ZA_.11.Xt_2.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblAdversaireZachilles" layoutX="454.0" layoutY="136.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireValkyrie" layoutX="90.0" layoutY="180.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireKerbeus" layoutX="324.0" layoutY="142.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireFafnir" layoutX="240.0" layoutY="180.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireFafnir" layoutX="167.0" layoutY="149.0" prefHeight="42.0" prefWidth="72.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireKerbeus" layoutX="390.0" layoutY="180.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <Label fx:id="lblAdversaireValkyrie" layoutX="14.0" layoutY="142.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
+            <Label fx:id="lblAdversaireZachilles" layoutX="540.0" layoutY="180.0" prefHeight="42.0" prefWidth="89.0" text="..." textFill="WHITE">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgSelectionRetour" fitHeight="49.0" fitWidth="72.0" layoutY="338.0" onMouseClicked="#btnSelectionRetour">
+            <ImageView fx:id="imgSelectionRetour" fitHeight="49.0" fitWidth="72.0" layoutX="10.0" layoutY="530.0" onMouseClicked="#btnSelectionRetour">
                <image>
                   <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apLancerToupie" prefHeight="200.0" prefWidth="200.0" visible="false">
+
+      <AnchorPane fx:id="apLancerToupie" prefHeight="600.0" prefWidth="800.0" visible="false">
          <children>
-            <ImageView fx:id="imgStadium" fitHeight="402.0" fitWidth="605.0">
+            <ImageView fx:id="imgStadium" fitHeight="600.0" fitWidth="800.0">
                <image>
                   <Image url="@../../../Environnement/Stadium_Beyblade.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblLancer" alignment="CENTER" layoutX="15.0" layoutY="115.0" prefHeight="70.0" prefWidth="581.0" text="..." textAlignment="CENTER" textFill="GOLD">
+            <Label fx:id="lblLancer" alignment="CENTER" layoutX="110.0" layoutY="200.0" prefHeight="70.0" prefWidth="581.0" text="..." textAlignment="CENTER" textFill="GOLD">
                <font>
                   <Font name="System Bold" size="48.0" />
                </font>
             </Label>
-            <Label fx:id="lblQTE" alignment="CENTER" layoutX="70.0" layoutY="238.0" onKeyPressed="#keyQTE" prefHeight="49.0" prefWidth="72.0" text="..." textFill="GOLD">
+            <Label fx:id="lblQTE" alignment="CENTER" layoutX="364.0" layoutY="300.0" onKeyPressed="#keyQTE" prefHeight="49.0" prefWidth="72.0" text="..." textFill="GOLD">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apDuelToupie" prefHeight="200.0" prefWidth="200.0">
+
+      <AnchorPane fx:id="apDuelToupie" prefHeight="600.0" prefWidth="800.0">
          <children>
-            <ImageView fx:id="imgStadium2" fitHeight="402.0" fitWidth="605.0" layoutY="1.0">
+            <ImageView fx:id="imgStadium2" fitHeight="600.0" fitWidth="800.0" layoutY="0.0">
                <image>
                   <Image url="@../../../Environnement/Stadium_Beyblade.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgToupieDuPerso" fitHeight="82.0" fitWidth="129.0" layoutX="63.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgToupieDeEnnemi" fitHeight="91.0" fitWidth="122.0" layoutX="412.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgToupieDuPerso" fitHeight="82.0" fitWidth="129.0" layoutX="83.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgToupieDeEnnemi" fitHeight="91.0" fitWidth="122.0" layoutX="604.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true" />
             <ProgressBar fx:id="barreVieToupiePerso" layoutX="92.0" layoutY="55.0" prefHeight="17.0" prefWidth="200.0" progress="0.0" />
-            <ProgressBar fx:id="barrevieToupieEnnemie" layoutX="404.0" layoutY="55.0" prefWidth="200.0" progress="0.0" />
-            <ImageView fx:id="imgPourAttaquer" fitHeight="70.0" fitWidth="89.0" layoutX="14.0" layoutY="318.0" onMouseClicked="#btnClickAttaque">
+            <ProgressBar fx:id="barrevieToupieEnnemie" layoutX="504.0" layoutY="55.0" prefWidth="200.0" progress="0.0" />
+            <ImageView fx:id="imgPourAttaquer" fitHeight="70.0" fitWidth="89.0" layoutX="14.0" layoutY="518.0" onMouseClicked="#btnClickAttaque">
                <image>
                   <Image url="@../../../../../../../../Downloads/Bouton-attaque.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgPourEsquiver" fitHeight="70.0" fitWidth="82.0" layoutX="128.0" layoutY="318.0" onMouseClicked="#btnEsquive">
+            <ImageView fx:id="imgPourEsquiver" fitHeight="70.0" fitWidth="82.0" layoutX="128.0" layoutY="518.0" onMouseClicked="#btnEsquive">
                <image>
                   <Image url="@../../../../../../../../Downloads/Bouton-esquive.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgProtection" fitHeight="69.0" fitWidth="82.0" layoutX="247.0" layoutY="319.0" onMouseClicked="#btnProtection" visible="false">
+            <ImageView fx:id="imgProtection" fitHeight="69.0" fitWidth="82.0" layoutX="247.0" layoutY="519.0" onMouseClicked="#btnProtection" visible="false">
                <image>
                   <Image url="@../../../../../../../../Downloads/Bouton-protection.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblNombrePVToupieEnnemie" alignment="CENTER" layoutX="435.0" layoutY="90.0" prefHeight="32.0" prefWidth="99.0" text="...">
+            <Label fx:id="lblNombrePVToupieEnnemie" alignment="CENTER" layoutX="563.0" layoutY="120.0" prefHeight="32.0" prefWidth="99.0" text="...">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <Label fx:id="lblNombrePVToupiePerso" alignment="CENTER" layoutX="104.0" layoutY="90.0" prefHeight="32.0" prefWidth="82.0" text="...">
+            <Label fx:id="lblNombrePVToupiePerso" alignment="CENTER" layoutX="151.0" layoutY="120.0" prefHeight="32.0" prefWidth="82.0" text="...">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <Label fx:id="lblToupieEnnModeCombat" layoutX="379.0" layoutY="258.0" text="...">
+            <Label fx:id="lblToupieEnnModeCombat" layoutX="565.0" layoutY="450.0" text="...">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblTour" alignment="CENTER" layoutX="209.0" layoutY="14.0" prefHeight="22.0" prefWidth="72.0" text="Tour : " textFill="RED">
+            <Label fx:id="lblTour" alignment="CENTER" layoutX="309.0" layoutY="14.0" prefHeight="22.0" prefWidth="72.0" text="Tour : " textFill="RED">
                <font>
                   <Font name="Impact" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblNombreTour" layoutX="283.0" layoutY="12.0" text="..." textFill="RED">
+            <Label fx:id="lblNombreTour" layoutX="383.0" layoutY="12.0" text="..." textFill="RED">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgRotationSteal" fitHeight="70.0" fitWidth="82.0" layoutX="245.0" layoutY="318.0" onMouseClicked="#btnRotationSteal" visible="false">
+            <ImageView fx:id="imgRotationSteal" fitHeight="70.0" fitWidth="82.0" layoutX="345.0" layoutY="518.0" onMouseClicked="#btnRotationSteal" visible="false">
                <image>
                   <Image url="@../../../../../../../../Downloads/Bouton-RotationSteal.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgModeSixLames" fitHeight="70.0" fitWidth="82.0" layoutX="348.0" layoutY="318.0" onMouseClicked="#btnModeSixLames">
+            <ImageView fx:id="imgModeSixLames" fitHeight="70.0" fitWidth="82.0" layoutX="448.0" layoutY="518.0" onMouseClicked="#btnModeSixLames">
                <image>
                   <Image url="@../../../Bouton-Combat/mode-6-lames.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgModeTroisLames" fitHeight="70.0" fitWidth="82.0" layoutX="463.0" layoutY="318.0" onMouseClicked="#btnModeTroislames">
+            <ImageView fx:id="imgModeTroisLames" fitHeight="70.0" fitWidth="82.0" layoutX="563.0" layoutY="518.0" onMouseClicked="#btnModeTroislames">
                <image>
                   <Image url="@../../../Bouton-Combat/Mode-3-lames.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblComboEnnemie" alignment="CENTER" layoutX="148.0" layoutY="187.0" prefHeight="27.0" prefWidth="287.0" textFill="#0028ff">
+            <Label fx:id="lblComboEnnemie" alignment="CENTER" layoutX="256.0" layoutY="336.0" prefHeight="27.0" prefWidth="287.0" textFill="#0028ff">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgRetourDuCombat" fitHeight="55.0" fitWidth="63.0" layoutY="9.0" onMouseClicked="#btnRetourDuCombat">
+            <ImageView fx:id="imgRetourDuCombat" fitHeight="55.0" fitWidth="63.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#btnRetourDuCombat">
                <image>
                   <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblToupiePersoModeCombat" layoutX="58.0" layoutY="258.0" prefHeight="17.0" prefWidth="89.0" text="...">
+            <Label fx:id="lblToupiePersoModeCombat" layoutX="113.0" layoutY="450.0" prefHeight="17.0" prefWidth="138.0" text="...">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lblCombo" layoutX="186.0" layoutY="78.0" prefHeight="22.0" prefWidth="251.0" textFill="GOLD">
+            <Label fx:id="lblCombo" layoutX="247.0" layoutY="161.0" prefHeight="22.0" prefWidth="251.0" textFill="GOLD">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="lblComboEnnemie2" alignment="CENTER" layoutX="148.0" layoutY="228.0" prefHeight="27.0" prefWidth="287.0" textFill="#0028ff">
+            <Label fx:id="lblComboEnnemie2" alignment="CENTER" layoutX="283.0" layoutY="391.0" prefHeight="27.0" prefWidth="287.0" textFill="#0028ff">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="lblCombo2" alignment="CENTER" layoutX="168.0" layoutY="122.0" prefHeight="27.0" prefWidth="287.0" textFill="GOLD">
+            <Label fx:id="lblCombo2" alignment="CENTER" layoutX="256.0" layoutY="226.0" prefHeight="27.0" prefWidth="287.0" textFill="GOLD">
                <font>
                   <Font size="13.0" />
                </font>
@@ -369,19 +392,21 @@
          </children>
       </AnchorPane>
 
-      <BorderPane fx:id="BpCollection" prefHeight="1613.0" prefWidth="1338.0" visible="false">
+
+      <BorderPane fx:id="BpCollection" prefHeight="600.0" prefWidth="800.0" visible="false">
          <top>
-            <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="1200.0" prefWidth="1200.0" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER">
+            <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="600.0" prefWidth="800.0" vbarPolicy="AS_NEEDED" BorderPane.alignment="CENTER">
                <content>
-                  <AnchorPane fx:id="apTop" prefHeight="1525.0" prefWidth="1339.0">
+                  <AnchorPane fx:id="apTop" prefHeight="600.0" prefWidth="800.0">
                      <children>
-                        <ImageView fitHeight="1525.0" fitWidth="1339.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ImageView fitHeight="600.0" fitWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <image>
                               <Image url="@../../../Environnement/Fond-EcranFichePerso.png" />
                            </image>
                         </ImageView>
-                        <VBox alignment="CENTER" layoutX="150.0" layoutY="198.0" spacing="20.0" AnchorPane.bottomAnchor="102.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="-150.0" AnchorPane.topAnchor="198.0">
+                        <VBox alignment="CENTER" layoutX="50.0" layoutY="100.0" spacing="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                            <children>
+                              <!-- Energy Layer -->
                               <VBox alignment="CENTER_LEFT" spacing="8.0">
                                  <children>
                                     <Label text="Energy layer" textFill="WHITE">
@@ -392,44 +417,32 @@
                                     <HBox alignment="CENTER_LEFT" spacing="12.0">
                                        <children>
                                           <ImageView fx:id="imgEnergyLayer1" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgEnergyLayer2" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgEnergyLayer3" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgEnergyLayer4" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgEnergyLayer5" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgEnergyLayer6" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgEnergyLayer7" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
+
+                              <!-- Forge Discs -->
                               <VBox alignment="CENTER_LEFT" spacing="8.0">
                                  <children>
                                     <Label text="Forge Discs" textFill="WHITE">
@@ -440,44 +453,32 @@
                                     <HBox alignment="CENTER_LEFT" spacing="12.0">
                                        <children>
                                           <ImageView fx:id="imgForgeDisc1" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgForgeDisc2" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgForgeDisc3" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgForgeDisc4" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgForgeDisc5" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgForgeDisc6" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgForgeDisc7" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
+
+                              <!-- Performance Tips -->
                               <VBox alignment="CENTER_LEFT" spacing="8.0">
                                  <children>
                                     <Label text="Performance Tips" textFill="WHITE">
@@ -488,39 +489,25 @@
                                     <HBox alignment="CENTER_LEFT" spacing="12.0">
                                        <children>
                                           <ImageView fx:id="imgPerformanceTip1" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgPerformanceTip2" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgPerformanceTip3" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgPerformanceTip4" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgPerformanceTip5" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgPerformanceTip6" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                           <ImageView fx:id="imgPerformanceTip7" fitHeight="60.0" fitWidth="60.0">
-                                             <image>
-                                                <Image url="@../../../Bouton_Spécial/cadenas.png" />
-                                             </image>
+                                             <image><Image url="@../../../Bouton_Spécial/cadenas.png" /></image>
                                           </ImageView>
                                        </children>
                                     </HBox>
@@ -528,12 +515,10 @@
                               </VBox>
                            </children>
                         </VBox>
-                        <ImageView fitHeight="91.0" fitWidth="99.0" layoutX="14.0" layoutY="415.0" onMouseClicked="#btnRetour3" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="415.0">
-                           <image>
-                              <Image url="@../../../Bouton_Spécial/Toupie_Retour.png" />
-                           </image>
+                        <ImageView fitHeight="55.0" fitWidth="82.0" layoutX="10.0" layoutY="540.0" onMouseClicked="#btnRetour3">
+                           <image><Image url="@../../../Bouton_Spécial/Toupie_Retour.png" /></image>
                         </ImageView>
-                        <Label layoutX="113.0" layoutY="34.0" text="Collections" textFill="WHITE" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="30.0">
+                        <Label layoutX="113.0" layoutY="34.0" text="Collections" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="22.0" />
                            </font>
@@ -544,16 +529,18 @@
             </ScrollPane>
          </top>
       </BorderPane>
-      <AnchorPane fx:id="apBurst" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="apBurst" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="imgGifBurst" fitHeight="401.0" fitWidth="601.0">
+            <ImageView fx:id="imgGifBurst" fitHeight="400.0" fitWidth="600.0" layoutX="100.0" layoutY="80.0">
                <image>
                   <Image url="@../../../Toupie/beyblade-burst.gif" />
                </image>
             </ImageView>
-            <Button layoutX="237.0" layoutY="321.0" mnemonicParsing="false" onMouseClicked="#btnGif" opacity="0.7" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: gold;" text="Continuer" />
+            <Button layoutX="342.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#btnGif" opacity="0.7" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: gold;" text="Continuer" />
          </children>
       </AnchorPane>
+
+
 
    </children>
 </StackPane>

@@ -211,7 +211,7 @@ public class ToupieEnnemie  {
         float coef = 1.0f;
 
         // Réduction de base selon la défense
-        coef -= 0.7f * (this.defenseEnnemie / 100f);
+        coef -= 0.8f * (this.defenseEnnemie / 100f);
 
         // Avantages/désavantages entre types
         if ("Défense".equalsIgnoreCase(this.classeToupieEnnemie.getTypeToupie())) {
